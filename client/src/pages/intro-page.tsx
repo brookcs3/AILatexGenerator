@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import HyperIntro from '@/components/hero/HyperIntro';
+import DistortionBackground from '@/components/background/DistortionBackground';
 import './intro-page.css';
 
 /**
