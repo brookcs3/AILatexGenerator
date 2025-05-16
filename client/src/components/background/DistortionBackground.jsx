@@ -1,68 +1,31 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import './DistortionBackground.css';
 
+// A simpler version of the background effect using pure CSS
 const DistortionBackground = () => {
-  const containerRef = useRef(null);
-  const controlsRef = useRef(null);
-  
-  useEffect(() => {
-    let backgroundControls = null;
-    
-    // Dynamically import Three.js distortion background
-    const loadBackground = async () => {
-      try {
-        // Import the module dynamically
-        const module = await import('/js/distortion-background.js');
-        if (containerRef.current) {
-          // Initialize the background
-          backgroundControls = module.initDistortionBackground(containerRef.current);
-          
-          // Set up UI controls
-          if (controlsRef.current) {
-            const patternSelect = controlsRef.current.querySelector('#dither-pattern');
-            const scaleSelect = controlsRef.current.querySelector('#dither-scale');
-            
-            patternSelect.addEventListener('change', (e) => {
-              backgroundControls.setDitherPattern(e.target.value);
-            });
-            
-            scaleSelect.addEventListener('change', (e) => {
-              backgroundControls.setDitherScale(e.target.value);
-            });
-          }
-        }
-      } catch (err) {
-        console.error('Failed to load distortion background:', err);
-      }
-    };
-    
-    loadBackground();
-    
-    // Cleanup function
-    return () => {
-      // Remove event listeners if needed
-      if (controlsRef.current) {
-        const patternSelect = controlsRef.current.querySelector('#dither-pattern');
-        const scaleSelect = controlsRef.current.querySelector('#dither-scale');
-        
-        if (patternSelect) {
-          patternSelect.removeEventListener('change', () => {});
-        }
-        
-        if (scaleSelect) {
-          scaleSelect.removeEventListener('change', () => {});
-        }
-      }
-    };
-  }, []);
-  
   return (
     <div className="distortion-background-container">
-      {/* Container for Three.js canvas */}
-      <div ref={containerRef} className="canvas-container"></div>
+      {/* Animated background with particles and gradients */}
+      <div className="animated-bg">
+        <div className="gradient-layer"></div>
+        <div className="noise-layer"></div>
+        <div className="particles-container">
+          {[...Array(40)].map((_, index) => (
+            <div key={index} className="particle" style={{
+              '--size': `${Math.random() * 3 + 1}px`,
+              '--left': `${Math.random() * 100}%`,
+              '--top': `${Math.random() * 100}%`,
+              '--duration': `${Math.random() * 20 + 15}s`,
+              '--delay': `${Math.random() * 5}s`,
+              '--hue': `${Math.random() * 60 + 230}deg`,
+              '--opacity': `${Math.random() * 0.5 + 0.2}`
+            }}></div>
+          ))}
+        </div>
+      </div>
       
       {/* Controls UI */}
-      <div ref={controlsRef} className="distortion-controls">
+      <div className="distortion-controls">
         <div className="controls-panel">
           <h3 className="text-lg font-semibold text-gray-100 mb-4 tracking-wide uppercase">Distortion Controls</h3>
           

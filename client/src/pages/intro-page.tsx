@@ -49,6 +49,9 @@ const IntroPage: React.FC = () => {
 
   return (
     <div className={`intro-page-container ${isCompleting ? 'fade-out' : ''}`}>
+      {/* Distortion background effect */}
+      <DistortionBackground />
+      
       {/* Skip intro button */}
       {showSkipButton && (
         <button 
