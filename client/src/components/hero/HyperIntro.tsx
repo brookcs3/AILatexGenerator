@@ -262,7 +262,8 @@ Unlike classical bits, quantum bits (qubits) can exist in superpositions of stat
 \\section{Quantum Algorithms}
 \\subsection{Shor's Algorithm}
 Provides exponential speedup for integer factorization...
-\\end{document}`
+\\end{document}`,
+                previewImage: '/images/latex-previews/quantum-paper.svg'
               },
               {
                 prompt: "Convert my essay into a slideshow",
@@ -310,7 +311,8 @@ Provides exponential speedup for integer factorization...
 \\end{block}
 \\end{frame}
 
-\\end{document}`
+\\end{document}`,
+                previewImage: '/images/latex-previews/slideshow.svg'
               },
               {
                 prompt: "Generate a mathematical report template",
@@ -355,7 +357,8 @@ The analysis shows that the solution converges when...
 \\begin{thebibliography}{9}
 \\bibitem{ref1} Author, A. (Year). Title. Journal, Volume(Issue), Pages.
 \\end{thebibliography}
-\\end{document}`
+\\end{document}`,
+                previewImage: '/images/latex-previews/math-report.svg'
               },
               {
                 prompt: "Format my research notes into a document",
