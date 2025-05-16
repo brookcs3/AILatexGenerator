@@ -165,7 +165,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
           timeline
             .from(tvContainer, {
               opacity: 0,
-              duration: 1.2,
+              duration: 1.14,
               onStart: () => {
                 // Add a TV static noise when it turns on
                 const staticSound = new Audio(
@@ -250,13 +250,13 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
                           // Too sharp again
                           gsap.to(tvContainer, {
                             filter: `blur(0px) contrast(1.1)`,
-                            duration: 0.1,
+                            duration: 0.15,
                             onComplete: () => {
                               // Subtle blur
                               gsap.to(tvContainer, {
                                 filter: `blur(${blurAmount * 4.3}px)`,
                                 transform: `scale(1.12)`,
-                                duration: 1.08,
+                                duration: 1.15,
                                 onComplete: () => {
                                   // Finally settle on proper focus
                                   gsap.to(tvContainer, {
@@ -283,7 +283,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
 
         // Animate the title with typewriter effect
         if (title) {
-          const fullText = "Advanced LaTeX Generation";
+          const fullText = "AI  LaTeX   Generator";
           title.textContent = "";
 
           let charIndex = 0;
@@ -662,7 +662,7 @@ Method B & Better for categorical variables \\\\
                           gsap.to(screen, {
                             filter:
                               "hue-rotate(0deg) brightness(1) contrast(1)",
-                            duration: 0.5,
+                            duration: 0.2,
                           });
                         },
                       });
@@ -673,7 +673,7 @@ Method B & Better for categorical variables \\\\
                       opacity: 1,
                       scale: 1,
                       duration: 1,
-                      delay: 0.3,
+                      delay: 0,
                     });
 
                     // Schedule hiding the LaTeX after some time
@@ -683,7 +683,7 @@ Method B & Better for categorical variables \\\\
                   };
 
                   // Start distortion effect
-                  setTimeout(distort, 300);
+                  setTimeout(distort, 3000);
                   return;
                 }
               } else {
@@ -822,7 +822,7 @@ Method B & Better for categorical variables \\\\
             <div className="tv-screen">
               <div className="scanlines"></div>
               <div className="tv-content">
-                <h1 className="hero-title">Advanced LaTeX Generation</h1>
+                <h1 className="hero-title">AI LaTeX Generator</h1>
                 <div className="prompt-container">
                   <span className="prompt-text"></span>
                   <span className="prompt-cursor">|</span>
