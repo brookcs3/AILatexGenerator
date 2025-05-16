@@ -218,22 +218,23 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
             ease: "none",
             repeatDelay: 5,
           });
-          
+
           // Add occasional blur spikes for TV static effect
           const createBlurSpike = () => {
             // Random interval between 3-10 seconds
             const interval = Math.random() * 7000 + 3000;
-            
+
             // Create the spike effect with random intensity
             setTimeout(() => {
               // Random blur intensity
               const blurAmount = Math.random() * 8 + 2;
-              
+
               // Apply the autofocus struggle effect with over/under focusing
               // Start with sudden blur
               gsap.to(tvContainer, {
                 filter: `blur(${blurAmount}px)`,
                 duration: 0.08,
+                transform: "scale(1.1)",
                 onComplete: () => {
                   // Quick attempt to focus but overshoot (too sharp)
                   gsap.to(tvContainer, {
@@ -259,21 +260,21 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
                                   gsap.to(tvContainer, {
                                     filter: "blur(0px)",
                                     duration: 0.1,
-                                    onComplete: createBlurSpike // Create next spike
+                                    onComplete: createBlurSpike, // Create next spike
                                   });
-                                }
+                                },
                               });
-                            }
+                            },
                           });
-                        }
+                        },
                       });
-                    }
+                    },
                   });
-                }
+                },
               });
-            }, interval);
+            }, interval - 700);
           };
-          
+
           // Start the effect
           createBlurSpike();
         }
