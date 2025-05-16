@@ -546,8 +546,8 @@
       }
     </script>
     <script>
-      // Only show ads if user has been on the page for more than 25 seconds
-      // and is not logged in
+      // Only show ads if user has been on the page for more than 25 seconds,
+      // is not logged in, and is on a content-rich page (not error/thank you pages)
       (function () {
         // Create a container for all ads positioned at bottom left
         var adContainer = document.createElement("div");
@@ -561,6 +561,51 @@
         adContainer.style.flexDirection = "column";
         adContainer.style.gap = "10px";
         adContainer.id = "ad-container-bottom-left";
+
+        // List of paths where ads shouldn't appear (non-content pages)
+        var noAdPaths = [
+          '/404',                  // Error page
+          '/thank-you',            // Thank you page
+          '/confirmation',         // Confirmation page
+          '/payment-success',      // Payment success page
+          '/error',                // General error page
+          '/maintenance',          // Maintenance page
+          '/logout',               // Logout page
+          '/password-reset',       // Password reset page
+          '/verify-email',         // Email verification page
+          '/auth',                 // Authentication page
+          '/account/billing',      // Billing page
+          '/account/subscription', // Subscription management 
+          '/login',                // Login page
+          '/register'              // Registration page
+        ];
+
+        // Function to check if the current page should show ads
+        function shouldShowAdsOnCurrentPage() {
+          var currentPath = window.location.pathname;
+          
+          // Don't show ads on excluded paths
+          for (var i = 0; i < noAdPaths.length; i++) {
+            if (currentPath === noAdPaths[i] || currentPath.startsWith(noAdPaths[i] + '/')) {
+              return false;
+            }
+          }
+          
+          // Only show ads on pages with substantial content
+          // Check if page has enough content to justify ads
+          var contentElements = document.querySelectorAll('article, .content, main, .main-content, #content');
+          if (contentElements.length === 0) {
+            return false;
+          }
+          
+          // Check if page has substantial text content
+          var bodyText = document.body.innerText || '';
+          if (bodyText.length < 300) { // Minimum 300 characters of content
+            return false;
+          }
+          
+          return true;
+        }
 
         // Function to check if user is logged in
         function checkUserLoggedIn() {
@@ -601,8 +646,14 @@
           return scriptElem;
         }
 
-        // Wait 25 seconds before checking login status
+        // Wait 25 seconds before checking login status and content
         setTimeout(function () {
+          // Only proceed if we're on a content page that should show ads
+          if (!shouldShowAdsOnCurrentPage()) {
+            console.log('Page not suitable for ads according to Google policies - no ads will be shown');
+            return;
+          }
+          
           checkUserLoggedIn().then(function (isLoggedIn) {
             if (!isLoggedIn) {
               // Only add ads if user is not logged in

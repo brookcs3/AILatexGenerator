@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./HyperIntro.css";
+import { Scale } from "lucide-react";
 
 // Modern intro component with professional animation effects
 
@@ -26,7 +27,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
         // Animate the gradient background with complementary blue theme
         gsap.to(background, {
           background:
-            "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 70%, #e0f2fe 100%)",
+            "linear-gradient(135deg, #D2FCF3 0%, #ABF5FF 50%, #93c5fd 70%, #fffff 84%, #e0f2fe 100%)",
           duration: 10,
           repeat: -1,
           yoyo: true,
@@ -48,7 +49,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
 
         // Create particles with professional colors
         const particleCount = 60;
-        const colors = ["#6366f1", "#8b5cf6", "#a855f7", "#d946ef", "#ec4899"];
+        const colors = ["#6366f1", "#8b5cf6", "#a855f7", "#7CFFC9", "#ec4899"];
 
         for (let i = 0; i < particleCount; i++) {
           const particle = document.createElement("div");
@@ -128,7 +129,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
           gsap.to(wave, {
             y: -10,
             x: i * 5,
-            duration: 2 + i * 0.5,
+            duration: 2,
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut",
@@ -253,8 +254,9 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
                             onComplete: () => {
                               // Subtle blur
                               gsap.to(tvContainer, {
-                                filter: `blur(${blurAmount * 0.3}px)`,
-                                duration: 0.08,
+                                filter: `blur(${blurAmount * 4.3}px)`,
+                                transform: `scale(1.12)`,
+                                duration: 1.08,
                                 onComplete: () => {
                                   // Finally settle on proper focus
                                   gsap.to(tvContainer, {
