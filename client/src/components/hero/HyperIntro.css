@@ -402,8 +402,7 @@
   right: 10px;
   z-index: 5;
   opacity: 0;
-  /* Animation starts 2s after latex-reveal's 2s delay (total: 4s) */
-  animation: pdfButtonAppear 0.8s forwards 6s, pdfButtonFlicker 1.5s linear 6.2s;
+  /* No automatic animation - will be controlled by GSAP */
 }
 
 .download-pdf-button button {

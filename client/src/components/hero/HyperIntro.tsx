@@ -674,6 +674,22 @@ Method B & Better for categorical variables \\\\
                       scale: 1,
                       duration: 1,
                       delay: 0,
+                      onComplete: () => {
+                        // Get the download button and show it with a delay
+                        const downloadButton = document.getElementById("download-pdf-button");
+                        if (downloadButton) {
+                          // First ensure it's hidden
+                          gsap.set(downloadButton, { opacity: 0 });
+                          
+                          // Then animate it in after a delay
+                          gsap.to(downloadButton, {
+                            opacity: 1,
+                            duration: 0.5,
+                            delay: 1, // 1 second delay after LaTeX appears
+                            ease: "power2.inOut"
+                          });
+                        }
+                      }
                     });
 
                     // Schedule hiding the LaTeX after some time
@@ -841,7 +857,7 @@ Method B & Better for categorical variables \\\\
                 
                 <div className="latex-reveal">
                   <div className="latex-code" id="latex-code-container">
-                    <div className="download-pdf-button">
+                    <div id="download-pdf-button" className="download-pdf-button">
                       <button onClick={() => console.log('Download PDF clicked')}>
                         Download PDF
                       </button>
