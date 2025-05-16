@@ -405,6 +405,29 @@
   /* No automatic animation - will be controlled by GSAP */
 }
 
+/* PDF Preview tooltip styling */
+.pdf-preview {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 220px;
+}
+
+.tippy-box {
+  background-color: white;
+  color: #333;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.tippy-arrow {
+  color: white;
+}
+
+.tippy-content {
+  padding: 10px;
+}
+
 .download-pdf-button button,
 .pdf-download-button {
   background: #50ff50;

@@ -23,6 +23,24 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
   // Create gradient background and wave animation
   useEffect(() => {
     try {
+      // Initialize tooltip for PDF preview
+      if (pdfButtonRef.current) {
+        tippy(pdfButtonRef.current, {
+          content: `<div class="pdf-preview">
+            <img src="/images/latex-previews/math-report.svg" alt="PDF Preview" style="width: 200px; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" />
+            <div style="text-align: center; margin-top: 5px; font-size: 12px; color: #333;">
+              Preview of your LaTeX document
+            </div>
+          </div>`,
+          allowHTML: true,
+          interactive: true,
+          placement: 'top',
+          theme: 'light',
+          animation: 'shift-away',
+          arrow: true,
+        });
+      }
+      
       // Create beautiful gradient background animation
       if (gradientBackgroundRef.current) {
         const background = gradientBackgroundRef.current;
@@ -864,10 +882,11 @@ Method B & Better for categorical variables \\\\
                       <button
                         id="pdf-download-btn"
                         className="pdf-download-button"
+                        ref={pdfButtonRef}
                         onClick={() => {
                           // Create a download link for the PDF
                           const link = document.createElement('a');
-                          link.href = '/sample-latex.pdf';
+                          link.href = '/images/latex-previews/math-report.svg';
                           link.download = 'latex-document.pdf';
                           document.body.appendChild(link);
                           link.click();
