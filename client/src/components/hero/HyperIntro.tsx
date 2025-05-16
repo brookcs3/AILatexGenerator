@@ -148,105 +148,116 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
           defaults: { duration: 0.8, ease: "power3.out" }
         });
         
-        // Create text animation for each heading
+        // Create text animation for TV screen effect
+        const tvContainer = textContainerRef.current.querySelector('.tv-effect-container');
         const title = textContainerRef.current.querySelector('.hero-title');
         const subtitle = textContainerRef.current.querySelector('.hero-subtitle');
-        const typingContainer = textContainerRef.current.querySelector('.typing-container');
+        const latexCode = textContainerRef.current.querySelector('.latex-code');
         const cta = textContainerRef.current.querySelector('.cta-button');
         
-        if (title && subtitle && typingContainer && cta) {
+        if (tvContainer && title && subtitle && latexCode && cta) {
+          // First make the TV container visible with a power-on effect
           timeline
+            .from(tvContainer, {
+              opacity: 0,
+              duration: 1.2,
+              onStart: () => {
+                // Add a TV static noise when it turns on
+                const staticSound = new Audio('https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3');
+                staticSound.volume = 0.2;
+                staticSound.play().catch(e => console.log('Audio play prevented by browser'));
+              }
+            })
             .from(title, {
               opacity: 0,
-              y: 30,
-              duration: 1
+              filter: 'blur(10px)',
+              duration: 0.5
             })
             .from(subtitle, {
               opacity: 0,
               y: 20,
-              duration: 0.8
-            }, "-=0.4")
-            .from(typingContainer, {
-              opacity: 0,
-              y: 20,
-              duration: 0.8
-            }, "-=0.3")
+              duration: 0.5
+            }, "-=0.2")
+            .to(title, {
+              opacity: 0.2,
+              yoyo: true,
+              repeat: 3,
+              duration: 0.1,
+              ease: "none"
+            })
             .from(cta, {
               opacity: 0,
               y: 20,
               scale: 0.9,
               duration: 0.6
-            }, "-=0.2");
-        }
-        
-        // Add rotating typing animation
-        const typingText = document.querySelector('.typing-text') as HTMLElement;
-        const typingCursor = document.querySelector('.typing-cursor') as HTMLElement;
-        
-        if (typingText && typingCursor) {
-          // Array of prompts to cycle through
-          const prompts = [
-            "research papers into professional LaTeX",
-            "math equations into perfect syntax",
-            "complex formulas into elegant documents",
-            "plain text into publication-ready files",
-            "ideas into structured academic papers"
-          ];
-          
-          let currentPromptIndex = 0;
-          let currentCharIndex = 0;
-          let isDeleting = false;
-          let typingSpeed = 100; // milliseconds
-          let pauseDuration = 1000; // pause at complete text
-          
-          // Cursor blinking animation
-          gsap.to(typingCursor, {
-            opacity: 0,
-            duration: 0.5,
+            }, "+=0.5");
+            
+          // Add glitch effects to the TV
+          gsap.to(tvContainer, {
+            scale: 1.01,
+            x: 3,
+            duration: 0.1,
             repeat: -1,
             yoyo: true,
-            ease: "power2.inOut"
+            ease: "none",
+            repeatDelay: 5
           });
+        }
+        
+        // Animate the title with typewriter effect
+        if (title) {
+          const fullText = "Advanced LaTeX Generation";
+          title.textContent = "";
           
-          // Create type text function safe for strict mode
-          const typeText = () => {
-            const currentPrompt = prompts[currentPromptIndex];
-            
-            if (isDeleting) {
-              // Deleting
-              if (typingText) {
-                typingText.textContent = currentPrompt.substring(0, currentCharIndex - 1);
-              }
-              currentCharIndex--;
-              typingSpeed = 50; // Faster when deleting
+          let charIndex = 0;
+          const typeTitle = () => {
+            if (charIndex < fullText.length) {
+              title.textContent += fullText.charAt(charIndex);
+              charIndex++;
+              setTimeout(typeTitle, 80); // Speed of typing
             } else {
-              // Typing
-              if (typingText) {
-                typingText.textContent = currentPrompt.substring(0, currentCharIndex + 1);
-              }
-              currentCharIndex++;
-              typingSpeed = 100; // Normal typing speed
+              // When typing is complete, add blinking cursor effect
+              const cursor = document.createElement('span');
+              cursor.className = 'cursor';
+              cursor.textContent = '|';
+              title.appendChild(cursor);
+              
+              // Blink the cursor
+              gsap.to(cursor, {
+                opacity: 0,
+                duration: 0.5,
+                repeat: -1,
+                yoyo: true
+              });
             }
-            
-            // Logic for when to start deleting or move to next prompt
-            if (!isDeleting && currentCharIndex === currentPrompt.length) {
-              // Finished typing current prompt
-              isDeleting = true;
-              typingSpeed = pauseDuration; // Pause before deleting
-            } else if (isDeleting && currentCharIndex === 0) {
-              // Finished deleting
-              isDeleting = false;
-              currentPromptIndex = (currentPromptIndex + 1) % prompts.length; // Next prompt
-            }
-            
-            // Continue the animation loop
-            setTimeout(typeText, typingSpeed);
           };
           
-          // Start the typing animation
-          setTimeout(() => {
-            typeText();
-          }, 1000);
+          // Start typing after a small delay
+          setTimeout(typeTitle, 800);
+        }
+        
+        // Add occasional glitch effect to the subtitle
+        if (subtitle) {
+          const glitchSubtitle = () => {
+            gsap.to(subtitle, {
+              skewX: 20,
+              color: '#10ff00',
+              duration: 0.1,
+              onComplete: () => {
+                gsap.to(subtitle, {
+                  skewX: 0,
+                  color: '#f8f8f8',
+                  duration: 0.1
+                });
+              }
+            });
+            
+            // Schedule next glitch at random interval
+            setTimeout(glitchSubtitle, Math.random() * 5000 + 3000);
+          };
+          
+          // Start the glitch effect
+          setTimeout(glitchSubtitle, 2000);
         }
         
         // Animate feature cards with stagger
@@ -333,16 +344,29 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
         className="content-container"
       >
         <div className="hero-section">
-          <h1 className="hero-title">
-            Advanced LaTeX Generation
-          </h1>
-          <h2 className="hero-subtitle">
-            Powered by AI
-          </h2>
-          <div className="typing-container">
-            <span className="typing-prefix">Transform </span>
-            <span className="typing-text"></span>
-            <span className="typing-cursor">|</span>
+          <div className="tv-effect-container">
+            <div className="tv-screen">
+              <div className="scanlines"></div>
+              <div className="tv-content">
+                <h1 className="hero-title">Advanced LaTeX Generation</h1>
+                <h2 className="hero-subtitle">Powered by AI</h2>
+                <div className="latex-reveal">
+                  <div className="latex-code">
+                    <pre>{`\\documentclass{article}
+\\usepackage{amsmath}
+\\begin{document}
+\\title{AI Generated Document}
+\\author{AI LaTeX Generator}
+\\maketitle
+\\begin{equation}
+  E = mc^2
+\\end{equation}
+\\end{document}`}</pre>
+                  </div>
+                </div>
+              </div>
+              <div className="tv-glitch"></div>
+            </div>
           </div>
           
           <button 

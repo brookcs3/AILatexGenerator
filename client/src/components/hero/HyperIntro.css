@@ -115,6 +115,19 @@
   -webkit-background-clip: text;
   color: transparent;
   letter-spacing: -0.03em;
+  text-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
+  position: relative;
+}
+
+.cursor {
+  color: #ec4899;
+  font-weight: bold;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .hero-subtitle {
@@ -122,37 +135,158 @@
   font-weight: 700;
   margin-bottom: 1.5rem;
   color: #f8f8f8;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-/* Typing animation */
-.typing-container {
-  font-size: 1.5rem;
-  font-weight: 400;
+/* TV screen effect */
+.tv-effect-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   margin-bottom: 2rem;
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  height: 60px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
 }
 
-.typing-prefix {
-  color: rgba(255, 255, 255, 0.8);
+.tv-screen {
+  position: relative;
+  width: 100%;
+  background: #000;
+  padding: 2rem;
+  overflow: hidden;
+  border: 1px solid rgba(139, 92, 246, 0.5);
 }
 
-.typing-text {
-  background: linear-gradient(90deg, #8b5cf6, #ec4899);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  font-weight: 500;
+/* Scan lines effect */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.3) 51%
+  );
+  background-size: 100% 4px;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.15;
+  animation: scanAnimation 8s linear infinite;
 }
 
-.typing-cursor {
-  display: inline-block;
-  color: #ec4899;
-  font-weight: bold;
-  margin-left: 2px;
+/* TV glitch effect */
+.tv-glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(139, 92, 246, 0.05);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  animation: glitchAnimation 3s linear infinite;
+}
+
+/* TV content */
+.tv-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+/* LaTeX code reveal */
+.latex-reveal {
+  margin: 2rem auto 0;
+  max-width: 100%;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 1.5s, transform 1.5s;
+  animation: revealCode 4s forwards 2s;
+  position: relative;
+}
+
+.latex-code {
+  background: rgba(30, 14, 50, 0.7);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: left;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #10ff00;
+  overflow-x: auto;
+  box-shadow: 0 0 20px rgba(16, 255, 0, 0.2);
+  border: 1px solid rgba(16, 255, 0, 0.2);
+}
+
+.latex-code pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+@keyframes scanAnimation {
+  0% {
+    transform: translateY(0);
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(4px);
+    opacity: 0.15;
+  }
+}
+
+@keyframes glitchAnimation {
+  0%, 90%, 100% {
+    opacity: 0;
+    transform: translate(0);
+    background: rgba(139, 92, 246, 0.05);
+  }
+  92% {
+    opacity: 0.8;
+    transform: translate(-5px, 5px);
+    background: rgba(139, 92, 246, 0.1);
+  }
+  94% {
+    opacity: 0.4;
+    transform: translate(5px, -2px);
+    background: rgba(16, 255, 0, 0.15);
+  }
+  96% {
+    opacity: 0.6;
+    transform: translate(-2px, -5px);
+    background: rgba(236, 72, 153, 0.1);
+  }
+}
+
+@keyframes revealCode {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  10% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+  12% {
+    opacity: 0.2;
+    transform: scale(0.98) translateX(5px);
+  }
+  15% {
+    opacity: 0.8;
+    transform: scale(1) translateX(-3px);
+  }
+  20%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* CTA button */
