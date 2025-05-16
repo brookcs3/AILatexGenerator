@@ -5,7 +5,7 @@
   width: 100%;
   min-height: 100vh;
   z-index: 100;
-  background-color: #f0f9ff;
+  background-color: #f8fafc;
   transition: opacity 1s ease;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -51,38 +51,35 @@
 
 .skip-intro-button {
   padding: 0.75rem 1.5rem;
-  background: rgba(25, 5, 35, 0.7);
+  background: linear-gradient(to right, #3b82f6, #2563eb);
   color: white;
-  border: 1px solid rgba(174, 77, 255, 0.4);
-  border-radius: 50px;
+  border: none;
+  border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .toggle-mode-button {
   padding: 0.75rem 1.5rem;
-  background: rgba(25, 5, 35, 0.7);
+  background: linear-gradient(to right, #3b82f6, #2563eb);
   color: white;
-  border: 1px solid rgba(139, 92, 246, 0.4);
-  border-radius: 50px;
+  border: none;
+  border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .toggle-mode-button:hover,
 .skip-intro-button:hover {
-  transform: translateY(-2px);
-  background: rgba(40, 10, 60, 0.8);
-  border-color: rgba(174, 77, 255, 0.8);
-  box-shadow: 0 6px 16px rgba(174, 77, 255, 0.3);
+  transform: translateY(-1px);
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
 }
 
 .toggle-mode-button:active,
@@ -96,49 +93,52 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(25, 5, 35, 0.7);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   padding: 2rem;
-  border-radius: 16px;
+  border-radius: 12px;
   max-width: 500px;
   text-align: center;
-  color: white;
+  color: #1e293b;
   z-index: 200;
-  border: 1px solid rgba(139, 92, 246, 0.4);
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
 }
 
 .distortion-explanation h2 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  font-weight: 700;
 }
 
 .distortion-explanation p {
   margin-bottom: 1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: #475569;
 }
 
 .return-button {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  background: linear-gradient(to right, #3b82f6, #2563eb);
   color: white;
   border: none;
-  border-radius: 50px;
+  border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .return-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(174, 77, 255, 0.3);
+  transform: translateY(-1px);
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
 }
 
 .return-button:active {
