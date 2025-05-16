@@ -151,10 +151,10 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
         // Create text animation for each heading
         const title = textContainerRef.current.querySelector('.hero-title');
         const subtitle = textContainerRef.current.querySelector('.hero-subtitle');
-        const description = textContainerRef.current.querySelector('.hero-description');
+        const typingContainer = textContainerRef.current.querySelector('.typing-container');
         const cta = textContainerRef.current.querySelector('.cta-button');
         
-        if (title && subtitle && description && cta) {
+        if (title && subtitle && typingContainer && cta) {
           timeline
             .from(title, {
               opacity: 0,
@@ -166,7 +166,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
               y: 20,
               duration: 0.8
             }, "-=0.4")
-            .from(description, {
+            .from(typingContainer, {
               opacity: 0,
               y: 20,
               duration: 0.8
@@ -177,6 +177,76 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
               scale: 0.9,
               duration: 0.6
             }, "-=0.2");
+        }
+        
+        // Add rotating typing animation
+        const typingText = document.querySelector('.typing-text') as HTMLElement;
+        const typingCursor = document.querySelector('.typing-cursor') as HTMLElement;
+        
+        if (typingText && typingCursor) {
+          // Array of prompts to cycle through
+          const prompts = [
+            "research papers into professional LaTeX",
+            "math equations into perfect syntax",
+            "complex formulas into elegant documents",
+            "plain text into publication-ready files",
+            "ideas into structured academic papers"
+          ];
+          
+          let currentPromptIndex = 0;
+          let currentCharIndex = 0;
+          let isDeleting = false;
+          let typingSpeed = 100; // milliseconds
+          let pauseDuration = 1000; // pause at complete text
+          
+          // Cursor blinking animation
+          gsap.to(typingCursor, {
+            opacity: 0,
+            duration: 0.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut"
+          });
+          
+          // Create type text function safe for strict mode
+          const typeText = () => {
+            const currentPrompt = prompts[currentPromptIndex];
+            
+            if (isDeleting) {
+              // Deleting
+              if (typingText) {
+                typingText.textContent = currentPrompt.substring(0, currentCharIndex - 1);
+              }
+              currentCharIndex--;
+              typingSpeed = 50; // Faster when deleting
+            } else {
+              // Typing
+              if (typingText) {
+                typingText.textContent = currentPrompt.substring(0, currentCharIndex + 1);
+              }
+              currentCharIndex++;
+              typingSpeed = 100; // Normal typing speed
+            }
+            
+            // Logic for when to start deleting or move to next prompt
+            if (!isDeleting && currentCharIndex === currentPrompt.length) {
+              // Finished typing current prompt
+              isDeleting = true;
+              typingSpeed = pauseDuration; // Pause before deleting
+            } else if (isDeleting && currentCharIndex === 0) {
+              // Finished deleting
+              isDeleting = false;
+              currentPromptIndex = (currentPromptIndex + 1) % prompts.length; // Next prompt
+            }
+            
+            // Continue the animation loop
+            setTimeout(typeText, typingSpeed);
+          };
+          
+          // Start the typing animation
+          setTimeout(() => {
+            typeText();
+          }, 1000);
         }
         
         // Animate feature cards with stagger
@@ -269,9 +339,11 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
           <h2 className="hero-subtitle">
             Powered by AI
           </h2>
-          <p className="hero-description">
-            Transform plain text into professional LaTeX documents in seconds
-          </p>
+          <div className="typing-container">
+            <span className="typing-prefix">Transform </span>
+            <span className="typing-text"></span>
+            <span className="typing-cursor">|</span>
+          </div>
           
           <button 
             className="cta-button"
