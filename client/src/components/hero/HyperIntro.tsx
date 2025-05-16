@@ -231,14 +231,254 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
           const latexReveal = document.querySelector('.latex-reveal') as HTMLElement;
           
           if (promptText && latexReveal) {
-            // Array of prompts to cycle through
-            const prompts = [
-              "Create a paper about quantum computing",
-              "Generate equation for kinetic energy",
-              "Write a proof for Pythagorean theorem",
-              "Make presentation slides about neural networks",
-              "Explain theory of relativity with equations"
+            // Array of prompts to cycle through with corresponding LaTeX templates
+            const promptsWithTemplates = [
+              {
+                prompt: "Create a paper about quantum computing",
+                latex: `\\documentclass{article}
+\\usepackage{amsmath}
+\\usepackage{graphicx}
+\\title{Introduction to Quantum Computing}
+\\author{AI LaTeX Generator}
+\\date{\\today}
+
+\\begin{document}
+\\maketitle
+
+\\begin{abstract}
+This paper provides an introduction to quantum computing concepts including quantum bits, superposition, and quantum algorithms.
+\\end{abstract}
+
+\\section{Introduction}
+Quantum computing is an emerging field that utilizes quantum mechanical phenomena...
+
+\\section{Quantum Bits}
+Unlike classical bits, quantum bits (qubits) can exist in superpositions of states...
+
+\\begin{equation}
+|\\psi\\rangle = \\alpha|0\\rangle + \\beta|1\\rangle
+\\end{equation}
+
+\\section{Quantum Algorithms}
+\\subsection{Shor's Algorithm}
+Provides exponential speedup for integer factorization...
+\\end{document}`
+              },
+              {
+                prompt: "Convert my essay into a slideshow",
+                latex: `\\documentclass{beamer}
+\\usetheme{Madrid}
+\\usecolortheme{dolphin}
+\\title{Presentation Title}
+\\author{AI LaTeX Generator}
+\\date{\\today}
+
+\\begin{document}
+
+\\begin{frame}
+\\titlepage
+\\end{frame}
+
+\\begin{frame}{Introduction}
+\\begin{itemize}
+    \\item First major point to introduce your topic
+    \\item Second key concept or idea
+    \\item Why this topic matters to your audience
+\\end{itemize}
+\\end{frame}
+
+\\begin{frame}{Main Arguments}
+\\begin{enumerate}
+    \\item First supporting evidence or argument
+    \\item Second key point with more details
+    \\item Analysis connecting your points
+\\end{enumerate}
+\\end{frame}
+
+\\begin{frame}{Visual Data}
+\\begin{figure}
+    \\centering
+    % A placeholder for an image
+    \\rule{8cm}{6cm}
+    \\caption{Figure Description}
+\\end{figure}
+\\end{frame}
+
+\\begin{frame}{Conclusion}
+\\begin{block}{Summary}
+    Your concluding thoughts and final message.
+\\end{block}
+\\end{frame}
+
+\\end{document}`
+              },
+              {
+                prompt: "Generate a mathematical report template",
+                latex: `\\documentclass{article}
+\\usepackage{amsmath,amsthm,amssymb}
+\\usepackage{graphicx}
+
+\\title{Mathematical Analysis Report}
+\\author{AI LaTeX Generator}
+\\date{\\today}
+
+\\begin{document}
+\\maketitle
+
+\\section{Problem Statement}
+Define the problem and establish notation...
+
+\\section{Methodology}
+\\subsection{Assumptions}
+The following assumptions are made:
+\\begin{enumerate}
+    \\item The function $f(x)$ is continuous on $[a,b]$
+    \\item The boundary conditions are...
+\\end{enumerate}
+
+\\subsection{Derivation}
+Starting with the general form:
+\\begin{align}
+\\frac{d^2y}{dx^2} + p(x)\\frac{dy}{dx} + q(x)y = f(x)
+\\end{align}
+
+\\section{Results}
+\\begin{figure}[h]
+    \\centering
+    % Placeholder for graph
+    \\caption{Solution behavior as parameters vary}
+\\end{figure}
+
+\\section{Conclusion}
+The analysis shows that the solution converges when...
+
+\\begin{thebibliography}{9}
+\\bibitem{ref1} Author, A. (Year). Title. Journal, Volume(Issue), Pages.
+\\end{thebibliography}
+\\end{document}`
+              },
+              {
+                prompt: "Format my research notes into a document",
+                latex: `\\documentclass{article}
+\\usepackage{blindtext}
+\\usepackage{hyperref}
+\\usepackage{natbib}
+
+\\title{Research Notes: Topic Exploration}
+\\author{AI LaTeX Generator}
+\\date{\\today}
+
+\\begin{document}
+\\maketitle
+
+\\section{Literature Review}
+\\subsection{Key Papers}
+\\begin{itemize}
+    \\item Smith et al. (2023) found that...
+    \\item According to Johnson (2022), the primary mechanism is...
+    \\item Recent studies indicate a correlation between variables (Wong, 2024).
+\\end{itemize}
+
+\\section{Research Questions}
+\\begin{enumerate}
+    \\item How does factor X influence outcome Y?
+    \\item What are the underlying mechanisms of process Z?
+    \\item Can the model be improved by incorporating feature W?
+\\end{enumerate}
+
+\\section{Methodology Notes}
+\\begin{tabular}{|p{3cm}|p{8cm}|}
+\\hline
+\\textbf{Technique} & \\textbf{Application} \\\\
+\\hline
+Method A & Suitable for analysis of time series data \\\\
+\\hline
+Method B & Better for categorical variables \\\\
+\\hline
+\\end{tabular}
+
+\\section{Next Steps}
+\\begin{itemize}
+    \\item Collect additional data on...
+    \\item Re-analyze using the refined model
+    \\item Prepare visualization for key findings
+\\end{itemize}
+
+\\end{document}`
+              },
+              {
+                prompt: "Create a scientific poster layout",
+                latex: `\\documentclass[final]{beamer}
+\\usepackage[scale=1.24]{beamerposter}
+\\usetheme{confposter}
+\\usepackage{graphicx}
+\\usepackage{booktabs}
+
+\\title{Scientific Research Poster}
+\\author{AI LaTeX Generator}
+\\institute{University Department}
+
+\\begin{document}
+\\begin{frame}{}
+  \\begin{columns}[t]
+    \\begin{column}{.32\\linewidth}
+      \\begin{block}{Introduction}
+        \\begin{itemize}
+          \\item Background of the research problem
+          \\item Significance and practical implications
+          \\item Research objectives and hypotheses
+        \\end{itemize}
+      \\end{block}
+      
+      \\begin{block}{Methodology}
+        \\begin{itemize}
+          \\item Study design
+          \\item Sampling procedure
+          \\item Data collection methods
+          \\item Analytical approach
+        \\end{itemize}
+      \\end{block}
+    \\end{column}
+    
+    \\begin{column}{.32\\linewidth}
+      \\begin{block}{Results}
+        % Placeholder for a figure
+        \\centering
+        Key findings:
+        \\begin{itemize}
+          \\item Finding 1 with statistical significance
+          \\item Finding 2 with implications
+          \\item Unexpected observations
+        \\end{itemize}
+      \\end{block}
+    \\end{column}
+    
+    \\begin{column}{.32\\linewidth}
+      \\begin{block}{Discussion}
+        \\begin{itemize}
+          \\item Interpretation of results
+          \\item Comparison with existing literature
+          \\item Limitations of the study
+          \\item Future research directions
+        \\end{itemize}
+      \\end{block}
+      
+      \\begin{block}{Conclusions}
+        Summary of the main findings and their implications.
+      \\end{block}
+      
+      \\begin{block}{References}
+        Selected key references in the field.
+      \\end{block}
+    \\end{column}
+  \\end{columns}
+\\end{frame}
+\\end{document}`
+              }
             ];
+            
+            // Convert to simple prompts array for animation
+            const prompts = promptsWithTemplates.map(item => item.prompt);
             
             let currentPromptIndex = 0;
             let currentCharIndex = 0;
@@ -296,12 +536,38 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
                       });
                     }
                     
+                    // Update the LaTeX content based on current prompt
+                    const latexContainer = document.querySelector('#latex-code-container pre') as HTMLElement;
+                    if (latexContainer) {
+                      // Use the corresponding LaTeX template for this prompt
+                      latexContainer.textContent = promptsWithTemplates[currentPromptIndex].latex;
+                    }
+                    
                     // Hide prompt text during distortion
                     gsap.to(promptText, {
                       opacity: 0,
                       scale: 1.05,
                       duration: 0.3
                     });
+                    
+                    // Add more intense distortion effect
+                    const screen = document.querySelector('.tv-screen') as HTMLElement;
+                    if (screen) {
+                      // Create a stronger distortion effect
+                      gsap.to(screen, {
+                        filter: 'hue-rotate(90deg) brightness(1.3) contrast(1.5)',
+                        duration: 0.2,
+                        repeat: 3,
+                        yoyo: true,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                          gsap.to(screen, {
+                            filter: 'hue-rotate(0deg) brightness(1) contrast(1)',
+                            duration: 0.5
+                          });
+                        }
+                      });
+                    }
                     
                     // Show LaTeX with glitch entrance
                     gsap.to(latexReveal, {
@@ -474,7 +740,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
                   <span className="prompt-cursor">|</span>
                 </div>
                 <div className="latex-reveal">
-                  <div className="latex-code">
+                  <div className="latex-code" id="latex-code-container">
                     <pre>{`\\documentclass{article}
 \\usepackage{amsmath}
 \\begin{document}
