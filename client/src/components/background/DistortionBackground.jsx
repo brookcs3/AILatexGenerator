@@ -1,30 +1,110 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './DistortionBackground.css';
 
-// A simpler version of the background effect using pure CSS
 const DistortionBackground = () => {
+  const backgroundRef = useRef(null);
+  const particlesRef = useRef(null);
+  
+  // Create the particles on component mount
+  useEffect(() => {
+    if (particlesRef.current) {
+      const particlesContainer = particlesRef.current;
+      particlesContainer.innerHTML = '';
+      
+      // Create particles with professional colors
+      const particleCount = 60;
+      const colors = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899'];
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'bg-particle';
+        
+        // Random position
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 3 + 1;
+        
+        // Random color from our palette
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Set particle styles
+        particle.style.position = 'absolute';
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.borderRadius = '50%';
+        particle.style.backgroundColor = color;
+        particle.style.boxShadow = `0 0 ${size}px ${color}`;
+        particle.style.opacity = `${Math.random() * 0.5 + 0.2}`;
+        
+        // Add smooth animation
+        const duration = Math.random() * 20 + 15;
+        const delay = Math.random() * 5;
+        
+        // Create unique animation name
+        const animName = `float-${i}`;
+        
+        // Create and append style with keyframes
+        const style = document.createElement('style');
+        style.innerHTML = `
+          @keyframes ${animName} {
+            0% {
+              transform: translate(0, 0);
+            }
+            25% {
+              transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px);
+            }
+            50% {
+              transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px);
+            }
+            75% {
+              transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px);
+            }
+            100% {
+              transform: translate(0, 0);
+            }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Apply animation
+        particle.style.animation = `${animName} ${duration}s ease-in-out ${delay}s infinite`;
+        
+        // Add to container
+        particlesContainer.appendChild(particle);
+      }
+    }
+  }, []);
+  
   return (
-    <div className="distortion-background-container">
-      {/* Animated background with particles and gradients */}
-      <div className="animated-bg">
-        <div className="gradient-layer"></div>
-        <div className="noise-layer"></div>
-        <div className="particles-container">
-          {[...Array(40)].map((_, index) => (
-            <div key={index} className="particle" style={{
-              '--size': `${Math.random() * 3 + 1}px`,
-              '--left': `${Math.random() * 100}%`,
-              '--top': `${Math.random() * 100}%`,
-              '--duration': `${Math.random() * 20 + 15}s`,
-              '--delay': `${Math.random() * 5}s`,
-              '--hue': `${Math.random() * 60 + 230}deg`,
-              '--opacity': `${Math.random() * 0.5 + 0.2}`
-            }}></div>
-          ))}
-        </div>
+    <div className="distortion-background-container" ref={backgroundRef}>
+      {/* Gradient backdrop */}
+      <div className="gradient-backdrop"></div>
+      
+      {/* Particles effect */}
+      <div className="particles-backdrop" ref={particlesRef}></div>
+      
+      {/* TV Scan lines effect */}
+      <div className="scanlines-effect">
+        <div className="scanline-overlay"></div>
       </div>
       
-      {/* Controls UI */}
+      {/* TV Static noise */}
+      <div className="tv-static-effect"></div>
+      
+      {/* TV Glitch effect */}
+      <div className="tv-glitch-effect"></div>
+      
+      {/* CRT Vignette effect */}
+      <div className="crt-vignette"></div>
+      
+      {/* Dithering pattern */}
+      <div className="dither-pattern"></div>
+      
+      {/* Controls UI - hidden by default */}
       <div className="distortion-controls">
         <div className="controls-panel">
           <h3 className="text-lg font-semibold text-gray-100 mb-4 tracking-wide uppercase">Distortion Controls</h3>
