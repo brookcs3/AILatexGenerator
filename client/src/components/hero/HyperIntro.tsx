@@ -669,11 +669,11 @@ Method B & Better for categorical variables \\\\
                       });
                     }
 
-                    // Show LaTeX with glitch entrance
+                    // Show LaTeX with glitch entrance - faster animation
                     gsap.to(latexReveal, {
                       opacity: 1,
                       scale: 1,
-                      duration: 1,
+                      duration: 0.5, // Reduced from 1s to 0.5s
                       delay: 0,
                       onComplete: () => {
                         // Get the download button and show it with a delay
@@ -700,7 +700,7 @@ Method B & Better for categorical variables \\\\
                   };
 
                   // Start distortion effect
-                  setTimeout(distort, 3000);
+                  setTimeout(distort, 1000); // Reduced from 3000ms to 1000ms (1 second)
                   return;
                 }
               } else {
