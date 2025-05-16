@@ -589,10 +589,10 @@ Method B & Better for categorical variables \\\\
                       ".tv-screen",
                     ) as HTMLElement;
                     if (screen) {
-                      // Create a stronger distortion effect
+                      // Create a distortion effect that stays in the blue/light color range
                       gsap.to(screen, {
                         filter:
-                          "hue-rotate(90deg) brightness(1.3) contrast(1.5)",
+                          "hue-rotate(210deg) brightness(1.05) contrast(1.1)",
                         duration: 0.2,
                         repeat: 3,
                         yoyo: true,
