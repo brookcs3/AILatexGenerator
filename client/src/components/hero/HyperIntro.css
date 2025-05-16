@@ -199,6 +199,31 @@
   text-align: center;
 }
 
+/* Prompt animation */
+.prompt-container {
+  min-height: 60px;
+  margin: 1.5rem auto;
+  font-size: 1.5rem;
+  font-weight: 500;
+  max-width: 700px;
+}
+
+.prompt-text {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-family: monospace;
+}
+
+.prompt-cursor {
+  color: #ec4899;
+  font-weight: bold;
+  margin-left: 2px;
+  font-family: monospace;
+  animation: blink 0.8s step-end infinite;
+}
+
 /* LaTeX code reveal */
 .latex-reveal {
   margin: 2rem auto 0;

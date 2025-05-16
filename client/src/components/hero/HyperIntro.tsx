@@ -216,49 +216,169 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
               charIndex++;
               setTimeout(typeTitle, 80); // Speed of typing
             } else {
-              // When typing is complete, add blinking cursor effect
-              const cursor = document.createElement('span');
-              cursor.className = 'cursor';
-              cursor.textContent = '|';
-              title.appendChild(cursor);
-              
-              // Blink the cursor
-              gsap.to(cursor, {
-                opacity: 0,
-                duration: 0.5,
-                repeat: -1,
-                yoyo: true
-              });
+              // When title is complete, start animating the prompts
+              animatePrompts();
             }
           };
           
           // Start typing after a small delay
-          setTimeout(typeTitle, 800);
+          setTimeout(typeTitle, 500);
         }
         
-        // Add occasional glitch effect to the subtitle
-        if (subtitle) {
-          const glitchSubtitle = () => {
-            gsap.to(subtitle, {
-              skewX: 20,
-              color: '#10ff00',
-              duration: 0.1,
-              onComplete: () => {
-                gsap.to(subtitle, {
-                  skewX: 0,
-                  color: '#f8f8f8',
-                  duration: 0.1
+        // Animate the prompts with typing/deleting effect
+        const animatePrompts = () => {
+          const promptText = document.querySelector('.prompt-text') as HTMLElement;
+          const latexReveal = document.querySelector('.latex-reveal') as HTMLElement;
+          
+          if (promptText && latexReveal) {
+            // Array of prompts to cycle through
+            const prompts = [
+              "Create a paper about quantum computing",
+              "Generate equation for kinetic energy",
+              "Write a proof for Pythagorean theorem",
+              "Make presentation slides about neural networks",
+              "Explain theory of relativity with equations"
+            ];
+            
+            let currentPromptIndex = 0;
+            let currentCharIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 80; // milliseconds
+            let pauseDuration = 1500; // pause at complete text
+            let showingLatex = false;
+            
+            // Function to handle the animation cycle
+            const animationCycle = () => {
+              const currentPrompt = prompts[currentPromptIndex];
+              
+              if (showingLatex) {
+                // Hide the latex reveal and reset
+                gsap.to(latexReveal, {
+                  opacity: 0,
+                  scale: 0.95,
+                  duration: 0.8,
+                  onComplete: () => {
+                    gsap.set(promptText, { opacity: 1 });
+                    showingLatex = false;
+                    isDeleting = false;
+                    currentCharIndex = 0;
+                    currentPromptIndex = (currentPromptIndex + 1) % prompts.length;
+                    setTimeout(animationCycle, 500); // Continue with next prompt
+                  }
+                });
+                return;
+              }
+              
+              if (isDeleting) {
+                // Deleting
+                promptText.textContent = currentPrompt.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+                typingSpeed = 40; // Faster when deleting
+                
+                // When completely deleted, start next prompt or show latex
+                if (currentCharIndex === 0) {
+                  isDeleting = false;
+                  
+                  // Show the LaTeX code with distortion effect
+                  showingLatex = true;
+                  
+                  // Distortion effect for "processing" prompt
+                  const distort = () => {
+                    // Create glitch effect on TV
+                    const tvGlitch = document.querySelector('.tv-glitch') as HTMLElement;
+                    if (tvGlitch) {
+                      gsap.to(tvGlitch, {
+                        opacity: 0.8,
+                        duration: 0.1,
+                        repeat: 5,
+                        yoyo: true,
+                        ease: "none"
+                      });
+                    }
+                    
+                    // Hide prompt text during distortion
+                    gsap.to(promptText, {
+                      opacity: 0,
+                      scale: 1.05,
+                      duration: 0.3
+                    });
+                    
+                    // Show LaTeX with glitch entrance
+                    gsap.to(latexReveal, {
+                      opacity: 1,
+                      scale: 1,
+                      duration: 1,
+                      delay: 0.3
+                    });
+                    
+                    // Schedule hiding the LaTeX after some time
+                    setTimeout(() => {
+                      animationCycle();
+                    }, 5000); // Show LaTeX for 5 seconds
+                  };
+                  
+                  // Start distortion effect
+                  setTimeout(distort, 300);
+                  return;
+                }
+              } else {
+                // Typing
+                promptText.textContent = currentPrompt.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+                typingSpeed = 80; // Normal typing speed
+                
+                // When completed typing the prompt
+                if (currentCharIndex === currentPrompt.length) {
+                  isDeleting = true;
+                  typingSpeed = pauseDuration; // Pause before deleting
+                }
+              }
+              
+              // Continue the animation cycle
+              setTimeout(animationCycle, typingSpeed);
+            };
+            
+            // Start the animation cycle
+            animationCycle();
+          }
+        };
+        
+        // Animate content with glitch effects
+        const scheduleRandomGlitches = () => {
+          const tv = document.querySelector('.tv-screen') as HTMLElement;
+          
+          if (tv) {
+            // Create a random glitch effect
+            const randomGlitch = () => {
+              // Only apply glitch if user is still on the page
+              if (document.visibilityState === 'visible') {
+                gsap.to(tv, {
+                  filter: 'brightness(1.2) contrast(1.2)',
+                  x: Math.random() * 4 - 2,
+                  skewX: Math.random() * 2 - 1,
+                  duration: 0.1,
+                  onComplete: () => {
+                    gsap.to(tv, {
+                      filter: 'brightness(1) contrast(1)',
+                      x: 0,
+                      skewX: 0,
+                      duration: 0.2
+                    });
+                  }
                 });
               }
-            });
+              
+              // Schedule next random glitch
+              setTimeout(randomGlitch, Math.random() * 5000 + 3000);
+            };
             
-            // Schedule next glitch at random interval
-            setTimeout(glitchSubtitle, Math.random() * 5000 + 3000);
-          };
-          
-          // Start the glitch effect
-          setTimeout(glitchSubtitle, 2000);
-        }
+            // Start the random glitches
+            setTimeout(randomGlitch, 2000);
+          }
+        };
+        
+        // Start the random glitches
+        scheduleRandomGlitches();
         
         // Animate feature cards with stagger
         const cards = document.querySelectorAll('.feature-card');
@@ -349,7 +469,10 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
               <div className="scanlines"></div>
               <div className="tv-content">
                 <h1 className="hero-title">Advanced LaTeX Generation</h1>
-                <h2 className="hero-subtitle">Powered by AI</h2>
+                <div className="prompt-container">
+                  <span className="prompt-text"></span>
+                  <span className="prompt-cursor">|</span>
+                </div>
                 <div className="latex-reveal">
                   <div className="latex-code">
                     <pre>{`\\documentclass{article}
