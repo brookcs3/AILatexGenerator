@@ -337,11 +337,15 @@
 
 /* Prompt animation */
 .prompt-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 60px;
-  margin: 1.5rem auto;
+  margin: 1.5rem auto 0.75rem;
   font-size: 1.5rem;
   font-weight: 500;
   max-width: 700px;
+  text-align: center;
 }
 
 .prompt-text {
@@ -350,6 +354,9 @@
   -webkit-background-clip: text;
   color: transparent;
   font-family: monospace;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
 }
 
 .prompt-cursor {
@@ -362,8 +369,9 @@
 
 /* LaTeX code reveal */
 .latex-reveal {
-  margin: 2rem auto 0;
-  max-width: 100%;
+  margin: 0.75rem auto 0;
+  max-width: 700px;
+  width: 100%;
   opacity: 0;
   transform: scale(0.95);
   transition: opacity 1.5s, transform 1.5s;
