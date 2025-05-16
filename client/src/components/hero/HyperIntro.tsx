@@ -407,7 +407,8 @@ Method B & Better for categorical variables \\\\
     \\item Prepare visualization for key findings
 \\end{itemize}
 
-\\end{document}`
+\\end{document}`,
+                previewImage: '/images/latex-previews/research-notes.svg'
               },
               {
                 prompt: "Create a scientific poster layout",
@@ -476,7 +477,8 @@ Method B & Better for categorical variables \\\\
     \\end{column}
   \\end{columns}
 \\end{frame}
-\\end{document}`
+\\end{document}`,
+                previewImage: '/images/latex-previews/scientific-poster.svg'
               }
             ];
             
