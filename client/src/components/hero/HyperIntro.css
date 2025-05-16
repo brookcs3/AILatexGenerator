@@ -157,6 +157,8 @@
   padding: 2rem;
   overflow: hidden;
   border: 1px solid rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), inset 0 0 40px rgba(0, 0, 0, 0.7);
+  animation: flicker 0.15s infinite;
 }
 
 /* Scan lines effect */
@@ -178,6 +180,36 @@
   animation: scanAnimation 8s linear infinite;
 }
 
+/* Additional real scan lines from codepen.io/Alca/pen/MYYzpwY */
+.scanlines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0.025) 1px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.025) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  background-size: 100% 4px;
+  animation: moveScanlines 1s linear infinite;
+}
+
+@keyframes moveScanlines {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
 /* TV glitch effect */
 .tv-glitch {
   position: absolute;
@@ -190,6 +222,65 @@
   pointer-events: none;
   z-index: 5;
   animation: glitchAnimation 3s linear infinite;
+}
+
+/* CRT TV effect from codepen.io/TomHinton/pen/WbbPqZj */
+.tv-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Static noise effect */
+.tv-screen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+  opacity: 0.1;
+  z-index: 2;
+  pointer-events: none;
+  animation: staticNoise 0.5s steps(10) infinite;
+}
+
+@keyframes staticNoise {
+  0% { background-position: 0% 0%; }
+  20% { background-position: 20% -20%; }
+  40% { background-position: -20% 20%; }
+  60% { background-position: 40% 10%; }
+  80% { background-position: -30% 30%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.95; }
+  5% { opacity: 0.97; }
+  10% { opacity: 0.9; }
+  15% { opacity: 0.92; }
+  20% { opacity: 0.9; }
+  25% { opacity: 0.93; }
+  30% { opacity: 0.98; }
+  35% { opacity: 0.9; }
+  40% { opacity: 0.93; }
+  45% { opacity: 0.99; }
+  50% { opacity: 0.94; }
+  55% { opacity: 0.93; }
+  60% { opacity: 0.98; }
+  70% { opacity: 0.94; }
+  80% { opacity: 0.96; }
+  90% { opacity: 0.91; }
+  100% { opacity: 0.95; }
 }
 
 /* TV content */
