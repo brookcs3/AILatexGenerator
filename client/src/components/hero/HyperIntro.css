@@ -1,189 +1,260 @@
 /* Main container */
-.hyper-intro-container {
+.intro-container {
   position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: #0f0514;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Particles background */
-.particles-background {
-  position: absolute;
+/* Gradient background */
+.gradient-background {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background: linear-gradient(135deg, #0f0514 0%, #1a0b2e 50%, #0f0514 100%);
   z-index: 0;
 }
 
-/* THREE.js canvas */
-.three-canvas {
-  position: absolute;
+/* Particles container */
+.particles-container {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: 0.6;
+  pointer-events: none;
 }
 
-/* Hero text container */
-.hero-text-container {
+/* Particle element */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Wave animation */
+.wave-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  z-index: 2;
+  opacity: 0.4;
+  overflow: hidden;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" fill="%238b5cf6" opacity=".3"/></svg>') no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.wave-1 {
+  opacity: 0.7;
+  bottom: -10px;
+  z-index: 3;
+}
+
+.wave-2 {
+  opacity: 0.5;
+  bottom: -20px;
+  z-index: 2;
+}
+
+.wave-3 {
+  opacity: 0.3;
+  bottom: -30px;
+  z-index: 1;
+}
+
+/* Content container */
+.content-container {
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+/* Hero section */
+.hero-section {
   text-align: center;
-  padding: 3rem;
+  margin-bottom: 4rem;
   max-width: 800px;
-  background: rgba(25, 5, 35, 0.6);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(174, 77, 255, 0.3);
-  transform: perspective(1000px) rotateX(5deg);
-  transform-style: preserve-3d;
-  transition: all 0.5s ease;
 }
 
-.hero-text-container:hover {
-  transform: perspective(1000px) rotateX(0deg);
-  box-shadow: 0 0 30px rgba(174, 77, 255, 0.5);
-}
-
-/* Text elements with Splitting.js integration */
-.hero-text-1 {
+.hero-title {
   font-size: 4rem;
   font-weight: 900;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
-  animation: textPulse 3s infinite alternate, textGlitch 5s infinite;
+  letter-spacing: -0.03em;
 }
 
-.hero-text-2 {
-  font-size: 3rem;
+.hero-subtitle {
+  font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
   color: #f8f8f8;
-  animation: textFadeIn 1.5s ease-out, textFloat 4s ease-in-out infinite;
 }
 
-.hero-text-3 {
-  font-size: 2rem;
-  font-weight: 500;
+.hero-description {
+  font-size: 1.5rem;
+  font-weight: 400;
   margin-bottom: 2rem;
-  color: #ae4dff;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* CTA button */
+.cta-button {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  color: white;
+  font-weight: 600;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  border: none;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
   position: relative;
-  animation: ultravioletGlow 3s infinite alternate;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
+  margin-top: 2rem;
 }
 
-/* Ultraviolent glow effect */
-@keyframes ultravioletGlow {
-  0% {
-    text-shadow: 0 0 5px rgba(174, 77, 255, 0.5),
-                 0 0 10px rgba(174, 77, 255, 0.3);
-  }
-  100% {
-    text-shadow: 0 0 15px rgba(255, 0, 255, 0.8),
-                 0 0 30px rgba(255, 0, 255, 0.5),
-                 0 0 50px rgba(255, 0, 255, 0.3);
-  }
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
 }
 
-@keyframes textPulse {
-  0% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.03);
-  }
+.cta-button:active {
+  transform: translateY(1px);
 }
 
-@keyframes textGlitch {
-  0%, 91%, 93%, 95%, 100% {
-    transform: translate(0);
-    text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
-  }
-  92% {
-    transform: translate(-2px, 1px);
-    text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff;
-  }
-  94% {
-    transform: translate(2px, -1px);
-    text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
-  }
-  96% {
-    transform: translate(-1px, -1px);
-    text-shadow: 2px 0 #00ffff, -2px 0 #ff00ff;
-  }
-  98% {
-    transform: translate(1px, 1px);
-    text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff;
-  }
+/* Feature cards */
+.features-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 3rem;
+  width: 100%;
 }
 
-@keyframes textFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+.feature-card {
+  background: rgba(30, 14, 50, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 350px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
-/* Glitch text effect for title */
-.glitch-text-container {
+.feature-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+
+.feature-icon {
+  background: linear-gradient(45deg, #8b5cf6, #ec4899);
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.feature-icon svg {
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.feature-card p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
   position: absolute;
-  bottom: 70px;
+  bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  animation: fadeInUp 2s ease infinite;
+  z-index: 10;
 }
 
-.glitch-text {
-  color: white;
-  font-family: monospace;
-  font-size: 2rem;
-  font-weight: 900;
+.scroll-indicator span {
+  font-size: 0.875rem;
   text-transform: uppercase;
-  position: relative;
-  text-shadow: 0.05em 0 0 rgba(255, 0, 255, 0.75),
-              -0.05em -0.025em 0 rgba(0, 255, 255, 0.75),
-               0.025em 0.05em 0 rgba(255, 0, 0, 0.75);
-  animation: glitch 2s infinite;
+  letter-spacing: 2px;
 }
 
-.glitch-text::before,
-.glitch-text::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.scroll-indicator svg {
+  width: 24px;
+  height: 24px;
 }
 
-.glitch-text::before {
-  left: 2px;
-  text-shadow: -2px 0 #ff00ff;
-  clip: rect(24px, 550px, 90px, 0);
-  animation: glitch-anim 3s infinite linear alternate-reverse;
-}
-
-.glitch-text::after {
-  left: -2px;
-  text-shadow: -2px 0 #00ffff;
-  clip: rect(85px, 550px, 140px, 0);
-  animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+@keyframes fadeInUp {
+  0% {
+    opacity: 0.4;
+    transform: translate(-50%, 10px);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, 10px);
+  }
 }
 
 @keyframes glitch-anim {
