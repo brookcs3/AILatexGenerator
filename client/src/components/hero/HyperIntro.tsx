@@ -841,6 +841,11 @@ Method B & Better for categorical variables \\\\
                 
                 <div className="latex-reveal">
                   <div className="latex-code" id="latex-code-container">
+                    <div className="download-pdf-button">
+                      <button onClick={() => console.log('Download PDF clicked')}>
+                        Download PDF
+                      </button>
+                    </div>
                     <pre>{`\\documentclass{article}
 \\usepackage{amsmath}
 \\begin{document}
