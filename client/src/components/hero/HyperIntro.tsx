@@ -16,31 +16,10 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
   const particlesRef = useRef<HTMLDivElement>(null);
   const gradientBackgroundRef = useRef<HTMLDivElement>(null);
   const waveAnimationRef = useRef<HTMLDivElement>(null);
-  const pdfButtonRef = useRef<HTMLButtonElement>(null);
 
   // Create gradient background and wave animation
   useEffect(() => {
     try {
-      // Initialize tooltip for PDF preview
-      if (pdfButtonRef.current) {
-        tippy(pdfButtonRef.current, {
-          content: `<div class="pdf-preview">
-            <img src="/images/latex-previews/pdf-preview.svg" alt="PDF Preview" style="width: 240px; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
-            <div style="text-align: center; margin-top: 8px; font-size: 13px; color: #333; font-weight: 500;">
-              Preview of your LaTeX document
-            </div>
-          </div>`,
-          allowHTML: true,
-          interactive: true,
-          placement: 'top',
-          theme: 'light',
-          animation: 'shift-away',
-          arrow: true,
-          delay: [200, 0], // Delay showing the tooltip for better UX
-          maxWidth: 320,
-          appendTo: document.body, // Ensures tooltip is attached to body for proper positioning
-        });
-      }
       
       // Create beautiful gradient background animation
       if (gradientBackgroundRef.current) {
@@ -882,8 +861,7 @@ Method B & Better for categorical variables \\\\
                     <div id="download-pdf-button" className="download-pdf-button">
                       <button
                         id="pdf-download-btn"
-                        className="pdf-download-button"
-                        ref={pdfButtonRef}
+                        className="pdf-download-button" 
                         onClick={() => {
                           // Get the current LaTeX code from the container
                           const latexCodeContainer = document.getElementById('latex-code-container');
@@ -900,20 +878,16 @@ Method B & Better for categorical variables \\\\
                           // In a production environment, this would generate a PDF server-side
                           const link = document.createElement('a');
                           
-                          // For now, use the existing template file - in production this would be
-                          // a dynamically generated PDF from the LaTeX code
-                          link.href = '/templates/article-template.tex'; 
+                          // Use the appropriate template based on the current selection
+                          // For now, we'll use the report template
+                          link.href = '/templates/report-template.tex'; 
                           link.download = 'latex-document.tex';
                           
                           document.body.appendChild(link);
                           link.click();
                           document.body.removeChild(link);
-                          
-                          // Show success message
-                          alert('LaTeX document downloaded! In the full version, this would be converted to a PDF automatically.');
                         }}
                       >
-                        <Download size={14} className="mr-1" />
                         <span>Download PDF</span>
                       </button>
                     </div>
