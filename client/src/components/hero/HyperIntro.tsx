@@ -218,6 +218,35 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
             ease: "none",
             repeatDelay: 5,
           });
+          
+          // Add occasional blur spikes for TV static effect
+          const createBlurSpike = () => {
+            // Random interval between 2-8 seconds
+            const interval = Math.random() * 6000 + 2000;
+            
+            // Create the spike effect with random intensity
+            setTimeout(() => {
+              // Random blur intensity
+              const blurAmount = Math.random() * 8 + 2;
+              
+              // Apply the effect
+              gsap.to(tvContainer, {
+                filter: `blur(${blurAmount}px)`,
+                duration: 0.1,
+                onComplete: () => {
+                  // Remove the effect
+                  gsap.to(tvContainer, {
+                    filter: "blur(0px)",
+                    duration: 0.2,
+                    onComplete: createBlurSpike // Create next spike
+                  });
+                }
+              });
+            }, interval);
+          };
+          
+          // Start the effect
+          createBlurSpike();
         }
 
         // Animate the title with typewriter effect
