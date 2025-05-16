@@ -10,16 +10,15 @@
   z-index: 10;
 }
 
-/* Backdrop gradient */
+/* Backdrop gradient - completely transparent */
 .gradient-backdrop {
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.3) 0%, rgba(79, 70, 229, 0.4) 50%, rgba(99, 102, 241, 0.5) 100%);
-  opacity: 0.7;
-  /* Reduced opacity to make it more transparent */
+  background: transparent;
+  opacity: 0;
   z-index: 11;
 }
 

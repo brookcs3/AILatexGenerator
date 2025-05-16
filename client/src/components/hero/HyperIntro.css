@@ -154,6 +154,9 @@
   margin-bottom: 2rem;
   overflow: hidden;
   border-radius: 10px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .tv-screen {
@@ -162,6 +165,7 @@
   padding: 2rem;
   overflow: hidden;
   animation: flicker 0.15s infinite;
+  background: transparent;
 }
 
 /* Scan lines effect */
