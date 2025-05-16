@@ -405,7 +405,8 @@
   /* No automatic animation - will be controlled by GSAP */
 }
 
-.download-pdf-button button {
+.download-pdf-button button,
+.pdf-download-button {
   background: #50ff50;
   color: #000;
   font-family: 'Inter', sans-serif;
@@ -417,6 +418,10 @@
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(80, 255, 80, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 .download-pdf-button button:hover {

@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import "./HyperIntro.css";
-import { Scale } from "lucide-react";
+import { Scale, Download } from "lucide-react";
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
 
 // Modern intro component with professional animation effects
 
@@ -16,6 +18,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
   const particlesRef = useRef<HTMLDivElement>(null);
   const gradientBackgroundRef = useRef<HTMLDivElement>(null);
   const waveAnimationRef = useRef<HTMLDivElement>(null);
+  const pdfButtonRef = useRef<HTMLButtonElement>(null);
 
   // Create gradient background and wave animation
   useEffect(() => {
@@ -858,8 +861,21 @@ Method B & Better for categorical variables \\\\
                 <div className="latex-reveal">
                   <div className="latex-code" id="latex-code-container">
                     <div id="download-pdf-button" className="download-pdf-button">
-                      <button onClick={() => console.log('Download PDF clicked')}>
-                        Download PDF
+                      <button
+                        id="pdf-download-btn"
+                        className="pdf-download-button"
+                        onClick={() => {
+                          // Create a download link for the PDF
+                          const link = document.createElement('a');
+                          link.href = '/sample-latex.pdf';
+                          link.download = 'latex-document.pdf';
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                        }}
+                      >
+                        <Download size={14} className="mr-1" />
+                        <span>Download PDF</span>
                       </button>
                     </div>
                     <pre>{`\\documentclass{article}
