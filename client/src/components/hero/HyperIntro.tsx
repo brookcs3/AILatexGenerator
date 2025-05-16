@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./HyperIntro.css";
-import { Scale, Download } from "lucide-react";
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
+import { Scale } from "lucide-react";
 
 // Modern intro component with professional animation effects
 
