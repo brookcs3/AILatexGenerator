@@ -251,8 +251,8 @@
 }
 
 .intro-page-container.distortion-only .gradient-backdrop {
-  opacity: 0.95;
-  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.6) 0%, rgba(79, 70, 229, 0.7) 50%, rgba(99, 102, 241, 0.8) 100%);
+  opacity: 0;
+  background: transparent;
 }
 
 /* Controls panel */
