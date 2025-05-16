@@ -138,8 +138,8 @@ Never include non-existent packages like \`\\usepackage{math}\`.
 - Structure content logically with sections and subsections using the custom formatting
 - Take advantage of the color scheme when creating emphasis
 - Include the rest of the document structure
-- Use this exact template for the basis of all report documents, the template is contain in the following brackets 
-[\documentclass[11pt,letterpaper]{article}
+- Use this exact template for the basis of all report documents, the template is contain in the following brackets block "[[[[]]]]]"
+[[[[\documentclass[11pt,letterpaper]{article}
 
 \usepackage[margin=1in]{geometry}
 \usepackage{enumitem}
@@ -237,7 +237,7 @@ Never include non-existent packages like \`\\usepackage{math}\`.
 \end{tabular}
 
 \end{document}
-] 
+]]]]
 
 ### Letter Document
 - Use \`letter\` document class
