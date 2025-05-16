@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'wouter';
-import HyperIntro from '@/components/hero/HyperIntro';
-import DistortionBackground from '@/components/background/DistortionBackground';
-import './intro-page.css';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "wouter";
+import HyperIntro from "@/components/hero/HyperIntro";
+import DistortionBackground from "@/components/background/DistortionBackground";
+import "./intro-page.css";
 
 /**
  * Intro page with animated storytelling experience
@@ -29,16 +29,16 @@ const IntroPage: React.FC = () => {
   // Handle completion of the intro animation
   const handleIntroComplete = () => {
     setIsCompleting(true);
-    
+
     // Add the fade-out class to container
-    const container = document.querySelector('.intro-page-container');
+    const container = document.querySelector(".intro-page-container");
     if (container) {
-      container.classList.add('fade-out');
+      container.classList.add("fade-out");
     }
-    
+
     // Navigate to main app after fade animation completes
     setTimeout(() => {
-      navigate('/');
+      navigate("/");
     }, 1000);
   };
 
@@ -48,13 +48,13 @@ const IntroPage: React.FC = () => {
   };
 
   return (
-    <div className={`intro-page-container ${isCompleting ? 'fade-out' : ''}`}>
+    <div className={`intro-page-container ${isCompleting ? "fade-out" : ""}`}>
       {/* Distortion background effect */}
       <DistortionBackground />
-      
+
       {/* Skip intro button */}
       {showSkipButton && (
-        <button 
+        <button
           className="skip-intro-button"
           onClick={handleSkip}
           aria-label="Skip intro animation"
@@ -62,7 +62,7 @@ const IntroPage: React.FC = () => {
           Skip Intro
         </button>
       )}
-      
+
       {/* Main intro animation component */}
       <HyperIntro onComplete={handleIntroComplete} />
     </div>
