@@ -8,16 +8,17 @@ import "./intro-page.css";
  * Intro page with animated storytelling experience
  * Features:
  * - Ultra-modern animations using GSAP, Three.js, Splitting.js
- * - Interactive particle system
- * - Smooth transitions with Barba.js
+ * - Interactive particle system with CRT TV effects
+ * - Smooth transitions with scan lines and distortion
  * - Skip button for users who want to directly access the app
  */
 const IntroPage: React.FC = () => {
   const [, navigate] = useLocation();
   const [showSkipButton, setShowSkipButton] = useState(false);
   const [isCompleting, setIsCompleting] = useState(false);
+  const [showDistortionOnly, setShowDistortionOnly] = useState(false);
 
-  // Show skip button after a short delay
+  // Show skip button and toggle button after a short delay
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSkipButton(true);
@@ -47,24 +48,56 @@ const IntroPage: React.FC = () => {
     handleIntroComplete();
   };
 
+  // Toggle between full intro and just distortion background
+  const toggleDistortionOnly = () => {
+    setShowDistortionOnly(!showDistortionOnly);
+  };
+
   return (
-    <div className={`intro-page-container ${isCompleting ? "fade-out" : ""}`}>
+    <div className={`intro-page-container ${isCompleting ? "fade-out" : ""} ${showDistortionOnly ? "distortion-only" : ""}`}>
       {/* Distortion background effect */}
-      <DistortionBackground />
-
-      {/* Skip intro button */}
-      {showSkipButton && (
-        <button
-          className="skip-intro-button"
-          onClick={handleSkip}
-          aria-label="Skip intro animation"
+      <div className="distortion-container">
+        <DistortionBackground />
+      </div>
+      
+      {/* Control buttons */}
+      <div className="intro-controls">
+        {showSkipButton && (
+          <button 
+            className="skip-intro-button"
+            onClick={handleSkip}
+            aria-label="Skip intro animation"
+          >
+            Skip Intro
+          </button>
+        )}
+        
+        <button 
+          className="toggle-mode-button"
+          onClick={toggleDistortionOnly}
+          aria-label="Toggle distortion effect"
         >
-          Skip Intro
+          {showDistortionOnly ? "Show Full Intro" : "Show TV Effects Only"}
         </button>
+      </div>
+      
+      {/* Main intro animation component - only show if not in distortion-only mode */}
+      {!showDistortionOnly && <HyperIntro onComplete={handleIntroComplete} />}
+      
+      {/* Explanation text when in distortion-only mode */}
+      {showDistortionOnly && (
+        <div className="distortion-explanation">
+          <h2>TV Distortion Effects</h2>
+          <p>This screen demonstrates our CRT TV effects with scan lines, static, and glitch animations.</p>
+          <p>These visual effects provide the retro-futuristic aesthetic for the LaTeX generator application.</p>
+          <button 
+            className="return-button"
+            onClick={() => setShowDistortionOnly(false)}
+          >
+            Return to Full Intro
+          </button>
+        </div>
       )}
-
-      {/* Main intro animation component */}
-      <HyperIntro onComplete={handleIntroComplete} />
     </div>
   );
 };
