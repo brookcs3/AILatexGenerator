@@ -401,7 +401,7 @@
   right: 10px;
   z-index: 5;
   opacity: 0;
-  animation: pdfButtonAppear 0.8s forwards 4s, pdfButtonFlicker 1.5s linear 4s;
+  animation: pdfButtonAppear 0.8s forwards 5s, pdfButtonFlicker 1.5s linear 5s;
 }
 
 .download-pdf-button button {
