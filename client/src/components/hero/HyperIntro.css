@@ -890,7 +890,7 @@
 }
 
 .cta-button {
-  background: linear-gradient(45deg, #ff00ff, #7700ff);
+  background: linear-gradient(45deg, #3b82f6, #6366f1);
   color: white;
   border: none;
   padding: 1rem 2.5rem;
@@ -904,8 +904,8 @@
   position: relative;
   overflow: hidden;
   box-shadow:
-    0 5px 15px rgba(156, 39, 176, 0.4),
-    0 0 20px rgba(255, 0, 255, 0.3),
+    0 5px 15px rgba(59, 130, 246, 0.4),
+    0 0 20px rgba(59, 130, 246, 0.3),
     inset 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
@@ -927,8 +927,8 @@
 .cta-button:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow:
-    0 8px 25px rgba(156, 39, 176, 0.6),
-    0 0 30px rgba(255, 0, 255, 0.5),
+    0 8px 25px rgba(59, 130, 246, 0.6),
+    0 0 30px rgba(99, 102, 241, 0.5),
     inset 0 0 15px rgba(255, 255, 255, 0.3);
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
@@ -941,8 +941,8 @@
 .cta-button:active {
   transform: translateY(1px) scale(0.98);
   box-shadow:
-    0 2px 10px rgba(156, 39, 176, 0.4),
-    0 0 10px rgba(255, 0, 255, 0.3);
+    0 2px 10px rgba(59, 130, 246, 0.4),
+    0 0 10px rgba(99, 102, 241, 0.3);
 }
 
 /* Pulse effect for CTA button */
