@@ -346,6 +346,7 @@
   font-weight: 500;
   max-width: 700px;
   text-align: center;
+  flex-wrap: nowrap;
 }
 
 .prompt-text {
@@ -356,7 +357,6 @@
   font-family: monospace;
   display: inline-block;
   text-align: center;
-  width: 100%;
 }
 
 .prompt-cursor {
@@ -364,6 +364,7 @@
   font-weight: bold;
   margin-left: 2px;
   font-family: monospace;
+  display: inline-block;
   animation: blink 0.8s step-end infinite;
 }
 
@@ -401,7 +402,8 @@
   right: 10px;
   z-index: 5;
   opacity: 0;
-  animation: pdfButtonAppear 0.8s forwards 4s, pdfButtonFlicker 1.5s linear 4.2s;
+  /* Animation starts 2s after latex-reveal's 2s delay (total: 4s) */
+  animation: pdfButtonAppear 0.8s forwards 6s, pdfButtonFlicker 1.5s linear 6.2s;
 }
 
 .download-pdf-button button {
