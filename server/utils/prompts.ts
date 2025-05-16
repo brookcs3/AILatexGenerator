@@ -135,19 +135,19 @@ Never include non-existent packages like \`\\usepackage{math}\`.
   \`\`\`latex
   \\documentclass[11pt,letterpaper]{article}
 
-  \\\usepackage[margin=1in]{geometry}
+  \\usepackage[margin=1in]{geometry}
   \\usepackage{enumitem}
-  \\\usepackage{titlesec}
+  \\usepackage{titlesec}
   \\usepackage{titling}
   \\usepackage{fancyhdr}
   \\usepackage{xcolor}
-  \\\usepackage{hyperref}
+  \\usepackage{hyperref}
   \\usepackage{graphicx}
-  \\\usepackage{array}
+  \\usepackage{array}
   \\usepackage{booktabs}
   \\usepackage{soul}
-  \\\usepackage{adjustbox}
-  \\\usepackage{lastpage}
+  \\usepackage{adjustbox}
+  \\usepackage{lastpage}
 
   % Colors
   \\definecolor{mainblue}{RGB}{0,75,150}

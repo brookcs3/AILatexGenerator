@@ -874,14 +874,31 @@ Method B & Better for categorical variables \\\\
                             }
                           }
                           
-                          // For now, download the template as a PDF example
-                          // In a production environment, this would generate a PDF server-side
+                          // Download the appropriate PDF file based on current selection
                           const link = document.createElement('a');
                           
-                          // Use the appropriate template based on the current selection
-                          // For now, we'll use the report template
-                          link.href = '/templates/report-template.tex'; 
-                          link.download = 'latex-document.tex';
+                          // Get the current template type from the display
+                          const currentPromptText = document.querySelector('.prompt-text')?.textContent || '';
+                          
+                          // Select the appropriate PDF based on the current prompt
+                          let pdfFile = '';
+                          if (currentPromptText.includes('quantum computing')) {
+                            pdfFile = '/quantum_paper.pdf';
+                          } else if (currentPromptText.includes('slideshow')) {
+                            pdfFile = '/essay_slideshow.pdf';
+                          } else if (currentPromptText.includes('mathematical report')) {
+                            pdfFile = '/math_report.pdf';
+                          } else if (currentPromptText.includes('research notes')) {
+                            pdfFile = '/research_notes.pdf';
+                          } else if (currentPromptText.includes('scientific poster')) {
+                            pdfFile = '/scientific_poster.pdf';
+                          } else {
+                            // Default to math report if no match
+                            pdfFile = '/math_report.pdf';
+                          }
+                          
+                          link.href = pdfFile;
+                          link.download = pdfFile.substring(1);
                           
                           document.body.appendChild(link);
                           link.click();
