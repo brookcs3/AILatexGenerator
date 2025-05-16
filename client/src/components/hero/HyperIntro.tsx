@@ -23,10 +23,10 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
       if (gradientBackgroundRef.current) {
         const background = gradientBackgroundRef.current;
 
-        // Animate the gradient background
+        // Animate the gradient background with light blue theme
         gsap.to(background, {
           background:
-            "linear-gradient(135deg, #1a0b2e 0%, #2a1052 50%, #1a0b2e 100%)",
+            "linear-gradient(135deg, #f1f5f9 0%, #e0f2fe 50%, #f1f5f9 100%)",
           duration: 10,
           repeat: -1,
           yoyo: true,
