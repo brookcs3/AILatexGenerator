@@ -400,7 +400,8 @@
   top: 10px;
   right: 10px;
   z-index: 5;
-  /* Always visible when the parent latex-reveal is visible */
+  opacity: 0;
+  animation: pdfButtonAppear 0.8s forwards 4s, pdfButtonFlicker 1.5s linear 4.2s;
 }
 
 .download-pdf-button button {
