@@ -221,24 +221,53 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
           
           // Add occasional blur spikes for TV static effect
           const createBlurSpike = () => {
-            // Random interval between 2-8 seconds
-            const interval = Math.random() * 6000 + 2000;
+            // Random interval between 3-10 seconds
+            const interval = Math.random() * 7000 + 3000;
             
             // Create the spike effect with random intensity
             setTimeout(() => {
               // Random blur intensity
               const blurAmount = Math.random() * 8 + 2;
               
-              // Apply the effect
+              // Apply the autofocus struggle effect with over/under focusing
+              // Start with sudden blur
               gsap.to(tvContainer, {
                 filter: `blur(${blurAmount}px)`,
-                duration: 0.1,
+                duration: 0.08,
                 onComplete: () => {
-                  // Remove the effect
+                  // Quick attempt to focus but overshoot (too sharp)
                   gsap.to(tvContainer, {
-                    filter: "blur(0px)",
-                    duration: 0.2,
-                    onComplete: createBlurSpike // Create next spike
+                    filter: `blur(0px) contrast(1.2)`,
+                    duration: 0.12,
+                    onComplete: () => {
+                      // Overcorrect to blurry again
+                      gsap.to(tvContainer, {
+                        filter: `blur(${blurAmount * 0.7}px)`,
+                        duration: 0.15,
+                        onComplete: () => {
+                          // Too sharp again
+                          gsap.to(tvContainer, {
+                            filter: `blur(0px) contrast(1.1)`,
+                            duration: 0.1,
+                            onComplete: () => {
+                              // Subtle blur
+                              gsap.to(tvContainer, {
+                                filter: `blur(${blurAmount * 0.3}px)`,
+                                duration: 0.08,
+                                onComplete: () => {
+                                  // Finally settle on proper focus
+                                  gsap.to(tvContainer, {
+                                    filter: "blur(0px)",
+                                    duration: 0.1,
+                                    onComplete: createBlurSpike // Create next spike
+                                  });
+                                }
+                              });
+                            }
+                          });
+                        }
+                      });
+                    }
                   });
                 }
               });
