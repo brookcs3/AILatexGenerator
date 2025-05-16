@@ -131,112 +131,113 @@ Never include non-existent packages like \`\\usepackage{math}\`.
 - Add appropriate theme and navigation elements
 
 ### Report Document
-- Use this exact template:
-  \`\`\`latex
-  \\documentclass[11pt,letterpaper]{article}
 
-  \\usepackage[margin=1in]{geometry}
-  \\usepackage{enumitem}
-  \\usepackage{titlesec}
-  \\usepackage{titling}
-  \\usepackage{fancyhdr}
-  \\usepackage{xcolor}
-  \\usepackage{hyperref}
-  \\usepackage{graphicx}
-  \\usepackage{array}
-  \\usepackage{booktabs}
-  \\usepackage{soul}
-  \\usepackage{adjustbox}
-  \\usepackage{lastpage}
-
-  % Colors
-  \\definecolor{mainblue}{RGB}{0,75,150}
-  \\definecolor{lightblue}{RGB}{242,247,255}
-  \\definecolor{darkgray}{RGB}{80,80,80}
-  \\definecolor{paperbg}{RGB}{252,252,250}
-
-  % Page color
-  \\pagecolor{paperbg}
-
-  % Hyperref settings
-  \\hypersetup{
-      colorlinks=true,
-      linkcolor=mainblue,
-      filecolor=mainblue,      
-      urlcolor=mainblue,
-      citecolor=mainblue,
-      pdftitle={},
-      pdfauthor={},
-  }
-
-  % Header and footer
-  \\pagestyle{fancy}
-  \\fancyhf{}
-  \\renewcommand{\\headrulewidth}{0.4pt}
-  \\renewcommand{\\footrulewidth}{0.4pt}
-  \\fancyhead[L]{}
-  \\fancyhead[R]{}
-  \\fancyfoot[C]{Page \\thepage\\ of \\pageref{LastPage}}
-
-  % Title format
-  \\titleformat{\\section}
-  {\\normalfont\\Large\\bfseries\\color{mainblue}}
-  {\\thesection.}{0.5em}{}[\\titlerule]
-
-  \\titleformat{\\subsection}
-  {\\normalfont\\large\\bfseries\\color{darkgray}}
-  {\\thesubsection}{0.5em}{}
-  \`\`\`
 - Format the document with title, author, and date fields
 - Include professional-looking tabular environments
 - Use horizontal rules to separate content sections
 - Structure content logically with sections and subsections using the custom formatting
 - Take advantage of the color scheme when creating emphasis
-- Include the rest of the document structure:
-  \`\`\`latex
-  % Document info
-  \\title{}
-  \\author{}
-  \\date{}
+- Include the rest of the document structure
+- Use this exact template for the basis of all report documents, the template is contain in the following brackets 
+[\documentclass[11pt,letterpaper]{article}
 
-  \\begin{document}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{soul}
+\usepackage{adjustbox}
+\usepackage{lastpage}
 
-  \\maketitle
+% Colors
+\definecolor{mainblue}{RGB}{0,75,150}
+\definecolor{lightblue}{RGB}{242,247,255}
+\definecolor{darkgray}{RGB}{80,80,80}
+\definecolor{paperbg}{RGB}{252,252,250}
 
-  \\begin{center}
-  \\begin{tabular}{rl}
-  \\textbf{} & \\\\
-  \\textbf{} & \\\\
-  \\textbf{} & \\\\
-  \\textbf{} & \\\\
-  \\textbf{} & \\\\
-  \\end{tabular}
-  \\end{center}
+% Page color
+\pagecolor{paperbg}
 
-  \\vspace{0.5cm}
-  \\noindent\\rule{\\textwidth}{0.4pt}
-  \\vspace{0.5cm}
+% Hyperref settings
+\hypersetup{
+    colorlinks=true,
+    linkcolor=mainblue,
+    filecolor=mainblue,      
+    urlcolor=mainblue,
+    citecolor=mainblue,
+    pdftitle={},
+    pdfauthor={},
+}
 
-  % Write your content here.
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{}
+\fancyhead[R]{}
+\fancyfoot[C]{Page \thepage\ of \pageref{LastPage}}
 
-  \\vspace{0.5cm}
-  \\noindent\\rule{\\textwidth}{0.4pt}
-  \\vspace{0.5cm}
+% Title format
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{mainblue}}
+{\thesection.}{0.5em}{}[\titlerule]
 
-  % More content here.
+\titleformat{\subsection}
+{\normalfont\large\bfseries\color{darkgray}}
+{\thesubsection}{0.5em}{}
 
-  \\vspace{1.5cm}
+% Document info
+\title{}
+\author{}
+\date{}
 
-  \\vspace{0.5cm}
+\begin{document}
 
-  \\begin{tabular}{l}
-  \\textbf{} \\\\
-  \\\\
-  
-  \\end{tabular}
+\maketitle
 
-  \\end{document}
-  \`\`\`
+\begin{center}
+\begin{tabular}{rl}
+\textbf{} & \\
+\textbf{} & \\
+\textbf{} & \\
+\textbf{} & \\
+\textbf{} & \\
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+\noindent\rule{\textwidth}{0.4pt}
+\vspace{0.5cm}
+
+% Write your content here.
+
+\vspace{0.5cm}
+\noindent\rule{\textwidth}{0.4pt}
+\vspace{0.5cm}
+
+% More content here.
+
+\vspace{1.5cm}
+
+
+
+\vspace{0.5cm}
+
+\begin{tabular}{l}
+\textbf{} \\
+ \\
+ 
+\end{tabular}
+
+\end{document}
+] 
 
 ### Letter Document
 - Use \`letter\` document class
