@@ -17,7 +17,7 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(ellipse at center, rgba(34, 8, 55, 0.5) 0%, rgba(14, 2, 26, 0.6) 50%, rgba(8, 1, 15, 0.7) 100%);
+  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.3) 0%, rgba(79, 70, 229, 0.4) 50%, rgba(99, 102, 241, 0.5) 100%);
   opacity: 0.7;
   /* Reduced opacity to make it more transparent */
   z-index: 11;
@@ -253,7 +253,7 @@
 
 .intro-page-container.distortion-only .gradient-backdrop {
   opacity: 0.95;
-  background: radial-gradient(ellipse at center, rgba(24, 6, 45, 0.95) 0%, rgba(12, 2, 24, 0.98) 50%, rgba(6, 1, 12, 1) 100%);
+  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.6) 0%, rgba(79, 70, 229, 0.7) 50%, rgba(99, 102, 241, 0.8) 100%);
 }
 
 /* Controls panel */
