@@ -827,6 +827,18 @@ Method B & Better for categorical variables \\\\
                   <span className="prompt-text"></span>
                   <span className="prompt-cursor">|</span>
                 </div>
+                
+                {/* CTA button - repositioned between prompt-text and latex-reveal */}
+                <div className="cta-button-container">
+                  <button
+                    className="cta-button"
+                    onClick={handleGetStartedClick}
+                    aria-label="Get started with AI LaTeX Generator"
+                  >
+                    Get Started
+                  </button>
+                </div>
+                
                 <div className="latex-reveal">
                   <div className="latex-code" id="latex-code-container">
                     <pre>{`\\documentclass{article}
@@ -845,14 +857,6 @@ Method B & Better for categorical variables \\\\
               <div className="tv-glitch"></div>
             </div>
           </div>
-
-          <button
-            className="cta-button"
-            onClick={handleGetStartedClick}
-            aria-label="Get started with AI LaTeX Generator"
-          >
-            Get Started
-          </button>
         </div>
 
         {/* Feature cards */}
