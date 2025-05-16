@@ -27,8 +27,8 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
       if (pdfButtonRef.current) {
         tippy(pdfButtonRef.current, {
           content: `<div class="pdf-preview">
-            <img src="/images/latex-previews/math-report.svg" alt="PDF Preview" style="width: 200px; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" />
-            <div style="text-align: center; margin-top: 5px; font-size: 12px; color: #333;">
+            <img src="/images/latex-previews/pdf-preview.svg" alt="PDF Preview" style="width: 240px; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+            <div style="text-align: center; margin-top: 8px; font-size: 13px; color: #333; font-weight: 500;">
               Preview of your LaTeX document
             </div>
           </div>`,
@@ -38,6 +38,9 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
           theme: 'light',
           animation: 'shift-away',
           arrow: true,
+          delay: [200, 0], // Delay showing the tooltip for better UX
+          maxWidth: 320,
+          appendTo: document.body, // Ensures tooltip is attached to body for proper positioning
         });
       }
       
@@ -884,13 +887,32 @@ Method B & Better for categorical variables \\\\
                         className="pdf-download-button"
                         ref={pdfButtonRef}
                         onClick={() => {
-                          // Create a download link for the PDF
+                          // Get the current LaTeX code from the container
+                          const latexCodeContainer = document.getElementById('latex-code-container');
+                          let latexCode = '';
+                          
+                          if (latexCodeContainer) {
+                            const preElement = latexCodeContainer.querySelector('pre');
+                            if (preElement) {
+                              latexCode = preElement.textContent || '';
+                            }
+                          }
+                          
+                          // For now, download the template as a PDF example
+                          // In a production environment, this would generate a PDF server-side
                           const link = document.createElement('a');
-                          link.href = '/images/latex-previews/math-report.svg';
-                          link.download = 'latex-document.pdf';
+                          
+                          // For now, use the existing template file - in production this would be
+                          // a dynamically generated PDF from the LaTeX code
+                          link.href = '/templates/article-template.tex'; 
+                          link.download = 'latex-document.tex';
+                          
                           document.body.appendChild(link);
                           link.click();
                           document.body.removeChild(link);
+                          
+                          // Show success message
+                          alert('LaTeX document downloaded! In the full version, this would be converted to a PDF automatically.');
                         }}
                       >
                         <Download size={14} className="mr-1" />
