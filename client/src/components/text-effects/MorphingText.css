@@ -41,6 +41,19 @@
   color: transparent;
 }
 
+/* Specific styling for the header morphing text */
+.header-morphing .morphing-container {
+  height: 24pt;
+}
+
+.header-morphing .morphing-text {
+  font-size: 16pt;
+  text-align: left;
+  background: linear-gradient(45deg, #4f46e5, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 /* Hide SVG from visual flow */
 .filters-svg {
   position: absolute;

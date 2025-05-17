@@ -26,8 +26,8 @@ const MorphingText: React.FC<MorphingTextProps> = ({
     const elts = { text1, text2 };
     
     // Controls the speed of morphing.
-    const morphTime = 1;
-    const cooldownTime = 0.25;
+    const morphTime = 2;
+    const cooldownTime = 3;
     
     let textIndex = texts.length - 1;
     let time = new Date();
@@ -53,7 +53,8 @@ const MorphingText: React.FC<MorphingTextProps> = ({
     
     // A lot of the magic happens here, this is what applies the blur filter to the text.
     function setMorph(fraction: number) {
-      // fraction = Math.cos(fraction * Math.PI) / -2 + .5;
+      // Add cosine easing for smoother transitions
+      fraction = Math.cos(fraction * Math.PI) / -2 + 0.5;
       
       elts.text2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
       elts.text2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;

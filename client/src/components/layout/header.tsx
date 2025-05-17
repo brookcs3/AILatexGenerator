@@ -87,7 +87,7 @@ export default function Header() {
               />
             </svg>
             <div className="ml-2" id="site-title">
-              <MorphingText texts={["AI LATEX GENERATOR", "ai latex generator"]} />
+              <MorphingText texts={["AI LATEX GENERATOR", "ai latex generator"]} className="header-morphing" />
             </div>
           </Link>
         </div>
