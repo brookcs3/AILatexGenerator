@@ -9,7 +9,7 @@ import SubscriptionModal from "@/components/dialogs/subscription-modal";
 import { getUsageColor } from "@/lib/utils";
 import { SubscriptionTier } from "@shared/schema.ts";
 import { Loader2 } from "lucide-react";
-import MorphingText from "@/components/text-effects/MorphingText";
+import LiquidMetalText from "@/components/text-effects/LiquidMetalText";
 
 export default function Header() {
   const [location, navigate] = useLocation();
@@ -87,7 +87,7 @@ export default function Header() {
               />
             </svg>
             <div className="ml-2" id="site-title">
-              <MorphingText texts={["AI LATEX GENERATOR", "ai latex generator"]} className="header-morphing" />
+              <LiquidMetalText text="AI LATEX GENERATOR" />
             </div>
           </Link>
         </div>
