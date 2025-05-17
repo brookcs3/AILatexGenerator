@@ -65,10 +65,10 @@ export default function Header() {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center">
           <Link 
-            href="/" 
+            href="/app" 
             className="flex items-center" 
-            aria-label="Go to AI LaTeX Generator homepage" 
-            title="AI LaTeX Generator - Home"
+            aria-label="Go to AI LaTeX Generator app" 
+            title="AI LaTeX Generator - App"
             rel="home"
           >
             <svg
