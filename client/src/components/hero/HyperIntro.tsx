@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./HyperIntro.css";
 import { Scale } from "lucide-react";
-import LiquidMetalText from "@/components/text-effects/LiquidMetalText";
 
 // Modern intro component with professional animation effects
 
