@@ -15,6 +15,10 @@ import { useToast } from "@/hooks/use-toast";
 import { useAnonymousStatus } from "@/hooks/use-anonymous-status";
 import { Button } from "@/components/ui/button";
 
+// Flag to enable/disable the mobile auto-scroll effect
+// Set to false to disable the "boop" scroll-to-top animation
+const ENABLE_MOBILE_SCROLL_EFFECT = true;
+
 /**
  * Extract a meaningful title from the user's input content
  * This analyzes the content to find a suitable title or generates one based on the content
@@ -165,8 +169,10 @@ export default function Home() {
     }
   }, []);
   
-  // "Boop" effect - always pulling page to top on mobile with nice animation
+  // "Boop" effect - scroll-to-top animation on mobile
   useEffect(() => {
+    if (!ENABLE_MOBILE_SCROLL_EFFECT) return;
+
     // Only apply on mobile devices in portrait mode
     const isMobilePortrait = () => window.innerWidth < 768 && window.innerHeight > window.innerWidth;
     
