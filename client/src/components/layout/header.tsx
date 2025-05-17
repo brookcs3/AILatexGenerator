@@ -9,6 +9,7 @@ import SubscriptionModal from "@/components/dialogs/subscription-modal";
 import { getUsageColor } from "@/lib/utils";
 import { SubscriptionTier } from "@shared/schema.ts";
 import { Loader2 } from "lucide-react";
+import MorphingText from "@/components/text-effects/MorphingText";
 
 export default function Header() {
   const [location, navigate] = useLocation();
@@ -85,9 +86,9 @@ export default function Header() {
                 clipRule="evenodd"
               />
             </svg>
-            <h1 className="ml-2 text-xl font-semibold text-gray-800" id="site-title">
-              AI Latex Generator
-            </h1>
+            <div className="ml-2" id="site-title">
+              <MorphingText texts={["AI LATEX GENERATOR", "ai latex generator"]} />
+            </div>
           </Link>
         </div>
         
