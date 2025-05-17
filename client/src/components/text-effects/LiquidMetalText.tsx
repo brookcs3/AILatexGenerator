@@ -82,7 +82,7 @@ const LiquidMetalText: React.FC<LiquidMetalTextProps> = ({
       }
       
       // Draw text
-      const fontSize = Math.min(canvas.width / 15, 24);
+      const fontSize = Math.min(canvas.width / 20, 18);
       ctx.font = `bold ${fontSize}px 'Raleway', sans-serif`;
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';
@@ -122,7 +122,7 @@ const LiquidMetalText: React.FC<LiquidMetalTextProps> = ({
   }, [text]);
   
   return (
-    <div className={`liquid-metal-container ${className}`} style={{ position: 'relative', width: '100%', height: '40px' }}>
+    <div className={`liquid-metal-container ${className}`} style={{ position: 'relative', width: '200px', height: '30px' }}>
       <canvas 
         ref={canvasRef} 
         className="liquid-metal-canvas"
