@@ -112,16 +112,16 @@ const MorphingText: React.FC<MorphingTextProps> = ({
   return (
     <div className={`morphing-text-container ${className}`}>
       {/* The two texts */}
-      <div id="container">
-        <span id="text1"></span>
-        <span id="text2"></span>
+      <div id={containerId} className="morphing-container" style={{ filter: `url(#${filterId}) blur(0.6px)` }}>
+        <span id={text1Id} className="morphing-text"></span>
+        <span id={text2Id} className="morphing-text"></span>
       </div>
 
       {/* The SVG filter used to create the merging effect */}
-      <svg id="filters">
+      <svg className="filters-svg">
         <defs>
-          <filter id="threshold">
-            {/* Basically just a threshold effect - pixels with a high enough opacity are set to full opacity, and all other pixels are set to completely transparent. */}
+          <filter id={filterId}>
+            {/* Threshold effect - pixels with high enough opacity are set to full opacity */}
             <feColorMatrix 
               in="SourceGraphic"
               type="matrix"

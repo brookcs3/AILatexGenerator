@@ -10,24 +10,24 @@
   width: 100%;
 }
 
-#container {
+.morphing-container {
   /* Center the text */
   position: relative;
   width: 100%;
-  height: 80pt;
+  height: 40pt;
   
   /* This filter is a lot of the magic, creates the gooey effect */
   filter: url(#threshold) blur(0.6px);
 }
 
 /* Text styling */
-#text1, #text2 {
+.morphing-text {
   position: absolute;
   width: 100%;
   display: inline-block;
   
   font-family: 'Raleway', sans-serif;
-  font-size: 60pt;
+  font-size: 24pt;
   font-weight: 900;
   
   text-align: center;
@@ -42,7 +42,7 @@
 }
 
 /* Hide SVG from visual flow */
-#filters {
+.filters-svg {
   position: absolute;
   width: 0;
   height: 0;
