@@ -138,8 +138,7 @@ Never include non-existent packages like \`\\usepackage{math}\`.
 - Structure content logically with sections and subsections using the custom formatting
 - Take advantage of the color scheme when creating emphasis
 - Include the rest of the document structure
-- Use this exact template for the basis of all report documents, the template is contain in the following 
-template at path '/report.tex'
+- Use this exact template as the basis for all report documents. The template is contained in the file at path '/report.tex'.
 
 ### Letter Document
 - Use \`letter\` document class
