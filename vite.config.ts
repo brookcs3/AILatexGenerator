@@ -1,6 +1,6 @@
 /**
  * vite.config.ts  Railwayfriendly version
- * ------------------------------------------------
+ * -----------------------------------------------
  * - Adds Nodecompatible __dirname / __filename
  * - Leaves all existing plugins & aliases intact
  */
