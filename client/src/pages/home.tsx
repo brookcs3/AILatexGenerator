@@ -147,6 +147,10 @@ export default function Home() {
   const { setShowAuthPrompt } = useContext(AuthRequiredContext);
   const [, navigate] = useLocation();
   const { toast } = useToast();
+
+  // Flag to control the old mobile "boop" effect that kept the page scrolled
+  // to the top. Disabled by default to prevent unexpected scrolling.
+  const enableMobileBoop = false;
   
   // Query anonymous user status
   const anonymousStatus = useAnonymousStatus();
@@ -167,6 +171,7 @@ export default function Home() {
   
   // "Boop" effect - always pulling page to top on mobile with nice animation
   useEffect(() => {
+    if (!enableMobileBoop) return;
     // Only apply on mobile devices in portrait mode
     const isMobilePortrait = () => window.innerWidth < 768 && window.innerHeight > window.innerWidth;
     
@@ -289,7 +294,7 @@ export default function Home() {
       
       window.removeEventListener('scroll', scrollHandler);
     };
-  }, []);
+  }, [enableMobileBoop]);
   
   // Check localStorage for preselected template when coming from template URL
   const getInitialDocumentType = () => {
