@@ -287,7 +287,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
 
         // Animate the title with typewriter effect
         if (title) {
-          const fullText = "AI  LaTeX   Generator";
+          const fullText = "AI LaTeX Generator";
           title.textContent = "";
 
           let charIndex = 0;
