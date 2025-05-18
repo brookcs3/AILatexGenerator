@@ -132,10 +132,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }));
   
   // Optional session logging middleware for debugging
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    process.env.DEBUG_SESSIONS === 'true'
-  ) {
+  const debugSessions = process.env.DEBUG_SESSIONS === 'true';
+  if (debugSessions) {
     app.use((req: Request, res: Response, next: NextFunction) => {
       if (req.method === 'GET' && req.path.startsWith('/api/')) {
         console.log('Session ID:', req.sessionID);

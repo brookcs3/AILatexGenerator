@@ -50,6 +50,8 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    
    - `DATABASE_URL` (Copy this from the PostgreSQL service's "Connect" tab)
    - `SESSION_SECRET` (A random string for securing sessions)
+   - `DEBUG_SESSIONS` set to `true` to log session data for debugging
+
    - `OPENAI_API_KEY` (Your OpenAI API key)
    - `ANTHROPIC_API_KEY` (Your Anthropic API key)
    - `GROQ_API_KEY` (Your Groq API key)
@@ -78,21 +80,47 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
 
+## Required Environment Variables
+
+The following variables must be configured either in a `.env` file or in your
+deployment platform. Refer to `.env.example` for sample values.
+
+- `PORT` - Port for the server (default `5000`).
+- `NODE_ENV` - Environment mode (`development` or `production`).
+- `DATABASE_URL` - PostgreSQL connection string.
+- `SESSION_SECRET` - Secret used to sign sessions.
+- `OPENAI_API_KEY` - OpenAI API key.
+- `ANTHROPIC_API_KEY` - Anthropic API key.
+- `GROQ_API_KEY` - Groq API key.
+- `POSTMARK_API_KEY` - Postmark API key for sending emails.
+- `STRIPE_SECRET_KEY` - Stripe secret key.
+- `STRIPE_WEBHOOK_SECRET` - Secret to verify Stripe webhooks.
+- `VITE_STRIPE_PUBLIC_KEY` - Stripe publishable key for the client.
+- `STRIPE_PRICE_TIER1_ID` to `STRIPE_PRICE_TIER5_ID` - Price IDs for
+  subscription tiers.
+- `STRIPE_PRICE_REFILL_PACK_ID` - Price ID for refill packs.
+- `DOMAIN` - Production domain used in email links.
+- `VITE_API_BASE_URL` - Base URL for the frontend API.
+
 ## Stripe Environment Variables
 
-The application integrates with Stripe for payment processing. Set the following
-variables in your `.env` file or deployment platform:
 
-- `STRIPE_SECRET_KEY` - server-side secret for creating customers, subscriptions
-  and handling webhooks.
-- `STRIPE_WEBHOOK_SECRET` - used to verify incoming Stripe webhooks.
-- `STRIPE_PRICE_TIER1_ID` to `STRIPE_PRICE_TIER5_ID` - price IDs for each
-  subscription tier.
-- `STRIPE_PRICE_REFILL_PACK_ID` - price ID for refill packs.
-- `VITE_STRIPE_PUBLIC_KEY` - **required for client-side checkout**. Without this
-  key, the frontend cannot initialize Stripe and payment flows will be
-  unavailable.
+Below is a list of important environment variables used throughout the project.
+Make sure to define these in your `.env` file or in your deployment platform's
+configuration:
+
+- `DATABASE_URL`
+- `SESSION_SECRET`
+- `OPENAI_API_KEY`
+- `ANTHROPIC_API_KEY`
+- `GROQ_API_KEY`
+- `VITE_STRIPE_PUBLIC_KEY`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `POSTMARK_API_KEY`
+
+Refer to `.env.example` for default values and additional optional variables.
 
 ## License
 
-[MIT License](LICENSE)
+Released under the [MIT License](LICENSE).

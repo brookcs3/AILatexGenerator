@@ -59,11 +59,11 @@ function getEmbeddedTemplate(templateType: TemplateType): string {
       // Default report template here
       return `\\documentclass[11pt,letterpaper]{article}
 \\usepackage[margin=1in]{geometry}
-\\begin{document}
-\\title{Report Title}
+      \\begin{document}
+      \\title{Report Title}
+      \\author{Author Name}
+      \\date{\\today}
 
-\\author{Author Name}
-\\date{\\today}
 \\maketitle
 \\section{Introduction}
 % Report content
@@ -111,3 +111,4 @@ export async function updateSystemPromptsWithTemplates(): Promise<void> {
   // For now, this is a placeholder
   console.log('Templates loaded and ready for use');
 }
+
