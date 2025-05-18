@@ -10,3 +10,5 @@ interface ParticlesJS {
 interface Window {
   particlesJS: ParticlesJS;
 }
+
+declare module 'particles.js';

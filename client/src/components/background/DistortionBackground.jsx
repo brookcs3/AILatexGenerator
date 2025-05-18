@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import particlesJS from 'particlesjs';
+
+
+import 'particles.js';  
 import './DistortionBackground.css';
 
 const DistortionBackground = () => {
@@ -8,10 +10,12 @@ const DistortionBackground = () => {
   
   // Initialize particles.js when component mounts
   useEffect(() => {
-    
+
     const initParticles = () => {
       try {
-        if (particlesRef.current) {
+        // Initialize particles with our config
+        if (window.particlesJS && particlesRef.current) {
+          // Use the particlesRef.current ID for initialization
           const particlesId = 'particles-js-' + Math.random().toString(36).substring(2, 10);
           particlesRef.current.id = particlesId;
 
