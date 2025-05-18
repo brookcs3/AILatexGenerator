@@ -7,11 +7,12 @@
     "dev": "tsx server/index.ts",
     "build": "vite build",
     "start": "NODE_ENV=production tsx server/index.ts",
-    "test": "node --test server/utils/__tests__/tectonic.test.js",
     "check": "tsc",
     "db:push": "drizzle-kit push --force --config=./drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config=./drizzle.config.ts",
-    "db:migrate": "tsx db/migrate.ts"
+    "db:migrate": "tsx db/migrate.ts",
+    "test:server": "node --test server/utils/__tests__/tectonic.test.js",
+    "test": "jest"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
