@@ -150,7 +150,7 @@ export default function Home() {
 
   // Flag to control the old mobile "boop" effect that kept the page scrolled
   // to the top. Disabled by default to prevent unexpected scrolling.
-  const enableMobileBoop = false;
+  const enableMobileBoop = true;
   
   // Query anonymous user status
   const anonymousStatus = useAnonymousStatus();
