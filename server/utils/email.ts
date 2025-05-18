@@ -87,8 +87,7 @@ export async function sendVerificationEmail(
           
           <div style="margin-top: 24px; padding: 16px; background-color: #f3f4f6; border-radius: 4px;">
             <p style="margin: 0; font-size: 14px; color: #374151;">
-              <strong>⚠️ Important:</strong> This email might end up in your spam/junk folder. 
-              Please check there if you don't see it in your inbox.
+              <strong>⚠ Check your spam or junk folder</strong> if you don't see it in your inbox.
             </p>
           </div>
           
