@@ -50,10 +50,16 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    
    - `DATABASE_URL` (Copy this from the PostgreSQL service's "Connect" tab)
    - `SESSION_SECRET` (A random string for securing sessions)
+   - `DEBUG_SESSIONS` (Set to `true` to log session details during development)
    - `OPENAI_API_KEY` (Your OpenAI API key)
    - `ANTHROPIC_API_KEY` (Your Anthropic API key)
    - `GROQ_API_KEY` (Your Groq API key)
+   - `VITE_STRIPE_PUBLIC_KEY` (Your Stripe publishable key for the client)
+   - `STRIPE_SECRET_KEY` (Your Stripe secret key)
+   - `STRIPE_WEBHOOK_SECRET` (Webhook secret used to verify Stripe events)
+   - `POSTMARK_API_KEY` (Your Postmark API key for sending emails)
    - Any other API keys needed for service integrations
+   - Stripe variables (see [Stripe Environment Variables](#stripe-environment-variables))
 
 5. **Deploy**
    - Railway will automatically deploy your application
@@ -68,10 +74,12 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 
 1. Clone this repository
 2. Install dependencies: `npm install`
-3. Create a `.env` file with the required environment variables
+3. Create a `.env` file with the required environment variables (see `.env.example`)
+   including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
+   `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
 
-## Environment Variables
+
 
 Below is a list of important environment variables used throughout the project.
 Make sure to define these in your `.env` file or in your deployment platform's
