@@ -280,7 +280,7 @@ function runTectonic(inputFile: string, outputDir: string): Promise<{
 /**
  * Parse Tectonic error log to extract line numbers and error messages
  */
-function parseErrorLog(errorLog: string): { line: number; message: string }[] {
+export function parseErrorLog(errorLog: string): { line: number; message: string }[] {
   const errors: { line: number; message: string }[] = [];
   
   // Common LaTeX error patterns
