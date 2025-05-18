@@ -59,8 +59,8 @@ function getEmbeddedTemplate(templateType: TemplateType): string {
       // Default report template here
       return `\\documentclass[11pt,letterpaper]{article}
 \\usepackage[margin=1in]{geometry}
-\\begin{document}
-\\title{Report Title}
+      \\begin{document}
+      \\title{Report Title}
 \\author{Author Name}
 \\date{\\today}
 \\maketitle
