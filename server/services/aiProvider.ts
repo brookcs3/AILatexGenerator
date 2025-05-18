@@ -553,7 +553,8 @@ export async function modifyLatex(
  */
 export async function rewriteText(
   text: string,
-  model: string = 'llama3-70b-8192'
+
+  model: string = 'llama3-8b-8192'
 ): Promise<{ success: boolean; text?: string; error?: string }> {
   if (!groqApiKey) {
     return { success: false, error: 'Groq API not configured' };
@@ -602,6 +603,7 @@ export async function rewriteText(
     const second = await makeRequest(first);
 
     return { success: true, text: second.trim() };
+    
   } catch (error) {
     const errorObj = error as any;
     if (errorObj.response?.status === 429) {

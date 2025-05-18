@@ -155,3 +155,10 @@ export const tierPrices = {
  */
 export const REFILL_PACK_CREDITS = 100;  // Each refill pack adds 100 requests
 export const REFILL_PACK_PRICE = 0.99;   // Each refill pack costs $0.99 (one-time purchase)
+
+// Schema for rewriting text using the Undetectable AI test page
+export const rewriteSchema = z.object({
+  text: z.string().min(1, "Text is required")
+});
+
+export type RewriteRequest = z.infer<typeof rewriteSchema>;

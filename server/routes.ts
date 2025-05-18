@@ -37,6 +37,8 @@ import session from "express-session";
 import pgSession from "connect-pg-simple";
 import { pool } from "../db";
 
+const GUEST_MODE = process.env.GUEST_MODE === 'true';
+
 // Initialize Stripe
 if (!process.env.STRIPE_SECRET_KEY) {
   console.warn('Missing STRIPE_SECRET_KEY, Stripe functionality will be limited');
