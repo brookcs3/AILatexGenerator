@@ -615,7 +615,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post(
     "/api/undetectable/rewrite",
     trackAnonymousUser,
-    GUEST_MODE ? allowAnonymousOrAuth : requireAuth,
+    allowAnonymousOrAuth,
     checkSubscription,
     async (req: Request, res: Response) => {
       const { text } = req.body;
