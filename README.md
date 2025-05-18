@@ -71,6 +71,24 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 3. Create a `.env` file with the required environment variables
 4. Run the application: `npm run dev`
 
+## Environment Variables
+
+Below is a list of important environment variables used throughout the project.
+Make sure to define these in your `.env` file or in your deployment platform's
+configuration:
+
+- `DATABASE_URL`
+- `SESSION_SECRET`
+- `OPENAI_API_KEY`
+- `ANTHROPIC_API_KEY`
+- `GROQ_API_KEY`
+- `VITE_STRIPE_PUBLIC_KEY`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `POSTMARK_API_KEY`
+
+Refer to `.env.example` for default values and additional optional variables.
+
 ## License
 
 [MIT License](LICENSE)
