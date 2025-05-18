@@ -1,4 +1,5 @@
 import { Scale } from "lucide-react";
+import "./FeatureCards.css";
 
 const FeatureCards: React.FC = () => (
   <div className="features-container flex justify-center flex-wrap gap-8 mt-12 w-full">
