@@ -78,6 +78,28 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
 
+## Required Environment Variables
+
+The following variables must be configured either in a `.env` file or in your
+deployment platform. Refer to `.env.example` for sample values.
+
+- `PORT` - Port for the server (default `5000`).
+- `NODE_ENV` - Environment mode (`development` or `production`).
+- `DATABASE_URL` - PostgreSQL connection string.
+- `SESSION_SECRET` - Secret used to sign sessions.
+- `OPENAI_API_KEY` - OpenAI API key.
+- `ANTHROPIC_API_KEY` - Anthropic API key.
+- `GROQ_API_KEY` - Groq API key.
+- `POSTMARK_API_KEY` - Postmark API key for sending emails.
+- `STRIPE_SECRET_KEY` - Stripe secret key.
+- `STRIPE_WEBHOOK_SECRET` - Secret to verify Stripe webhooks.
+- `VITE_STRIPE_PUBLIC_KEY` - Stripe publishable key for the client.
+- `STRIPE_PRICE_TIER1_ID` to `STRIPE_PRICE_TIER5_ID` - Price IDs for
+  subscription tiers.
+- `STRIPE_PRICE_REFILL_PACK_ID` - Price ID for refill packs.
+- `DOMAIN` - Production domain used in email links.
+- `VITE_API_BASE_URL` - Base URL for the frontend API.
+
 ## Stripe Environment Variables
 
 The application integrates with Stripe for payment processing. Set the following
