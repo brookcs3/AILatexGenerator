@@ -76,7 +76,7 @@ function Router() {
       <Route path="/history" component={DocumentHistory} />
       <Route path="/verify-email" component={VerifyEmail} />
       <Route path="/ui-playground" component={UIPlayground} />
-      <Route path="/undetectable-test" component={UndetectableTest} />
+      <Route path="/undetectable" component={UndetectableTest} />
       <Route path="/template/:type" component={TemplateRedirect} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route component={NotFound} />

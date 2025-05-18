@@ -26,8 +26,8 @@ const validateRequest = (schema: z.ZodType<any, any>) => {
     }
   };
 };
-import { generateLatexSchema, rewriteSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE } from "@shared/schema";
-import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex, rewriteHumanText } from "./services/aiProvider";
+import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE } from "@shared/schema";
+import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex, rewriteText } from "./services/aiProvider";
 import { compileLatex, compileAndFixLatex } from "./services/latexService";
 import { stripeService } from "./services/stripeService";
 import { stripeSync } from "./services/stripeSync";
@@ -609,24 +609,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   );
 
-  // Endpoint to rewrite text using the Undetectable AI test
+  // Endpoint to rewrite text using Groq to make it less detectable as AI
   app.post(
     "/api/undetectable/rewrite",
     trackAnonymousUser,
     allowAnonymousOrAuth,
     checkSubscription,
-    validateRequest(rewriteSchema),
     async (req: Request, res: Response) => {
       const { text } = req.body;
       const userId = req.session.userId;
       const isAuthenticated = !!userId;
 
-      if (!isAuthenticated) {
-        await incrementAnonymousUsage(req);
+      if (!text) {
+        return res.status(400).json({ message: "Text is required" });
       }
 
       try {
-        const result = await rewriteHumanText(text);
+        if (!isAuthenticated) {
+          await incrementAnonymousUsage(req);
+        }
+
+        const result = await rewriteText(text);
+
         if (!result.success) {
           return res.status(500).json({ message: result.error });
         }
