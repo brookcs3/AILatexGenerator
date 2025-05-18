@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./HyperIntro.css";
-import { Scale } from "lucide-react";
+import HeroTitle from "./HeroTitle";
+import PromptAnimator from "./PromptAnimator";
+import FeatureCards from "./FeatureCards";
 
 // Modern intro component with professional animation effects
 
@@ -839,87 +841,8 @@ Method B & Better for categorical variables \\\\
             <div className="tv-screen">
               <div className="scanlines"></div>
               <div className="tv-content">
-                <h1 className="hero-title">AI LaTeX Generator</h1>
-                <div className="prompt-container">
-                  <span className="prompt-text"></span>
-                  <span className="prompt-cursor">|</span>
-                </div>
-                
-                {/* CTA button - repositioned between prompt-text and latex-reveal */}
-                <div className="cta-button-container">
-                  <button
-                    className="cta-button"
-                    onClick={handleGetStartedClick}
-                    aria-label="Get started with AI LaTeX Generator"
-                  >
-                    Get Started
-                  </button>
-                </div>
-                
-                <div className="latex-reveal">
-                  <div className="latex-code" id="latex-code-container">
-                    <div id="download-pdf-button" className="download-pdf-button">
-                      <button
-                        id="pdf-download-btn"
-                        className="pdf-download-button" 
-                        onClick={() => {
-                          // Get the current LaTeX code from the container
-                          const latexCodeContainer = document.getElementById('latex-code-container');
-                          let latexCode = '';
-                          
-                          if (latexCodeContainer) {
-                            const preElement = latexCodeContainer.querySelector('pre');
-                            if (preElement) {
-                              latexCode = preElement.textContent || '';
-                            }
-                          }
-                          
-                          // Download the appropriate PDF file based on current selection
-                          const link = document.createElement('a');
-                          
-                          // Get the current template type from the display
-                          const currentPromptText = document.querySelector('.prompt-text')?.textContent || '';
-                          
-                          // Select the appropriate PDF based on the current prompt
-                          let pdfFile = '';
-                          if (currentPromptText.includes('quantum computing')) {
-                            pdfFile = '/quantum_paper.pdf';
-                          } else if (currentPromptText.includes('slideshow')) {
-                            pdfFile = '/essay_slideshow.pdf';
-                          } else if (currentPromptText.includes('mathematical report')) {
-                            pdfFile = '/math_report.pdf';
-                          } else if (currentPromptText.includes('research notes')) {
-                            pdfFile = '/research_notes.pdf';
-                          } else if (currentPromptText.includes('scientific poster')) {
-                            pdfFile = '/scientific_poster.pdf';
-                          } else {
-                            // Default to math report if no match
-                            pdfFile = '/math_report.pdf';
-                          }
-                          
-                          link.href = pdfFile;
-                          link.download = pdfFile.substring(1);
-                          
-                          document.body.appendChild(link);
-                          link.click();
-                          document.body.removeChild(link);
-                        }}
-                      >
-                        <span>Download PDF</span>
-                      </button>
-                    </div>
-                    <pre>{`\\documentclass{article}
-\\usepackage{amsmath}
-\\begin{document}
-\\title{AI Generated Document}
-\\author{AI LaTeX Generator}
-\\maketitle
-\\begin{equation}
-  E = mc^2
-\\end{equation}
-\\end{document}`}</pre>
-                  </div>
-                </div>
+                <HeroTitle />
+                <PromptAnimator onGetStarted={handleGetStartedClick} />
               </div>
               <div className="tv-glitch"></div>
             </div>
@@ -927,70 +850,7 @@ Method B & Better for categorical variables \\\\
         </div>
 
         {/* Feature cards */}
-        <div className="features-container">
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-              </svg>
-            </div>
-            <h3>Equation Processing</h3>
-            <p>
-              Complex mathematical expressions converted to perfect LaTeX syntax
-              with precise formatting
-            </p>
-          </div>
-
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 20h9"></path>
-                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-              </svg>
-            </div>
-            <h3>Adaptive Intelligence</h3>
-            <p>
-              Our AI adapts to your research style and preferences to deliver
-              personalized LaTeX documents
-            </p>
-          </div>
-
-          <div className="feature-card">
-            <div className="feature-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-              </svg>
-            </div>
-            <h3>Instant Compilation</h3>
-            <p>
-              View and download your compiled documents immediately with live
-              preview and PDF export
-            </p>
-          </div>
-        </div>
+        <FeatureCards />
       </div>
 
       {/* Scroll indicator */}
