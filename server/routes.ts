@@ -131,8 +131,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     name: 'latex.sid'              // Custom name to avoid conflicts
   }));
   
-  // Optional session logging for debugging
-  if (process.env.DEBUG_SESSIONS === 'true') {
+  // Optional session logging middleware for debugging
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    process.env.DEBUG_SESSIONS === 'true'
+  ) {
     app.use((req: Request, res: Response, next: NextFunction) => {
       if (req.method === 'GET' && req.path.startsWith('/api/')) {
         console.log('Session ID:', req.sessionID);

@@ -63,6 +63,7 @@ function getEmbeddedTemplate(templateType: TemplateType): string {
       \\title{Report Title}
       \\author{Author Name}
       \\date{\\today}
+
 \\maketitle
 \\section{Introduction}
 % Report content
