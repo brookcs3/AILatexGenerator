@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import 'particlesjs';
+import 'particles.js';
 import './DistortionBackground.css';
 
 const DistortionBackground = () => {
