@@ -77,6 +77,9 @@ export const API_ROUTES = {
     documents: "/api/documents",
     document: (id: string | number) => `/api/documents/${id}`
   },
+  undetectable: {
+    rewrite: "/api/undetectable/rewrite"
+  },
   subscription: {
     create: "/api/subscription/create",
     manage: "/api/subscription/manage",

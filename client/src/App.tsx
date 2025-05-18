@@ -15,6 +15,7 @@ import DocumentHistory from "@/pages/document-history";
 import VerifyEmail from "@/pages/verify-email";
 import Success from "@/pages/success";
 import UIPlayground from "@/pages/ui-playground";
+import UndetectableTest from "@/pages/undetectable-test";
 import TemplateRedirect from "@/pages/template-redirect";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import IntroPage from "@/pages/intro-page";
@@ -75,6 +76,7 @@ function Router() {
       <Route path="/history" component={DocumentHistory} />
       <Route path="/verify-email" component={VerifyEmail} />
       <Route path="/ui-playground" component={UIPlayground} />
+      <Route path="/undetectable" component={UndetectableTest} />
       <Route path="/template/:type" component={TemplateRedirect} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route component={NotFound} />

@@ -10,6 +10,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 - User authentication and subscription tiers
 - Collaborative editing functionality
 - User-friendly tag system for non-LaTeX users
+- Experimental text rewriting tool for AI detector evasion
 
 ## Tech Stack
 
