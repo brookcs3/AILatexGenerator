@@ -61,6 +61,7 @@ function getEmbeddedTemplate(templateType: TemplateType): string {
 \\usepackage[margin=1in]{geometry}
 \\begin{document}
 \\title{Report Title}
+
 \\author{Author Name}
 \\date{\\today}
 \\maketitle
