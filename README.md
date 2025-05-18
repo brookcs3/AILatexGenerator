@@ -50,6 +50,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    
    - `DATABASE_URL` (Copy this from the PostgreSQL service's "Connect" tab)
    - `SESSION_SECRET` (A random string for securing sessions)
+   - `DEBUG_SESSIONS` (Set to `true` to log session details during development)
    - `OPENAI_API_KEY` (Your OpenAI API key)
    - `ANTHROPIC_API_KEY` (Your Anthropic API key)
    - `GROQ_API_KEY` (Your Groq API key)
