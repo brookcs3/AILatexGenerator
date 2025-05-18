@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import particlesJS from 'particlesjs';
 import './DistortionBackground.css';
 
 const DistortionBackground = () => {
@@ -7,45 +8,24 @@ const DistortionBackground = () => {
   
   // Initialize particles.js when component mounts
   useEffect(() => {
-    let particlesInstance = null;
     
-    const initParticles = async () => {
+    const initParticles = () => {
       try {
-        // Load particles.js dynamically
-        if (typeof window.particlesJS === 'undefined') {
-          // Load particles.js script if not already loaded
-          const script = document.createElement('script');
-          script.src = 'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js';
-          script.async = true;
-          
-          // Wait for script to load
-          const scriptLoaded = new Promise((resolve, reject) => {
-            script.onload = resolve;
-            script.onerror = reject;
-          });
-          
-          document.head.appendChild(script);
-          await scriptLoaded;
-        }
-        
-        // Initialize particles with our config
-        if (window.particlesJS && particlesRef.current) {
-          // Use the particlesRef.current ID for initialization
+        if (particlesRef.current) {
           const particlesId = 'particles-js-' + Math.random().toString(36).substring(2, 10);
           particlesRef.current.id = particlesId;
-          
-          // Initialize particles
-          window.particlesJS.load(
-            particlesId, 
+
+          particlesJS.load(
+            particlesId,
             '/js/particles-config.json',
-            function() {
+            function () {
               console.log('Particles.js loaded and initialized successfully!');
             }
           );
         }
       } catch (err) {
         console.error('Failed to initialize particles:', err);
-        
+
         // Fallback to CSS particles if particles.js fails
         createCSSParticles();
       }
