@@ -53,6 +53,10 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    - `OPENAI_API_KEY` (Your OpenAI API key)
    - `ANTHROPIC_API_KEY` (Your Anthropic API key)
    - `GROQ_API_KEY` (Your Groq API key)
+   - `VITE_STRIPE_PUBLIC_KEY` (Your Stripe publishable key for the client)
+   - `STRIPE_SECRET_KEY` (Your Stripe secret key)
+   - `STRIPE_WEBHOOK_SECRET` (Webhook secret used to verify Stripe events)
+   - `POSTMARK_API_KEY` (Your Postmark API key for sending emails)
    - Any other API keys needed for service integrations
 
 5. **Deploy**
@@ -68,7 +72,9 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 
 1. Clone this repository
 2. Install dependencies: `npm install`
-3. Create a `.env` file with the required environment variables
+3. Create a `.env` file with the required environment variables (see `.env.example`)
+   including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
+   `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
 
 ## License
