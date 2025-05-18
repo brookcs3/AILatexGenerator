@@ -1,4 +1,5 @@
 import React from "react";
+import "./PromptAnimator.css";
 import HeroTitle from "./HeroTitle";
 
 interface Props {
