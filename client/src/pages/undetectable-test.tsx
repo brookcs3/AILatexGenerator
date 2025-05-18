@@ -34,6 +34,7 @@ export default function UndetectableTest() {
               onChange={(e) => setInput(e.target.value)}
             />
             <Button onClick={handleRewrite} disabled={loading || input.trim().length === 0}>
+
               {loading ? "Rewriting..." : "Rewrite"}
             </Button>
           </div>

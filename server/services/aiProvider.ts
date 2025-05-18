@@ -602,6 +602,7 @@ export async function rewriteText(
       provider.totalTokensUsed = provider.MAX_TOKENS;
     }
     return { success: false, error: errorObj.message || 'Failed to rewrite text' };
+
   }
 }
 
