@@ -1,202 +1,170 @@
 import React, { useEffect, useRef } from 'react';
-import 'particlesjs';
 import './DistortionBackground.css';
 
 const DistortionBackground = () => {
   const backgroundRef = useRef(null);
   const particlesRef = useRef(null);
   
-  // Initialize particles.js when component mounts
+  // Interactive network effect with canvas
   useEffect(() => {
-
-    const initParticles = () => {
-      try {
-        // Initialize particles with our config
-        if (particlesRef.current) {
-          // Use the particlesRef.current ID for initialization
-          const particlesId = 'particles-js-' + Math.random().toString(36).substring(2, 10);
-          particlesRef.current.id = particlesId;
-
-          // Direct initialization without load method (which might not be available)
-          if (window.particlesJS) {
-            window.particlesJS(particlesId, {
-              "particles": {
-                "number": {
-                  "value": 80,
-                  "density": {
-                    "enable": true,
-                    "value_area": 800
-                  }
-                },
-                "color": {
-                  "value": ["#6366f1", "#8b5cf6", "#a855f7", "#d946ef", "#ec4899"]
-                },
-                "shape": {
-                  "type": "circle",
-                  "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                  }
-                },
-                "opacity": {
-                  "value": 0.5,
-                  "random": false,
-                  "anim": {
-                    "enable": false,
-                    "speed": 1,
-                    "opacity_min": 0.1,
-                    "sync": false
-                  }
-                },
-                "size": {
-                  "value": 3,
-                  "random": true,
-                  "anim": {
-                    "enable": false,
-                    "speed": 40,
-                    "size_min": 0.1,
-                    "sync": false
-                  }
-                },
-                "line_linked": {
-                  "enable": true,
-                  "distance": 150,
-                  "color": "#a855f7",
-                  "opacity": 0.4,
-                  "width": 1
-                },
-                "move": {
-                  "enable": true,
-                  "speed": 2,
-                  "direction": "none",
-                  "random": false,
-                  "straight": false,
-                  "out_mode": "out",
-                  "bounce": false,
-                  "attract": {
-                    "enable": false,
-                    "rotateX": 600,
-                    "rotateY": 1200
-                  }
-                }
-              },
-              "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                  "onhover": {
-                    "enable": true,
-                    "mode": "grab"
-                  },
-                  "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                  },
-                  "resize": true
-                }
-              },
-              "retina_detect": true
-            });
-            console.log('Particles.js initialized successfully!');
-          } else {
-            console.warn('particlesJS not found, using CSS fallback');
-            createCSSParticles();
+    if (!particlesRef.current) return;
+    
+    // Create canvas element
+    const canvas = document.createElement('canvas');
+    canvas.className = 'particles-canvas';
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    
+    particlesRef.current.innerHTML = '';
+    particlesRef.current.appendChild(canvas);
+    
+    // Get context
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    // Set canvas size
+    const resize = () => {
+      canvas.width = particlesRef.current?.clientWidth || window.innerWidth;
+      canvas.height = particlesRef.current?.clientHeight || window.innerHeight;
+    };
+    
+    window.addEventListener('resize', resize);
+    resize();
+    
+    // Particle settings
+    const particleCount = 80;
+    const colors = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899'];
+    let mouseX = canvas.width / 2;
+    let mouseY = canvas.height / 2;
+    
+    // Create particles
+    const particles = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 3 + 1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: Math.random() * 1 - 0.5,
+        vy: Math.random() * 1 - 0.5,
+        opacity: Math.random() * 0.5 + 0.2
+      });
+    }
+    
+    // Mouse move handler
+    const handleMouseMove = (e) => {
+      // Get correct mouse coordinates relative to canvas
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    };
+    
+    // Touch move handler for mobile
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        const rect = canvas.getBoundingClientRect();
+        mouseX = e.touches[0].clientX - rect.left;
+        mouseY = e.touches[0].clientY - rect.top;
+        e.preventDefault(); // Prevent scrolling while interacting
+      }
+    };
+    
+    // Add event listeners
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove);
+    
+    // Animation function
+    const animate = () => {
+      // Request next frame
+      const animationId = requestAnimationFrame(animate);
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw particles and connections
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        
+        // Move particles
+        p.x += p.vx;
+        p.y += p.vy;
+        
+        // Reverse direction if hit edge
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        
+        // Slight attraction to mouse
+        const dx = mouseX - p.x;
+        const dy = mouseY - p.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 150) {
+          p.x += dx * 0.01;
+          p.y += dy * 0.01;
+        }
+        
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.fill();
+        
+        // Draw connections between nearby particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 100) {
+            // Draw line with gradient opacity based on distance
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            const opacity = 0.3 * (1 - distance / 100);
+            ctx.strokeStyle = '#a855f7';
+            ctx.globalAlpha = opacity;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
           }
         }
-      } catch (err) {
-        console.error('Failed to initialize particles:', err);
-        // Fallback to CSS particles if particles.js fails
-        createCSSParticles();
-      }
-    };
-    
-    // Fallback method using CSS particles (same as before)
-    const createCSSParticles = () => {
-      if (particlesRef.current) {
-        const particlesContainer = particlesRef.current;
-        particlesContainer.innerHTML = '';
         
-        // Create particles with professional colors
-        const particleCount = 60;
-        const colors = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899'];
+        // Draw connections to mouse when close
+        const mouseDistance = Math.sqrt(
+          (p.x - mouseX) * (p.x - mouseX) + 
+          (p.y - mouseY) * (p.y - mouseY)
+        );
         
-        for (let i = 0; i < particleCount; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'bg-particle';
-          
-          // Random position
-          const posX = Math.random() * 100;
-          const posY = Math.random() * 100;
-          
-          // Random size
-          const size = Math.random() * 3 + 1;
-          
-          // Random color from our palette
-          const color = colors[Math.floor(Math.random() * colors.length)];
-          
-          // Set particle styles
-          particle.style.position = 'absolute';
-          particle.style.left = `${posX}%`;
-          particle.style.top = `${posY}%`;
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-          particle.style.borderRadius = '50%';
-          particle.style.backgroundColor = color;
-          particle.style.boxShadow = `0 0 ${size}px ${color}`;
-          particle.style.opacity = `${Math.random() * 0.5 + 0.2}`;
-          
-          // Add smooth animation
-          const duration = Math.random() * 20 + 15;
-          const delay = Math.random() * 5;
-          
-          // Create unique animation name
-          const animName = `float-${i}`;
-          
-          // Create and append style with keyframes
-          const style = document.createElement('style');
-          style.innerHTML = `
-            @keyframes ${animName} {
-              0% {
-                transform: translate(0, 0);
-              }
-              25% {
-                transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px);
-              }
-              50% {
-                transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px);
-              }
-              75% {
-                transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px);
-              }
-              100% {
-                transform: translate(0, 0);
-              }
-            }
-          `;
-          document.head.appendChild(style);
-          
-          // Apply animation
-          particle.style.animation = `${animName} ${duration}s ease-in-out ${delay}s infinite`;
-          
-          // Add to container
-          particlesContainer.appendChild(particle);
+        if (mouseDistance < 150) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouseX, mouseY);
+          const opacity = 0.3 * (1 - mouseDistance / 150);
+          ctx.strokeStyle = '#ec4899';
+          ctx.globalAlpha = opacity;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
         }
       }
     };
     
-    // Initialize particles
-    initParticles();
+    // Start animation
+    const animationId = requestAnimationFrame(animate);
     
     // Cleanup function
     return () => {
-      // Cleanup any created particles (for CSS fallback)
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
       if (particlesRef.current) {
         particlesRef.current.innerHTML = '';
       }
-      
-      // Remove any dynamically added styles
-      document.querySelectorAll('style[data-particle-style]').forEach(style => {
-        style.remove();
-      });
     };
   }, []);
   
