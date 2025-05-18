@@ -1,5 +1,6 @@
 import React from "react";
 import HeroTitle from "./HeroTitle";
+import "./PromptAnimator.css";
 
 interface Props {
   onGetStarted: () => void;
