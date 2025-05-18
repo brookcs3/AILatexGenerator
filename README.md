@@ -123,4 +123,4 @@ Refer to `.env.example` for default values and additional optional variables.
 
 ## License
 
-[MIT License](LICENSE)
+Released under the [MIT License](LICENSE).
