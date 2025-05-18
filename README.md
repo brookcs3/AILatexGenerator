@@ -50,6 +50,8 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    
    - `DATABASE_URL` (Copy this from the PostgreSQL service's "Connect" tab)
    - `SESSION_SECRET` (A random string for securing sessions)
+   - `DEBUG_SESSIONS` set to `true` to log session data for debugging
+
    - `OPENAI_API_KEY` (Your OpenAI API key)
    - `ANTHROPIC_API_KEY` (Your Anthropic API key)
    - `GROQ_API_KEY` (Your Groq API key)
@@ -102,18 +104,22 @@ deployment platform. Refer to `.env.example` for sample values.
 
 ## Stripe Environment Variables
 
-The application integrates with Stripe for payment processing. Set the following
-variables in your `.env` file or deployment platform:
 
-- `STRIPE_SECRET_KEY` - server-side secret for creating customers, subscriptions
-  and handling webhooks.
-- `STRIPE_WEBHOOK_SECRET` - used to verify incoming Stripe webhooks.
-- `STRIPE_PRICE_TIER1_ID` to `STRIPE_PRICE_TIER5_ID` - price IDs for each
-  subscription tier.
-- `STRIPE_PRICE_REFILL_PACK_ID` - price ID for refill packs.
-- `VITE_STRIPE_PUBLIC_KEY` - **required for client-side checkout**. Without this
-  key, the frontend cannot initialize Stripe and payment flows will be
-  unavailable.
+Below is a list of important environment variables used throughout the project.
+Make sure to define these in your `.env` file or in your deployment platform's
+configuration:
+
+- `DATABASE_URL`
+- `SESSION_SECRET`
+- `OPENAI_API_KEY`
+- `ANTHROPIC_API_KEY`
+- `GROQ_API_KEY`
+- `VITE_STRIPE_PUBLIC_KEY`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `POSTMARK_API_KEY`
+
+Refer to `.env.example` for default values and additional optional variables.
 
 ## License
 
