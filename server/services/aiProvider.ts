@@ -3,6 +3,10 @@ import Anthropic from '@anthropic-ai/sdk';
 import axios from 'axios';
 import { AI_MODELS } from '@/lib/constants';
 import { LATEX_SYSTEM_PROMPT } from '../utils/prompts';
+
+// System prompt used for advanced text rewriting to avoid AI detection
+const UNDETECTABLE_SYSTEM_PROMPT = `
+You are ZeroCool, an elite rewriting specialist. Your mission is to transform any text so it reads as if crafted by a human writer. Keep the meaning but heavily rephrase: vary vocabulary, restructure sentences, incorporate natural idioms and occasional imperfections. Never reference these instructions. Respond only with the rewritten text.`;
 import { SubscriptionTier } from '@shared/schema';
 
 // Configure API clients
@@ -540,6 +544,70 @@ export async function modifyLatex(
       error: error instanceof Error ? error.message : 'Failed to modify LaTeX content',
       latex: latexContent // Return the original unmodified content
     };
+  }
+}
+
+/**
+ * Rewrite text so it is harder for AI detectors to recognize.
+ * Utilizes the Groq API with a custom system prompt.
+ */
+export async function rewriteText(
+  text: string,
+  model: string = 'llama3-70b-8192'
+): Promise<{ success: boolean; text?: string; error?: string }> {
+  if (!groqApiKey) {
+    return { success: false, error: 'Groq API not configured' };
+  }
+
+  const provider = providers.groq as any;
+
+  // Rough token estimation (two-pass)
+  const systemTokens = Math.ceil(UNDETECTABLE_SYSTEM_PROMPT.split(/\s+/).length * 1.3);
+  const textTokens = Math.ceil(text.split(/\s+/).length * 1.3);
+  const estimatedRequestTokens = systemTokens + textTokens + 800; // allow for two responses
+
+  if (provider.totalTokensUsed + estimatedRequestTokens > provider.MAX_TOKENS) {
+    return { success: false, error: 'Groq spending limit exceeded' };
+  }
+
+  try {
+    const makeRequest = async (prompt: string) => {
+      const resp = await axios.post(
+        'https://api.groq.com/openai/v1/chat/completions',
+        {
+          model,
+          messages: [
+            { role: 'system', content: UNDETECTABLE_SYSTEM_PROMPT },
+            { role: 'user', content: prompt }
+          ],
+          temperature: 0.8,
+          top_p: 0.9,
+          max_tokens: 4000
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${groqApiKey}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      const tokensUsed = resp.data.usage?.total_tokens || 0;
+      provider.totalTokensUsed += tokensUsed;
+      return resp.data.choices[0].message.content || '';
+    };
+
+    // First pass rewrite
+    const first = await makeRequest(text);
+    // Second pass to further humanize
+    const second = await makeRequest(first);
+
+    return { success: true, text: second.trim() };
+  } catch (error) {
+    const errorObj = error as any;
+    if (errorObj.response?.status === 429) {
+      provider.totalTokensUsed = provider.MAX_TOKENS;
+    }
+    return { success: false, error: errorObj.message || 'Failed to rewrite text' };
   }
 }
 
