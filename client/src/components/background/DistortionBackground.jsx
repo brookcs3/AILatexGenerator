@@ -12,22 +12,98 @@ const DistortionBackground = () => {
     const initParticles = () => {
       try {
         // Initialize particles with our config
-        if (window.particlesJS && particlesRef.current) {
+        if (particlesRef.current) {
           // Use the particlesRef.current ID for initialization
           const particlesId = 'particles-js-' + Math.random().toString(36).substring(2, 10);
           particlesRef.current.id = particlesId;
 
-          particlesJS.load(
-            particlesId,
-            '/js/particles-config.json',
-            function () {
-              console.log('Particles.js loaded and initialized successfully!');
-            }
-          );
+          // Direct initialization without load method (which might not be available)
+          if (window.particlesJS) {
+            window.particlesJS(particlesId, {
+              "particles": {
+                "number": {
+                  "value": 80,
+                  "density": {
+                    "enable": true,
+                    "value_area": 800
+                  }
+                },
+                "color": {
+                  "value": ["#6366f1", "#8b5cf6", "#a855f7", "#d946ef", "#ec4899"]
+                },
+                "shape": {
+                  "type": "circle",
+                  "stroke": {
+                    "width": 0,
+                    "color": "#000000"
+                  }
+                },
+                "opacity": {
+                  "value": 0.5,
+                  "random": false,
+                  "anim": {
+                    "enable": false,
+                    "speed": 1,
+                    "opacity_min": 0.1,
+                    "sync": false
+                  }
+                },
+                "size": {
+                  "value": 3,
+                  "random": true,
+                  "anim": {
+                    "enable": false,
+                    "speed": 40,
+                    "size_min": 0.1,
+                    "sync": false
+                  }
+                },
+                "line_linked": {
+                  "enable": true,
+                  "distance": 150,
+                  "color": "#a855f7",
+                  "opacity": 0.4,
+                  "width": 1
+                },
+                "move": {
+                  "enable": true,
+                  "speed": 2,
+                  "direction": "none",
+                  "random": false,
+                  "straight": false,
+                  "out_mode": "out",
+                  "bounce": false,
+                  "attract": {
+                    "enable": false,
+                    "rotateX": 600,
+                    "rotateY": 1200
+                  }
+                }
+              },
+              "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                  "onhover": {
+                    "enable": true,
+                    "mode": "grab"
+                  },
+                  "onclick": {
+                    "enable": true,
+                    "mode": "push"
+                  },
+                  "resize": true
+                }
+              },
+              "retina_detect": true
+            });
+            console.log('Particles.js initialized successfully!');
+          } else {
+            console.warn('particlesJS not found, using CSS fallback');
+            createCSSParticles();
+          }
         }
       } catch (err) {
         console.error('Failed to initialize particles:', err);
-
         // Fallback to CSS particles if particles.js fails
         createCSSParticles();
       }
