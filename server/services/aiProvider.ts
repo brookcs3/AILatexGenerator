@@ -543,4 +543,35 @@ export async function modifyLatex(
   }
 }
 
+export async function rewriteHumanText(text: string) {
+  try {
+    if (!openaiClient) throw new Error('OpenAI API not configured');
+
+    const response = await openaiClient.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content:
+            'You rewrite text to appear naturally written by a human while preserving the original meaning.'
+        },
+        { role: 'user', content: `Rewrite this text:\n\n${text}` }
+      ],
+      temperature: 0.7,
+      max_tokens: 2000
+    });
+
+    return {
+      success: true,
+      text: response.choices[0].message.content?.trim() || ''
+    };
+  } catch (error) {
+    console.error('Error rewriting text:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to rewrite text'
+    };
+  }
+}
+
 // exports are already defined individually throughout the file

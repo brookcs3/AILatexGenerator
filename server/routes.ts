@@ -26,8 +26,8 @@ const validateRequest = (schema: z.ZodType<any, any>) => {
     }
   };
 };
-import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE } from "@shared/schema";
-import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex } from "./services/aiProvider";
+import { generateLatexSchema, rewriteSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE } from "@shared/schema";
+import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex, rewriteHumanText } from "./services/aiProvider";
 import { compileLatex, compileAndFixLatex } from "./services/latexService";
 import { stripeService } from "./services/stripeService";
 import { stripeSync } from "./services/stripeSync";
@@ -605,6 +605,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
           message: "Failed to modify LaTeX",
           error: error instanceof Error ? error.message : "Unknown error"
         });
+      }
+    }
+  );
+
+  // Endpoint to rewrite text using the Undetectable AI test
+  app.post(
+    "/api/undetectable/rewrite",
+    trackAnonymousUser,
+    allowAnonymousOrAuth,
+    checkSubscription,
+    validateRequest(rewriteSchema),
+    async (req: Request, res: Response) => {
+      const { text } = req.body;
+      const userId = req.session.userId;
+      const isAuthenticated = !!userId;
+
+      if (!isAuthenticated) {
+        await incrementAnonymousUsage(req);
+      }
+
+      try {
+        const result = await rewriteHumanText(text);
+        if (!result.success) {
+          return res.status(500).json({ message: result.error });
+        }
+
+        if (isAuthenticated && userId) {
+          await storage.incrementUserUsage(userId);
+        }
+
+        return res.status(200).json({ text: result.text });
+      } catch (error) {
+        console.error("Rewrite text error:", error);
+        return res.status(500).json({ message: "Failed to rewrite text" });
       }
     }
   );
