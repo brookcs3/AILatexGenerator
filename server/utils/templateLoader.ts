@@ -58,11 +58,11 @@ function getEmbeddedTemplate(templateType: TemplateType): string {
     case TemplateType.REPORT:
       // Default report template here
       return `\\documentclass[11pt,letterpaper]{article}
-\\\usepackage[margin=1in]{geometry}
-\\begin{document}
-\\title{Report Title}
-\\author{Author Name}
-\\date{\\today}
+\\usepackage[margin=1in]{geometry}
+      \\begin{document}
+      \\title{Report Title}
+      \\author{Author Name}
+      \\date{\\today}
 \\maketitle
 \\section{Introduction}
 % Report content
