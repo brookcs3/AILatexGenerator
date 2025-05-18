@@ -92,17 +92,6 @@ export default function Header() {
         </div>
         
         <div className="flex items-center space-x-4">
-          {/* Always display Experience link regardless of auth state */}
-          <Link 
-            href="/intro" 
-            className="text-sm text-purple-600 hover:text-purple-800 font-medium transition-transform hover:scale-105"
-            aria-label="View interactive experience"
-            title="Experience the interactive intro"
-          >
-            <span className="px-3 py-1 bg-purple-100 rounded-full flex items-center">
-              ✨ Experience
-            </span>
-          </Link>
 
           {session.isLoading ? (
             <div className="flex items-center">
