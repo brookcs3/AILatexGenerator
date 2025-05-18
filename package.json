@@ -11,8 +11,7 @@
     "db:push": "drizzle-kit push --force --config=./drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config=./drizzle.config.ts",
     "db:migrate": "tsx db/migrate.ts",
-    "test:server": "node --test server/utils/__tests__/tectonic.test.js",
-    "test": "jest"
+    "test": "node --test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
