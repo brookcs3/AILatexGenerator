@@ -8,11 +8,16 @@ export default {
       fontFamily: {
         sans: ["InterVariable", "ui-sans-serif", "system-ui"],
         inter: ["InterVariable", "ui-sans-serif", "system-ui"],
+
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["InterVariable", "ui-sans-serif", "system-ui", "sans-serif"],
+        heading: ["InterVariable", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",

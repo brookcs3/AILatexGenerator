@@ -1,5 +1,6 @@
 /* Import fonts and modern UI effects */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 @import './lib/ui-effects.css';
 
 @tailwind base;
@@ -262,6 +263,7 @@ html.has-scroll-dragging {
   }
 
   h1, h2, h3, h4, h5, h6 {
+
     @apply font-sans;
   }
 

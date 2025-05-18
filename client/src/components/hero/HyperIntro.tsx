@@ -5,6 +5,7 @@ import PromptAnimator from "./PromptAnimator";
 import FeatureCards from "./FeatureCards";
 import ScrollIndicator from "./ScrollIndicator";
 
+
 // Modern intro component with professional animation effects
 
 interface HyperIntroProps {
@@ -833,6 +834,7 @@ Method B & Better for categorical variables \\\\
           <PromptAnimator onGetStarted={handleGetStartedClick} />
         </div>
         <FeatureCards />
+
       </div>
       <ScrollIndicator />
     </div>

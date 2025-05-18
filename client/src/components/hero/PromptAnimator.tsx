@@ -70,6 +70,7 @@ export default function PromptAnimator({ onGetStarted }: Props) {
                 </button>
               </div>
               <pre>{`\\documentclass{article}
+
 \\usepackage{amsmath}
 \\begin{document}
 \\title{AI Generated Document}
@@ -87,3 +88,4 @@ export default function PromptAnimator({ onGetStarted }: Props) {
     </div>
   );
 }
+
