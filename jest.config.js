@@ -3,6 +3,7 @@ export default {
   testEnvironment: 'jsdom',
   testMatch: ['**/*.test.ts?(x)'],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/client/src/$1',
     '^@shared/(.*)$': '<rootDir>/shared/$1',
