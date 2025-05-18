@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./HyperIntro.css";
-import HeroTitle from "./HeroTitle";
 import PromptAnimator from "./PromptAnimator";
 import FeatureCards from "./FeatureCards";
+import ScrollIndicator from "./ScrollIndicator";
+
 
 // Modern intro component with professional animation effects
 
@@ -825,50 +826,17 @@ Method B & Better for categorical variables \\\\
 
   return (
     <div ref={introContainerRef} className="intro-container">
-      {/* Gradient background */}
       <div ref={gradientBackgroundRef} className="gradient-background"></div>
-
-      {/* Particles effect */}
       <div ref={particlesRef} className="particles-container"></div>
-
-      {/* Wave animation */}
       <div ref={waveAnimationRef} className="wave-container"></div>
-
-      {/* Main content */}
       <div ref={textContainerRef} className="content-container">
         <div className="hero-section">
-          <div className="tv-effect-container">
-            <div className="tv-screen">
-              <div className="scanlines"></div>
-              <div className="tv-content">
-                <HeroTitle />
-                <PromptAnimator onGetStarted={handleGetStartedClick} />
-              </div>
-              <div className="tv-glitch"></div>
-            </div>
-          </div>
+          <PromptAnimator onGetStarted={handleGetStartedClick} />
         </div>
-
-        {/* Feature cards */}
         <FeatureCards />
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="scroll-indicator">
-        <span>Scroll to Explore</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <polyline points="19 12 12 19 5 12"></polyline>
-        </svg>
       </div>
+      <ScrollIndicator />
     </div>
   );
 };
