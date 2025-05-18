@@ -54,6 +54,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    - `ANTHROPIC_API_KEY` (Your Anthropic API key)
    - `GROQ_API_KEY` (Your Groq API key)
    - Any other API keys needed for service integrations
+   - Stripe variables (see [Stripe Environment Variables](#stripe-environment-variables))
 
 5. **Deploy**
    - Railway will automatically deploy your application
@@ -70,6 +71,21 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 2. Install dependencies: `npm install`
 3. Create a `.env` file with the required environment variables
 4. Run the application: `npm run dev`
+
+## Stripe Environment Variables
+
+The application integrates with Stripe for payment processing. Set the following
+variables in your `.env` file or deployment platform:
+
+- `STRIPE_SECRET_KEY` - server-side secret for creating customers, subscriptions
+  and handling webhooks.
+- `STRIPE_WEBHOOK_SECRET` - used to verify incoming Stripe webhooks.
+- `STRIPE_PRICE_TIER1_ID` to `STRIPE_PRICE_TIER5_ID` - price IDs for each
+  subscription tier.
+- `STRIPE_PRICE_REFILL_PACK_ID` - price ID for refill packs.
+- `VITE_STRIPE_PUBLIC_KEY` - **required for client-side checkout**. Without this
+  key, the frontend cannot initialize Stripe and payment flows will be
+  unavailable.
 
 ## License
 

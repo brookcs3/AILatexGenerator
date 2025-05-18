@@ -160,6 +160,16 @@ ANTHROPIC_API_KEY=sk-...       # Optional: Your Anthropic API key
 GROQ_API_KEY=...               # Optional: Your Groq API key
 ```
 
+### Stripe Environment Variables
+
+Configure these additional variables for payment processing:
+
+- `STRIPE_SECRET_KEY` - server secret used to communicate with Stripe.
+- `STRIPE_WEBHOOK_SECRET` - verifies incoming Stripe webhook requests.
+- `STRIPE_PRICE_TIER1_ID` to `STRIPE_PRICE_TIER5_ID` - price IDs for subscription tiers.
+- `STRIPE_PRICE_REFILL_PACK_ID` - price ID for purchasing refill credits.
+- `VITE_STRIPE_PUBLIC_KEY` - **required for client-side checkout** so the frontend can load Stripe.js.
+
 ## Database Setup
 
 1. Add a PostgreSQL database in your Railway project
@@ -328,8 +338,15 @@ If you encounter errors like "Error: Docker build failed":
        - ANTHROPIC_API_KEY
        - GROQ_API_KEY
        - SESSION_SECRET (can be any secure random string)
-       - STRIPE_SECRET_KEY
-       - VITE_STRIPE_PUBLIC_KEY
+      - STRIPE_SECRET_KEY
+      - STRIPE_WEBHOOK_SECRET
+      - STRIPE_PRICE_TIER1_ID
+      - STRIPE_PRICE_TIER2_ID
+      - STRIPE_PRICE_TIER3_ID
+      - STRIPE_PRICE_TIER4_ID
+      - STRIPE_PRICE_TIER5_ID
+      - STRIPE_PRICE_REFILL_PACK_ID
+      - VITE_STRIPE_PUBLIC_KEY (required for client-side checkout)
 
 7. **Last resort: Start from a fresh project**:
    - If you continue to encounter Docker-related failures, consider creating a new Railway project
