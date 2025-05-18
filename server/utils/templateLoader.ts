@@ -111,3 +111,4 @@ export async function updateSystemPromptsWithTemplates(): Promise<void> {
   // For now, this is a placeholder
   console.log('Templates loaded and ready for use');
 }
+
