@@ -37,6 +37,8 @@ import session from "express-session";
 import pgSession from "connect-pg-simple";
 import { pool } from "../db";
 
+const GUEST_MODE = process.env.GUEST_MODE === 'true';
+
 // Initialize Stripe
 if (!process.env.STRIPE_SECRET_KEY) {
   console.warn('Missing STRIPE_SECRET_KEY, Stripe functionality will be limited');
@@ -613,7 +615,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post(
     "/api/undetectable/rewrite",
     trackAnonymousUser,
-    allowAnonymousOrAuth,
+    GUEST_MODE ? allowAnonymousOrAuth : requireAuth,
     checkSubscription,
     async (req: Request, res: Response) => {
       const { text } = req.body;

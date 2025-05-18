@@ -93,6 +93,7 @@ deployment platform. Refer to `.env.example` for sample values.
 - `OPENAI_API_KEY` - OpenAI API key.
 - `ANTHROPIC_API_KEY` - Anthropic API key.
 - `GROQ_API_KEY` - Groq API key.
+- `GUEST_MODE` - Set to `true` to allow anonymous access for testing.
 - `POSTMARK_API_KEY` - Postmark API key for sending emails.
 - `STRIPE_SECRET_KEY` - Stripe secret key.
 - `STRIPE_WEBHOOK_SECRET` - Secret to verify Stripe webhooks.
