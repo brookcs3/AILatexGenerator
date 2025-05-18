@@ -96,4 +96,4 @@ variables in your `.env` file or deployment platform:
 
 ## License
 
-[MIT License](LICENSE)
+Released under the [MIT License](LICENSE).
