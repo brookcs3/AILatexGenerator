@@ -1,0 +1,361 @@
+/* Import fonts and modern UI effects */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+@import './lib/ui-effects.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Grid pattern for visual backgrounds */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(100, 116, 139, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(100, 116, 139, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: center center;
+}
+
+/* Glass effect utilities */
+.glass-effect {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-effect {
+  background: rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Animated gradient background (with medium opacity) */
+.gradient-animation {
+  background: linear-gradient(-45deg, rgba(238, 119, 82, 0.2), rgba(231, 60, 126, 0.2), rgba(35, 166, 213, 0.2), rgba(35, 213, 171, 0.2));
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animation keyframes for mobile keyboard dismissal effects */
+@keyframes parallax-rise {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-20px); opacity: 1; }
+}
+
+@keyframes scroll-reveal {
+  0% { transform: translateY(5px); opacity: 0.9; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes ripple-out {
+  0% { box-shadow: 0 0 0 rgba(100, 149, 237, 0); }
+  50% { box-shadow: 0 0 10px rgba(100, 149, 237, 0.4); }
+  100% { box-shadow: 0 0 0 rgba(100, 149, 237, 0); }
+}
+
+/* Animation classes */
+.header-parallax-animate {
+  animation: parallax-rise 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.scroll-reveal-animate {
+  animation: scroll-reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.ripple-out-animate {
+  animation: ripple-out 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Main keyboard dismissal animation class */
+.keyboard-dismiss-animate {
+  animation: scroll-reveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Staggered animation delays */
+.stagger-item-1 { animation-delay: 0s; }
+.stagger-item-2 { animation-delay: 0.1s; }
+.stagger-item-3 { animation-delay: 0.2s; }
+.stagger-item-4 { animation-delay: 0.3s; }
+.stagger-item-5 { animation-delay: 0.4s; }
+
+/* Removed parallax effects as requested */
+
+/* Mobile text input expansion animation - only expands downward */
+@keyframes expand-input {
+  0% { 
+    bottom: 1rem; /* inset-4 is 1rem */
+    z-index: 10; 
+  }
+  100% { 
+    bottom: -1.15rem; /* 23% additional space below */
+    z-index: 30; 
+  }
+}
+
+@keyframes shrink-input {
+  0% { 
+    bottom: -1.15rem;
+    z-index: 30; 
+  }
+  100% { 
+    bottom: 1rem;
+    z-index: 10; 
+  }
+}
+
+.input-expanded {
+  animation: expand-input 0.3s ease-out forwards;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.input-collapsed {
+  animation: shrink-input 0.3s ease-out forwards;
+}
+
+/* Locomotive Scroll styles */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+html.has-scroll-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.has-scroll-smooth body {
+  overflow: hidden;
+}
+.has-scroll-smooth [data-scroll-container] {
+  min-height: 100vh;
+}
+[data-scroll-direction="horizontal"] [data-scroll-container] {
+  height: 100vh;
+  display: inline-block;
+  white-space: nowrap;
+}
+[data-scroll-direction="horizontal"] [data-scroll-section] {
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  height: 100%;
+}
+.c-scrollbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 11px;
+  height: 100%;
+  transform-origin: center right;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+.c-scrollbar:hover {
+  transform: scaleX(1.45);
+}
+.c-scrollbar:hover, .has-scroll-scrolling .c-scrollbar, .has-scroll-dragging .c-scrollbar {
+  opacity: 1;
+}
+[data-scroll-direction="horizontal"] .c-scrollbar {
+  width: 100%;
+  height: 10px;
+  top: auto;
+  bottom: 0;
+  transform: scaleY(1);
+}
+[data-scroll-direction="horizontal"] .c-scrollbar:hover {
+  transform: scaleY(1.3);
+}
+.c-scrollbar_thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.5;
+  width: 7px;
+  border-radius: 10px;
+  margin: 2px;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.has-scroll-dragging .c-scrollbar_thumb {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+[data-scroll-direction="horizontal"] .c-scrollbar_thumb {
+  right: auto;
+  bottom: 0;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+
+    /* Modern UI effect variables */
+    --gradient-from: #3b82f6;
+    --gradient-to: #8b5cf6;
+    --gradient-from-hover: #2563eb;
+    --gradient-to-hover: #7c3aed;
+    --glass-opacity: 0.7;
+    --glass-blur: 12px;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gray-50 text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+
+    @apply font-sans;
+  }
+
+  /* Font for code/LaTeX */
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Monaco', 'Consolas', monospace;
+  }
+}
+
+/* Styling for editor containers */
+.editor-container {
+  @apply flex flex-col w-full h-full;
+}
+
+.editor-toolbar {
+  @apply flex items-center space-x-2 p-2 bg-white border-b border-gray-200;
+}
+
+.editor-content {
+  @apply flex-1 overflow-auto;
+}
+
+/* PDF preview styling */
+.pdf-preview {
+  @apply bg-white shadow-md rounded-md overflow-hidden;
+}
+
+/* LaTeX code area styling */
+.latex-code {
+  @apply font-mono text-sm whitespace-pre bg-gray-900 text-white p-4 overflow-auto h-full;
+}
+
+/* Override PrismJS theme for better readability */
+pre[class*="language-"],
+code[class*="language-"] {
+  @apply font-mono text-sm;
+  background-color: hsl(220, 13%, 18%);
+  color: hsl(220, 14%, 71%);
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+}
+
+/* Transitions */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+/* Visually hidden elements - for SEO accessibility 
+ * This implementation is crawler-friendly while still hiding the element visually
+ * - Avoids display: none (would be ignored by crawlers)
+ * - Avoids visibility: hidden (might be ignored by some crawlers)
+ * - Keeps content in the DOM and accessible
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px; 
+  height: 1px;
+  padding: 0;
+  margin: -1px; /* Negative margin to move it off-screen */
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%); /* Modern alternative to clip */
+  white-space: nowrap;
+  border-width: 0;
+  /* Important: Don't use display: none or visibility: hidden */
+  /* as these properties might cause search engines to ignore the content */
+  z-index: -1000; /* Behind everything, but still in the DOM */
+}
+
+/* Custom cursor styles */
+.custom-cursor-enabled {
+  cursor: none;
+}
+.custom-cursor-enabled * {
+  cursor: none;
+}
+
+
+/* Reveal animation for Locomotive Scroll */
+[data-reveal] { opacity: 0; transform: translateY(40px); }
+.revealed { opacity: 1 !important; transform: translateY(0) !important; transition: opacity 0.4s, transform 0.4s; }
+
