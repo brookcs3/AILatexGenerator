@@ -116,7 +116,7 @@ const providers = {
           {
             model: model,
             messages: [
-              { role: 'system', content: LATEX_SYSTEM_PROMPT },
+              { role: 'system', content: fullSystemPrompt },
               { role: 'user', content: prompt }
             ],
             temperature: 0.2,
