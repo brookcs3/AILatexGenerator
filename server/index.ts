@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { updateSystemPromptsWithTemplates } from "./utils/templateLoader";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  await updateSystemPromptsWithTemplates();
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

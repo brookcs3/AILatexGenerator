@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import * as prompts from './prompts';
 
 /**
  * Template types supported by the application
@@ -19,10 +20,19 @@ export enum TemplateType {
  */
 export async function loadTemplate(templateType: TemplateType): Promise<string> {
   try {
-    const templatePath = path.join(process.cwd(), 'public', 'templates', templateType, 'template.tex');
-    if (fs.existsSync(templatePath)) {
-      return fs.readFileSync(templatePath, 'utf8');
+    const templatesDir = path.join(process.cwd(), 'public', 'templates');
+    const fileOptions = [
+      path.join(templatesDir, templateType, 'template.tex'),
+      path.join(templatesDir, `${templateType}-template.tex`),
+      path.join(templatesDir, `${templateType}.tex`)
+    ];
+
+    for (const file of fileOptions) {
+      if (fs.existsSync(file)) {
+        return fs.readFileSync(file, 'utf8');
+      }
     }
+
     // Fall back to embedded templates if file doesn't exist
     return getEmbeddedTemplate(templateType);
   } catch (error) {
@@ -107,8 +117,26 @@ Letter content goes here.
  * This function should be called during server startup
  */
 export async function updateSystemPromptsWithTemplates(): Promise<void> {
-  // This function can be implemented to update system prompts with templates
-  // For now, this is a placeholder
-  console.log('Templates loaded and ready for use');
+  // Load each template from the filesystem and merge it into the
+  // system prompt so the AI provider has direct access to the text.
+  // Any errors fall back to the embedded templates defined above.
+  const templates: Record<TemplateType, string> = {} as Record<TemplateType, string>;
+
+  for (const type of Object.values(TemplateType)) {
+    templates[type as TemplateType] = await loadTemplate(type as TemplateType);
+  }
+
+  // Build a readable section for the system prompt containing all templates
+  const templateSections = Object.entries(templates)
+    .map(([type, text]) => {
+      const title = type.charAt(0).toUpperCase() + type.slice(1);
+      return `### ${title} Template\n\`\`\`latex\n${text}\n\`\`\``;
+    })
+    .join("\n\n");
+
+  // Append the templates to the global system prompt string
+  prompts.LATEX_SYSTEM_PROMPT += `\n\n## Document Templates\n${templateSections}`;
+
+  console.log('Templates loaded and merged into system prompt');
 }
 
