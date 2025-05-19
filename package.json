@@ -11,7 +11,7 @@
     "db:push": "drizzle-kit push --force --config=./drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config=./drizzle.config.ts",
     "db:migrate": "tsx db/migrate.ts",
-    "test": "node --test",
+    "test": "NODE_PATH=. node --test",
     "generate:robots": "node scripts/generate-robots.js",
     "prebuild": "npm run generate:robots"
   },
@@ -70,6 +70,7 @@
     "drizzle-orm": "^0.38.4",
     "drizzle-seed": "^0.3.1",
     "drizzle-zod": "^0.6.0",
+    "dotenv": "^16.5.0",
     "embla-carousel-react": "^8.3.0",
     "express": "^4.21.2",
     "express-session": "^1.18.1",

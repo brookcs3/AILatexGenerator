@@ -5,7 +5,7 @@
  * It creates a test checkout session and verifies the configuration is correct.
  */
 import { config } from 'dotenv';
-import Stripe from 'stripe';
+import Stripe from './stripe/index.js';
 
 // Load environment variables
 config();
