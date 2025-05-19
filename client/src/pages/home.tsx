@@ -913,10 +913,10 @@ export default function Home() {
   
   return (
     <SiteLayout seoTitle="AI LaTeX Generator - Create Professional LaTeX Documents with AI">
-      <div className="absolute inset-0 -z-10">
-        <ShaderBackground />
+      <div className="absolute inset-0 -z-10 bg-[#f8fafc]">
+        {/* Removed ShaderBackground in favor of simple off-white background */}
       </div>
-      <div className="relative h-full flex flex-col md:flex-row bg-gradient-soft">
+      <div className="relative h-full flex flex-col md:flex-row">
         
         {/* Left Panel (Input) */}
         <div className="w-full md:w-1/2 h-full relative">
