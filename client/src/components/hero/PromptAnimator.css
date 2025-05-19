@@ -471,11 +471,13 @@
   width: auto;
   margin: 0;
   padding: 0;
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 2rem;
   transform: translateX(-50%) translateZ(50px);
   pointer-events: all;
+  z-index: 50;
+
 }
 
 .cta-button {
