@@ -14,6 +14,7 @@ html(lang="en")
     meta(name="twitter:title", content=title)
     meta(name="twitter:description", content=description)
     meta(name="twitter:image", content=ogImage)
+    link(rel="canonical", href=ogUrl)
     title= title
     style.
       :root {
@@ -332,14 +333,43 @@ html(lang="en")
         animation: pulse 1.5s infinite;
       }
 
+      .hero {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: linear-gradient(135deg, #f8fafc, #dbeafe);
+        border-radius: var(--radius);
+        margin: 2rem 0;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+        color: var(--foreground);
+        margin-bottom: 1.5rem;
+      }
+
   body
     header.header
       div.logo AI LaTeX Generator
-      
+
       nav.nav-links
         a.nav-link(href="#") Home
         a.nav-link(href="#") Documents
         a.nav-link(href="#") Templates
+
+    section.hero
+      h1.hero-title Effortless LaTeX Creation
+      p.hero-subtitle Build professional documents with AI assistance
+      a.btn(href="#input-panel") Get Started →
     
     div.container
       div.app-container
