@@ -4,7 +4,8 @@
  * This script tests the Pro Plan subscription setup with tax-inclusive pricing.
  * It creates a test checkout session and verifies the configuration is correct.
  */
-import { config } from 'dotenv';
+// Use the local stub modules so tests run without external packages
+import { config } from './dotenv/index.js';
 import Stripe from './stripe/index.js';
 
 

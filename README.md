@@ -88,9 +88,9 @@ If you prefer the Replit ecosystem, this repository includes a `.replit` file fo
 
 1. Clone this repository
 2. Install dependencies: `npm install`
-3. Lint the codebase: `npm run lint`
-4. Create a `.env` file with the required environment variables (see `.env.example`)
-   including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
+**Note:** All server and client dependencies are managed in the root `package.json`; the `server` folder no longer has its own `package.json`.
+3. Create a `.env` file with the required environment variables (see `.env.example`)
+including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 5. Run the application: `npm run dev`
 
@@ -140,6 +140,9 @@ deployment platform. Refer to `.env.example` for sample values.
 - `SITE_IMAGE` - Default preview image for social cards.
 - `VITE_API_BASE_URL` - Base URL for the frontend API.
 
+After setting these values, run `npm run prebuild` to generate `robots.txt` and
+`sitemap.xml` under the `public/` directory for SEO purposes.
+
 Guest mode should only be enabled when testing. For production deployments make
 sure `GUEST_MODE=false`.
 
@@ -184,6 +187,8 @@ npm test
 ```
 
 This uses Node's built-in test runner to execute all tests defined in the project.
+The checkout test imports local stub versions of `dotenv` and `stripe` so it can
+run without installing those packages.
 
 ## License
 

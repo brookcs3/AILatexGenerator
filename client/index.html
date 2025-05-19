@@ -705,14 +705,15 @@
     <script type="module" src="/src/main.tsx"></script>
     <!-- Load Replit dev banner on *.repl.co or when REPL_ID is set -->
     <script type="module">
-      if (
-        window.location.hostname.endsWith('.repl.co') ||
-        import.meta.env.REPL_ID
-      ) {
-        const banner = document.createElement('script');
-        banner.src = 'https://replit.com/public/js/replit-dev-banner.js';
-        document.head.appendChild(banner);
-      }
+      (function () {
+        var host = window.location.hostname;
+        if (host.endsWith('.repl.co') || window.REPL_ID) {
+          var banner = document.createElement('script');
+          banner.type = 'text/javascript';
+          banner.src = 'https://replit.com/public/js/replit-dev-banner.js';
+          document.body.appendChild(banner);
+        }
+      })();
     </script>
   </body>
 </html>
