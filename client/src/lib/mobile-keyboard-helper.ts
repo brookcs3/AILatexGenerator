@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import ScrollManager from './locomotive-scroll-manager';
 
 interface KeyboardHelperOptions {
@@ -345,7 +346,7 @@ export class MobileKeyboardHelper {
    */
   private log(...args: any[]): void {
     if (this.options.debug) {
-      console.log('📱 [KeyboardHelper]', ...args);
+      logger('📱 [KeyboardHelper]', ...args);
     }
   }
 }

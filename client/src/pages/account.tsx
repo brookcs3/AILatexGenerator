@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { useContext, useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { UserContext } from "@/App";
@@ -95,11 +96,11 @@ export default function Account() {
   useEffect(() => {
     const verifySession = async (retryCount = 0, maxRetries = 2) => {
       try {
-        console.log(`Account page: Verifying session... (attempt ${retryCount + 1}/${maxRetries + 1})`);
+        logger(`Account page: Verifying session... (attempt ${retryCount + 1}/${maxRetries + 1})`);
         
         // If we already have a valid session, skip the check
         if (session.isAuthenticated && session.user && !session.isLoading) {
-          console.log("Account page: Already has valid session:", session.user.username);
+          logger("Account page: Already has valid session:", session.user.username);
           setPageIsLoading(false);
           return;
         }
@@ -107,7 +108,7 @@ export default function Account() {
         const authData = await checkAuthStatus();
         
         if (authData.isAuthenticated && authData.user) {
-          console.log("Account page: Session verified, user:", authData.user.username);
+          logger("Account page: Session verified, user:", authData.user.username);
           
           // Update the session with fresh data
           setSession({
@@ -126,7 +127,7 @@ export default function Account() {
           setPageIsLoading(false);
         } else if (retryCount < maxRetries) {
           // Not authenticated but we have retries left
-          console.log(`Account page: Auth check failed, retrying (${retryCount + 1}/${maxRetries})...`);
+          logger(`Account page: Auth check failed, retrying (${retryCount + 1}/${maxRetries})...`);
           
           // Wait 1 second before retrying
           setTimeout(() => {
@@ -134,7 +135,7 @@ export default function Account() {
           }, 1000);
           return;
         } else {
-          console.log("Account page: Not authenticated after retries");
+          logger("Account page: Not authenticated after retries");
           toast({
             title: "Session Expired",
             description: "Your session has expired. Please log in again.",
@@ -148,7 +149,7 @@ export default function Account() {
         
         // Retry on error
         if (retryCount < maxRetries) {
-          console.log(`Account page: Error, retrying (${retryCount + 1}/${maxRetries})...`);
+          logger(`Account page: Error, retrying (${retryCount + 1}/${maxRetries})...`);
           setTimeout(() => {
             verifySession(retryCount + 1, maxRetries);
           }, 1000);
@@ -194,7 +195,7 @@ export default function Account() {
     // Skip if we've already handled a redirect or if page is still loading
     if (hasRedirected || pageIsLoading) return;
     
-    console.log("Account page session state:", {
+    logger("Account page session state:", {
       isLoading: session.isLoading,
       isAuthenticated: session.isAuthenticated,
       hasUser: !!session.user,
@@ -208,7 +209,7 @@ export default function Account() {
     // Only redirect if we're definitely not authenticated (not loading and not authenticated)
     // AND we haven't already redirected
     if (!session.isLoading && !session.isAuthenticated && !hasRedirected) {
-      console.log("Not authenticated, showing toast and setting redirect flag");
+      logger("Not authenticated, showing toast and setting redirect flag");
       
       // Only show the toast, don't immediately redirect
       toast({
@@ -248,7 +249,7 @@ export default function Account() {
 
   // Return null if not authenticated
   if (!session.isAuthenticated || !session.user) {
-    console.log("Account page: No authenticated user found in session, showing error");
+    logger("Account page: No authenticated user found in session, showing error");
     return (
       <SiteLayout fullHeight={false}>
         <div className="flex h-[50vh] items-center justify-center">

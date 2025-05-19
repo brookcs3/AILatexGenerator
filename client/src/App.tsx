@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { Switch, Route } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -115,7 +116,7 @@ function App() {
   // Create a reusable function to check and update session that can be passed down via context
   const checkAndUpdateSession = useCallback(async (retryCount = 0, maxRetries = 2) => {
     try {
-      console.log(`MANUAL SESSION CHECK TRIGGERED (attempt ${retryCount + 1}/${maxRetries + 1})`);
+      logger(`MANUAL SESSION CHECK TRIGGERED (attempt ${retryCount + 1}/${maxRetries + 1})`);
       // First make a hard call to the server to check the actual session state
       const res = await fetch('/api/auth/me', {
         method: 'GET',
@@ -128,14 +129,14 @@ function App() {
         }
       });
       
-      console.log("SESSION CHECK STATUS:", res.status);
+      logger("SESSION CHECK STATUS:", res.status);
       
       if (res.ok) {
         const authData = await res.json();
-        console.log("SESSION CHECK RESPONSE:", authData);
+        logger("SESSION CHECK RESPONSE:", authData);
         
         if (authData.user) {
-          console.log("SESSION CHECK SUCCESS: AUTHENTICATED as", authData.user.username);
+          logger("SESSION CHECK SUCCESS: AUTHENTICATED as", authData.user.username);
           
           // Update the session with fresh data - ensure required fields exist
           if (!authData.user || typeof authData.user.id !== 'number') {
@@ -172,7 +173,7 @@ function App() {
         }
       } else if (res.status === 401 && retryCount < maxRetries) {
         // Might be a temporary session issue, retry after a short delay
-        console.log(`SESSION CHECK FAILED (${res.status}), retrying in 1 second...`);
+        logger(`SESSION CHECK FAILED (${res.status}), retrying in 1 second...`);
         setTimeout(() => {
           checkAndUpdateSession(retryCount + 1, maxRetries);
         }, 1000); // 1 second delay before retry
@@ -180,7 +181,7 @@ function App() {
       }
       
       // Not authenticated or max retries reached
-      console.log("SESSION CHECK - NOT AUTHENTICATED");
+      logger("SESSION CHECK - NOT AUTHENTICATED");
       
       // Clear any local storage session data
       localStorage.removeItem('userLoggedIn');
@@ -208,7 +209,7 @@ function App() {
       const noRedirectPaths = ['/', '/login', '/register', '/auth'];
       if (res && res.status === 401 && !noRedirectPaths.includes(window.location.pathname) && 
           !window.location.pathname.startsWith('/template/')) {
-        console.log("401 detected, but not redirecting for protected path:", window.location.pathname);
+        logger("401 detected, but not redirecting for protected path:", window.location.pathname);
         // Don't force redirect, let the page handle its own auth state
       }
     } catch (error) {
@@ -217,7 +218,7 @@ function App() {
       
       // Retry on network errors
       if (retryCount < maxRetries) {
-        console.log(`SESSION CHECK ERROR, retrying in 1 second... (${retryCount + 1}/${maxRetries + 1})`);
+        logger(`SESSION CHECK ERROR, retrying in 1 second... (${retryCount + 1}/${maxRetries + 1})`);
         setTimeout(() => {
           checkAndUpdateSession(retryCount + 1, maxRetries);
         }, 1000);
@@ -229,13 +230,13 @@ function App() {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
-        console.log("Page became visible, checking auth status");
+        logger("Page became visible, checking auth status");
         checkAndUpdateSession();
       }
     };
     
     const handleFocus = () => {
-      console.log("Window focused, checking auth status");
+      logger("Window focused, checking auth status");
       checkAndUpdateSession();
     };
     
@@ -252,7 +253,7 @@ function App() {
   
   // Add a debug effect to log relevant factors (window.fetch available, etc.)
   useEffect(() => {
-    console.log("Debug info:", {
+    logger("Debug info:", {
       fetchAvailable: typeof window.fetch === 'function',
       localStorage: typeof localStorage !== 'undefined',
       apiAuthMe: API_ROUTES.auth.me
@@ -263,9 +264,9 @@ function App() {
   useEffect(() => {
     if (session.isLoading) {
       // Create a timeout to force the loading state to resolve after 5 seconds
-      console.log("Setting loading timeout failsafe");
+      logger("Setting loading timeout failsafe");
       const loadingTimeout = setTimeout(() => {
-        console.log("Loading timeout triggered - forcing loading state to resolve");
+        logger("Loading timeout triggered - forcing loading state to resolve");
         setSession(prev => {
           if (prev.isLoading) {
             return {
@@ -285,11 +286,11 @@ function App() {
   
   // Initial auth check on app start
   useEffect(() => {
-    console.log("INITIAL AUTH CHECK STARTED");
+    logger("INITIAL AUTH CHECK STARTED");
     
     // Skip localStorage check and go straight to server check
     // This prevents intermittent loading state issues
-    console.log("Skipping localStorage check to avoid state cycles");
+    logger("Skipping localStorage check to avoid state cycles");
     
     // Perform proper server-side check immediately
     // Add a small delay to ensure the app has time to properly initialize

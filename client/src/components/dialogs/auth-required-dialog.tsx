@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { AuthRequiredContext } from '@/App';
@@ -18,13 +19,13 @@ export default function AuthRequiredDialog() {
 
   // Sync the local state with the context state only once
   useEffect(() => {
-    console.log("Auth dialog context state changed:", showAuthPrompt);
+    logger("Auth dialog context state changed:", showAuthPrompt);
     setOpen(showAuthPrompt);
   }, [showAuthPrompt]);
   
   // When dialog is manually closed, update the context only
   const handleDialogChange = (value: boolean) => {
-    console.log("Dialog open state changed to:", value);
+    logger("Dialog open state changed to:", value);
     setOpen(value);
     if (!value) {
       setShowAuthPrompt(false);
@@ -33,30 +34,30 @@ export default function AuthRequiredDialog() {
 
   // Debug effect to monitor dialog visibility
   useEffect(() => {
-    console.log(`Auth dialog is now ${open ? 'OPEN' : 'CLOSED'}`);
+    logger(`Auth dialog is now ${open ? 'OPEN' : 'CLOSED'}`);
   }, [open]);
 
   const handleSignUp = () => {
-    console.log("Sign up clicked");
+    logger("Sign up clicked");
     setOpen(false);
     setShowAuthPrompt(false);
     navigate('/register');
   };
 
   const handleLogin = () => {
-    console.log("Login clicked");
+    logger("Login clicked");
     setOpen(false);
     setShowAuthPrompt(false);
     navigate('/login');
   };
 
   const handleClose = () => {
-    console.log("Dialog closed");
+    logger("Dialog closed");
     setOpen(false);
     setShowAuthPrompt(false);
   };
 
-  console.log("Auth dialog render:", { contextState: showAuthPrompt, localState: open });
+  logger("Auth dialog render:", { contextState: showAuthPrompt, localState: open });
 
   return (
     <Dialog open={open} onOpenChange={handleDialogChange}>

@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -85,14 +86,14 @@ export default function PDFPreview({ pdfData, title, onCompilePdf, isHtml = fals
     if (isGenerating) {
       // Set a timeout to clear the loading state after 15 seconds if still loading
       timeoutId = setTimeout(() => {
-        console.log("PDF loading timeout reached");
+        logger("PDF loading timeout reached");
         setIsGenerating(false);
         
         // Only show error if we've reached max retries
         if (loadRetries >= 2) {
           setErrorMessage("PDF generation timeout. Please try again.");
         } else {
-          console.log(`Automatically retrying PDF load (retry ${loadRetries + 1}/3)`);
+          logger(`Automatically retrying PDF load (retry ${loadRetries + 1}/3)`);
           // Increment retry counter and force iframe refresh
           setLoadRetries(prev => prev + 1);
           setIframeKey(Date.now());
@@ -295,14 +296,14 @@ export default function PDFPreview({ pdfData, title, onCompilePdf, isHtml = fals
                       if (loadRetries >= 2) {
                         setErrorMessage("Failed to load HTML preview. Please try again.");
                       } else {
-                        console.log(`Automatically retrying HTML load (retry ${loadRetries + 1}/3)`);
+                        logger(`Automatically retrying HTML load (retry ${loadRetries + 1}/3)`);
                         // Increment retry counter and force iframe refresh
                         setLoadRetries(prev => prev + 1);
                         setIframeKey(Date.now());
                       }
                     }}
                     onLoad={() => {
-                      console.log("HTML iframe loaded successfully");
+                      logger("HTML iframe loaded successfully");
                       // Make sure we're not showing loading or error states
                       setIsGenerating(false);
                       setErrorMessage(null);
@@ -324,7 +325,7 @@ export default function PDFPreview({ pdfData, title, onCompilePdf, isHtml = fals
                           if (loadRetries >= 2) {
                             setErrorMessage("Failed to load PDF viewer. Please try again.");
                           } else {
-                            console.log(`Automatically retrying PDF load (retry ${loadRetries + 1}/3)`);
+                            logger(`Automatically retrying PDF load (retry ${loadRetries + 1}/3)`);
                             // Increment retry counter and force iframe refresh
                             setLoadRetries(prev => prev + 1);
                             setIframeKey(Date.now());
@@ -332,7 +333,7 @@ export default function PDFPreview({ pdfData, title, onCompilePdf, isHtml = fals
                           }
                         }}
                         onLoad={() => {
-                          console.log("PDF iframe loaded successfully");
+                          logger("PDF iframe loaded successfully");
                           // Make sure we're not showing loading or error states
                           setIsGenerating(false);
                           setErrorMessage(null);

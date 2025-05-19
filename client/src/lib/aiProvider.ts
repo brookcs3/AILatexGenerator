@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { API_ROUTES } from "./constants";
 import { apiRequest } from "./queryClient";
 import { GenerateLatexResponse, LatexGenerationOptions } from "./types";
@@ -9,7 +10,7 @@ export async function modifyLatex(
   isOmit: boolean = false
 ): Promise<GenerateLatexResponse> {
   try {
-    console.log(`Modifying LaTeX with ${isOmit ? 'OMIT' : 'notes'} instruction:`, notes);
+    logger(`Modifying LaTeX with ${isOmit ? 'OMIT' : 'notes'} instruction:`, notes);
     const response = await apiRequest(
       "POST",
       API_ROUTES.latex.modify,
@@ -34,7 +35,7 @@ export async function generateLatex(
   compile: boolean = false // Default to not compiling
 ): Promise<GenerateLatexResponse> {
   try {
-    console.log("Generating LaTeX with compile flag:", compile);
+    logger("Generating LaTeX with compile flag:", compile);
     const response = await apiRequest(
       "POST",
       API_ROUTES.latex.generate,
@@ -55,7 +56,7 @@ export async function generateLatex(
 
 export async function compileLatex(latexContent: string): Promise<GenerateLatexResponse> {
   try {
-    console.log("Sending LaTeX to compile:", latexContent.substring(0, 100) + "...");
+    logger("Sending LaTeX to compile:", latexContent.substring(0, 100) + "...");
     
     const response = await apiRequest(
       "POST",
@@ -64,7 +65,7 @@ export async function compileLatex(latexContent: string): Promise<GenerateLatexR
     );
     
     const result = await response.json();
-    console.log("Compile result:", {
+    logger("Compile result:", {
       success: result.compilationResult.success,
       hasPdf: !!result.compilationResult.pdf,
       pdfLength: result.compilationResult.pdf ? result.compilationResult.pdf.length : 0,

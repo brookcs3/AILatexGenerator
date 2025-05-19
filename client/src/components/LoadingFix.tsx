@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { useEffect, useContext } from 'react';
 import { UserContext } from '@/App';
 import { SubscriptionTier } from "@shared/schema";
@@ -12,14 +13,14 @@ export default function LoadingFix() {
 
   useEffect(() => {
     // This effect runs once on mount
-    console.log("LoadingFix mounted - Simple Version - session state:", {
+    logger("LoadingFix mounted - Simple Version - session state:", {
       isLoading: session.isLoading,
       isAuthenticated: session.isAuthenticated
     });
 
     // Single simple timer to force loading state to false after a short delay
     const timer = setTimeout(() => {
-      console.log("LoadingFix: Forcing loading state to false (200ms)");
+      logger("LoadingFix: Forcing loading state to false (200ms)");
       
       // Direct set session approach - no complexity
       if (session.isLoading) {
