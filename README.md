@@ -187,6 +187,8 @@ npm test
 ```
 
 This uses Node's built-in test runner to execute all tests defined in the project.
+The checkout test imports local stub versions of `dotenv` and `stripe` so it can
+run without installing those packages.
 
 ## License
 
