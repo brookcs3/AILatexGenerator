@@ -4,23 +4,9 @@
  * This script tests the Pro Plan subscription setup with tax-inclusive pricing.
  * It creates a test checkout session and verifies the configuration is correct.
  */
-// Attempt to load environment variables if dotenv is available
-let loadEnv = async () => {};
-try {
-  const mod = await import('dotenv');
-  loadEnv = mod.config;
-} catch (err) {
-  console.warn('dotenv not installed - skipping env load');
-}
-// Dynamically import Stripe if available
-let Stripe;
-try {
-  const mod = await import('stripe');
-  Stripe = mod.default;
-} catch (err) {
-  console.warn('stripe not installed - skipping test');
-  process.exit(0);
-}
+import { config } from 'dotenv';
+import Stripe from './stripe/index.js';
+
 
 // Load environment variables if possible
 await loadEnv();
