@@ -96,15 +96,11 @@ export const stripeService = {
           userId: userId.toString(),
           tier,
         },
-        automatic_tax: {
-          enabled: true
-        }
       },
-      // Prevent multiple subscriptions
+      tax_id_collection: { enabled: true },
       customer_update: {
         address: 'auto',
-        name: 'auto',
-        shipping: 'auto'
+        name: 'auto'
       },
       allow_promotion_codes: true,
     });
@@ -222,9 +218,7 @@ export const stripeService = {
         userId: userId.toString(),
         type: 'refill',
       },
-      automatic_tax: {
-        enabled: true
-      },
+      tax_id_collection: { enabled: true },
       customer_update: {
         address: 'auto'
       }
