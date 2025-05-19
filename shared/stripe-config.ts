@@ -5,8 +5,8 @@ export const STRIPE_PRICE_IDS = {
   [SubscriptionTier.Free]: '',                           // Free tier (no price ID needed)
   [SubscriptionTier.Basic]: process.env.STRIPE_PRICE_TIER1_ID || '', // $0.99/month (Basic Plan)
   [SubscriptionTier.Tier2]: process.env.STRIPE_PRICE_TIER2_ID || '', // $2.99/month (Standard Plan)
-  [SubscriptionTier.Pro]: process.env.STRIPE_PRICE_TIER3_ID || '',   // $6.99/month (Advanced Plan)
-  [SubscriptionTier.Tier4]: 'price_1RQTn0FlLCnouIYKOMOghgIp', // $11.99/month (Pro Plan) - Tax inclusive
+  [SubscriptionTier.Pro]: 'price_1RQTn0FlLCnouIYKOMOghgIp',   // $6.99/month (Pro Plan) - Tax inclusive
+  [SubscriptionTier.Tier4]: process.env.STRIPE_PRICE_TIER4_ID || '', // $11.99/month (Advanced Plan)
   [SubscriptionTier.Power]: process.env.STRIPE_PRICE_TIER5_ID || '', // $19.99/month (Power Plan)
   refillPack: process.env.STRIPE_PRICE_REFILL_PACK_ID || '',         // $0.99 one-time (Refill Pack)
 };
