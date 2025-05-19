@@ -121,9 +121,53 @@ export async function sendVerificationEmail(
     };
   } catch (error: any) {
     console.error('Failed to send verification email:', error);
-    return { 
-      success: false, 
-      message: `Failed to send verification email: ${error.message || 'Unknown error'}` 
+    return {
+      success: false,
+      message: `Failed to send verification email: ${error.message || 'Unknown error'}`
+    };
+  }
+}
+
+export async function sendContactEmail(
+  name: string,
+  email: string,
+  subject: string,
+  message: string
+): Promise<{ success: boolean; message: string }> {
+  if (!client) {
+    return {
+      success: false,
+      message: 'Email service not available'
+    };
+  }
+
+  const contactSubject = subject ? `Contact: ${subject}` : 'Contact Form Message';
+
+  try {
+    const response = await client.sendEmail({
+      From: FROM_EMAIL,
+      To: 'support@aitexgen.com',
+      ReplyTo: email,
+      Subject: contactSubject,
+      HtmlBody: `
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+      TextBody: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      MessageStream: 'outbound'
+    });
+
+    return {
+      success: true,
+      message: `Contact email sent: ${response.MessageID}`
+    };
+  } catch (error: any) {
+    console.error('Failed to send contact email:', error);
+    return {
+      success: false,
+      message: `Failed to send contact email: ${error.message || 'Unknown error'}`
     };
   }
 }

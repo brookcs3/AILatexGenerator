@@ -162,3 +162,13 @@ export const rewriteSchema = z.object({
 });
 
 export type RewriteRequest = z.infer<typeof rewriteSchema>;
+
+// Schema for contact form submissions
+export const contactSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Must provide a valid email'),
+  subject: z.string().optional(),
+  message: z.string().min(1, 'Message is required')
+});
+
+export type ContactForm = z.infer<typeof contactSchema>;

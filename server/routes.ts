@@ -26,12 +26,12 @@ const validateRequest = (schema: z.ZodType<any, any>) => {
     }
   };
 };
-import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE } from "@shared/schema";
+import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE, contactSchema } from "@shared/schema";
 import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex, rewriteText, generateSummary, generateOutline, generateGlossary, generateFlashcards } from "./services/aiProvider";
 import { compileLatex, compileAndFixLatex } from "./services/latexService";
 import { stripeService } from "./services/stripeService";
 import { stripeSync } from "./services/stripeSync";
-import { testPostmarkConnection, generateVerificationToken, sendVerificationEmail } from "./utils/email";
+import { testPostmarkConnection, generateVerificationToken, sendVerificationEmail, sendContactEmail } from "./utils/email";
 import Stripe from "stripe";
 import session from "express-session";
 import pgSession from "connect-pg-simple";
@@ -177,6 +177,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error checking anonymous status:", error);
       return res.status(500).json({ message: "Error checking anonymous status" });
+    }
+  });
+
+  // Contact form endpoint
+  app.post('/api/contact', async (req: Request, res: Response) => {
+    try {
+      const { name, email, subject = '', message } = contactSchema.parse(req.body);
+
+      const result = await sendContactEmail(name, email, subject, message);
+
+      if (result.success) {
+        return res.status(200).json({ success: true });
+      }
+
+      return res.status(500).json({ success: false, message: result.message });
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: 'Validation failed', errors: error.errors });
+      }
+      console.error('Contact form error:', error);
+      return res.status(500).json({ success: false, message: 'Failed to send message' });
     }
   });
   
