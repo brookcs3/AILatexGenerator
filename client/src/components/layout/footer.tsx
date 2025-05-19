@@ -83,6 +83,11 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/showcase" className="text-blue-600 hover:text-blue-800 text-sm">
+                Showcase
+              </Link>
+            </li>
+            <li>
               <Link href="/contact" className="text-blue-600 hover:text-blue-800 text-sm">
                 Contact Us
               </Link>
