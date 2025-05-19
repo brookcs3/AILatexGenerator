@@ -31,20 +31,30 @@ export { checkSubscription, tierLimits, SubscriptionTier, setUser };
 
 const modPromise = loadModule();
 
-test('bypasses limits when disabled', async () => {
-  const { checkSubscription } = await modPromise;
-  process.env.DISABLE_USAGE_LIMITS = 'true';
-  const req = { session: {} };
+test('allows registered user under limit', async () => {
+  const { checkSubscription, setUser, tierLimits, SubscriptionTier } = await modPromise;
+  setUser({ subscriptionTier: SubscriptionTier.Free, monthlyUsage: tierLimits[SubscriptionTier.Free] - 1 });
+  const req = { session: { userId: 1 } };
   let called = false;
   await checkSubscription(req, {}, () => { called = true; });
   assert.ok(called);
-  delete process.env.DISABLE_USAGE_LIMITS;
 });
 
 test('blocks user over limit', async () => {
   const { checkSubscription, setUser, tierLimits, SubscriptionTier } = await modPromise;
   setUser({ subscriptionTier: SubscriptionTier.Free, monthlyUsage: tierLimits[SubscriptionTier.Free] });
   const req = { session: { userId: 1 } };
+  let statusCode = null;
+  const res = { status(code) { statusCode = code; return this; }, json() { return this; } };
+  let called = false;
+  await checkSubscription(req, res, () => { called = true; });
+  assert.strictEqual(statusCode, 402);
+  assert.strictEqual(called, false);
+});
+
+test('blocks anonymous user over limit', async () => {
+  const { checkSubscription, tierLimits, SubscriptionTier } = await modPromise;
+  const req = { session: { anonymousUsage: tierLimits[SubscriptionTier.Free] } };
   let statusCode = null;
   const res = { status(code) { statusCode = code; return this; }, json() { return this; } };
   let called = false;
