@@ -230,7 +230,10 @@ const providers = {
           headers: {
             'Authorization': `Bearer ${openrouterApiKey}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': process.env.DOMAIN || 'http://localhost:5000',
+            'HTTP-Referer':
+              process.env.SITE_DOMAIN ||
+              process.env.DOMAIN ||
+              'http://localhost:5000',
             'X-Title': 'AI LaTeX Generator'
           }
         }
