@@ -95,6 +95,9 @@ export const stripeService = {
         metadata: {
           userId: userId.toString(),
           tier,
+        },
+        automatic_tax: {
+          enabled: true
         }
       },
       // Prevent multiple subscriptions
@@ -219,6 +222,12 @@ export const stripeService = {
         userId: userId.toString(),
         type: 'refill',
       },
+      automatic_tax: {
+        enabled: true
+      },
+      customer_update: {
+        address: 'auto'
+      }
     });
 
     return session;
