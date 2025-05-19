@@ -74,6 +74,15 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    - Add a one-time job with the command: `npm run db:push`
    - This will set up your database schema
 
+## Replit Hosting
+
+If you prefer the Replit ecosystem, this repository includes a `.replit` file for effortless setup. See [docs/replit-guide.md](docs/replit-guide.md) for detailed steps.
+
+1. Fork or import the project into Replit.
+2. Define the environment variables shown in `.env.example` using Replit's Secrets panel.
+3. Click **Run** to start `npm run dev`.
+4. The app will be available on Replit's provided webview URL.
+
 ## Local Development
 
 1. Clone this repository
