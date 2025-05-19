@@ -92,8 +92,6 @@ export default function Header() {
         </div>
         
         <div className="flex items-center space-x-4">
-          <ThemeToggle />
-
           {session.isLoading ? (
             <div className="flex items-center">
               <Loader2 className="h-5 w-5 animate-spin text-blue-500 mr-2" />
