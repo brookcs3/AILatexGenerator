@@ -61,19 +61,39 @@ export default function Footer() {
           
           <div>
             <h3 className="text-lg font-medium text-gray-900 mb-4">Resources</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/subscribe" className="text-blue-600 hover:text-blue-800 text-sm">
-                  Pricing Plans
-                </Link>
-              </li>
-              <li>
-                <Link href="/refill" className="text-blue-600 hover:text-blue-800 text-sm">
-                  Refill Packs
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/subscribe" className="text-blue-600 hover:text-blue-800 text-sm">
+                Pricing Plans
+              </Link>
+            </li>
+            <li>
+              <Link href="/refill" className="text-blue-600 hover:text-blue-800 text-sm">
+                Refill Packs
+              </Link>
+            </li>
+            <li>
+              <Link href="/how-to" className="text-blue-600 hover:text-blue-800 text-sm">
+                How&nbsp;To&nbsp;Guide
+              </Link>
+            </li>
+            <li>
+              <Link href="/community" className="text-blue-600 hover:text-blue-800 text-sm">
+                Community
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="text-blue-600 hover:text-blue-800 text-sm">
+                Contact Us
+              </Link>
+            </li>
+            <li>
+              <Link href="/faq" className="text-blue-600 hover:text-blue-800 text-sm">
+                FAQ
+              </Link>
+            </li>
+          </ul>
+        </div>
         </div>
         
         <div className="border-t border-gray-200 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
