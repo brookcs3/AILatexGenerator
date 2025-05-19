@@ -178,3 +178,6 @@ Guidelines:
 4. For papers or reports, use the first few words if they appear to be a title
 5. Return "Document" only if there is absolutely no text that could reasonably be a title
 `;
+
+// Function to be initialized by templateLoader.ts
+export let getSystemPromptWithTemplates = () => LATEX_SYSTEM_PROMPT;
