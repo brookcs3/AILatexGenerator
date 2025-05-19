@@ -18,6 +18,11 @@ const IntroPage: React.FC = () => {
   const [isCompleting, setIsCompleting] = useState(false);
   const [showDistortionOnly, setShowDistortionOnly] = useState(false);
 
+  // Ensure we start at the top of the page when the component loads
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Show skip button and toggle button after a short delay
   useEffect(() => {
     const timer = setTimeout(() => {

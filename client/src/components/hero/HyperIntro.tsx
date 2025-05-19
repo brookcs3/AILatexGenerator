@@ -832,11 +832,11 @@ Method B & Better for categorical variables \\\\
       <div ref={textContainerRef} className="content-container">
         <div className="hero-section">
           <PromptAnimator onGetStarted={handleGetStartedClick} />
+          <div className="mt-16">
+            <FeatureCards />
+          </div>
         </div>
-        <FeatureCards />
-
       </div>
-      <ScrollIndicator />
     </div>
   );
 };
