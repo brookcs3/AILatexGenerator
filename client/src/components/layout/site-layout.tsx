@@ -3,6 +3,7 @@ import Footer from "./footer";
 import { ReactNode } from "react";
 import { VisuallyHiddenHeading } from "@/components/seo/visually-hidden-heading";
 import MobileDisclaimer from "@/components/dialogs/mobile-disclaimer";
+import CustomCursor from "@/components/visuals/CustomCursor";
 
 interface SiteLayoutProps {
   children: ReactNode;
@@ -29,6 +30,9 @@ export default function SiteLayout({
       
       {/* Mobile disclaimer popup - enable by setting VITE_SHOW_MOBILE_DISCLAIMER=true */}
       <MobileDisclaimer />
+      
+      {/* Custom cursor effect applied to all pages */}
+      <CustomCursor />
     </div>
   );
 }
