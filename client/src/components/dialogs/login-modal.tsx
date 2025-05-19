@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -131,7 +132,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         // Look for verification requirement in the response data
         if (errorData.requiresEmailVerification || 
             (errorData.message && errorData.message.includes("verify your email"))) {
-          console.log("Verification required for:", values.email);
+          logger("Verification required for:", values.email);
           // Store the email for resend functionality
           setVerificationEmail(values.email);
           setRequiresVerification(true);

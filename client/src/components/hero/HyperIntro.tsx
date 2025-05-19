@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./HyperIntro.css";
@@ -178,7 +179,7 @@ const HyperIntro: React.FC<HyperIntroProps> = ({ onComplete }) => {
                 staticSound.volume = 0.2;
                 staticSound
                   .play()
-                  .catch((e) => console.log("Audio play prevented by browser"));
+                  .catch((e) => logger("Audio play prevented by browser"));
               },
             })
             .from(title, {

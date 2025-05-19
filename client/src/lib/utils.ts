@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -116,7 +117,7 @@ export function downloadPdf(base64Data: string, filename: string, isHtml: boolea
       // Download as HTML file
       downloadBlob(blob, `${properFilename}.html`);
       
-      console.log(`HTML download initiated with filename: ${properFilename}.html`);
+      logger(`HTML download initiated with filename: ${properFilename}.html`);
     } else {
       // Handle PDF content (default)
       const blob = base64ToBlob(base64Data, "application/pdf");
@@ -124,7 +125,7 @@ export function downloadPdf(base64Data: string, filename: string, isHtml: boolea
       // Download as PDF file
       downloadBlob(blob, `${properFilename}.pdf`);
       
-      console.log(`PDF download initiated with filename: ${properFilename}.pdf`);
+      logger(`PDF download initiated with filename: ${properFilename}.pdf`);
     }
   } catch (error) {
     console.error("Error downloading document:", error);

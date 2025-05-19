@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 /**
  * Locomotive Scroll Manager
  * A wrapper for the Locomotive Scroll library to manage smooth scrolling behavior
@@ -76,7 +77,7 @@ class ScrollManager {
     }
 
     try {
-      console.log('Initializing Locomotive Scroll');
+      logger('Initializing Locomotive Scroll');
       
       // Use provided root element or default to document.body
       this.rootElement = rootElement || document.body;

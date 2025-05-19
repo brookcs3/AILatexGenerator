@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { useState, useContext, useEffect } from "react";
 import { useLocation } from "wouter";
 import { UserContext, AuthRequiredContext } from "@/App";
@@ -180,11 +181,11 @@ export default function Home() {
     const isMobilePortrait = () => window.innerWidth < 768 && window.innerHeight > window.innerWidth;
     
     if (!isMobilePortrait()) {
-      console.log("Not mobile portrait, skipping boop effect");
+      logger("Not mobile portrait, skipping boop effect");
       return;
     }
     
-    console.log("Setting up boop to top effect for mobile");
+    logger("Setting up boop to top effect for mobile");
     
     // Create a stylesheet for our custom animation
     const styleSheet = document.createElement("style");
@@ -348,7 +349,7 @@ export default function Home() {
     }
     
     // DEBUGGING
-    console.log("Generate button clicked, auth status:", {
+    logger("Generate button clicked, auth status:", {
       isAuthenticated: session.isAuthenticated,
       user: session.user
     });
@@ -358,18 +359,18 @@ export default function Home() {
       // Check if this is an anonymous user with remaining free usage
       if (isAnonymous && hasRemainingAnonymousUsage) {
         // Anonymous user with remaining usage, allow one free generation
-        console.log("Anonymous user with remaining usage, allowing generation");
+        logger("Anonymous user with remaining usage, allowing generation");
       } else {
         // Stop the generating animation if it was started
         setEditorState(prev => ({ ...prev, isGenerating: false }));
         
-        console.log("User not authenticated, showing auth prompt");
+        logger("User not authenticated, showing auth prompt");
         
         // Try directly setting the auth prompt to true
         try {
           // Show auth required dialog
           setShowAuthPrompt(true);
-          console.log("Set showAuthPrompt to true");
+          logger("Set showAuthPrompt to true");
           
           // Force a dialog to appear (fallback)
           toast({
@@ -397,7 +398,7 @@ export default function Home() {
       }
     }
     
-    console.log("User is authenticated, proceeding with generation");
+    logger("User is authenticated, proceeding with generation");
 
     // Check if user has reached limit
     if (session.isAuthenticated && session.usage.current >= session.usage.limit) {
@@ -485,7 +486,7 @@ export default function Home() {
       // Check if this is an anonymous user with remaining free usage
       if (isAnonymous && hasRemainingAnonymousUsage) {
         // Anonymous user with remaining usage, allow one free modification
-        console.log("Anonymous user with remaining usage, allowing modification");
+        logger("Anonymous user with remaining usage, allowing modification");
       } else {
         setShowAuthPrompt(true);
         return;
@@ -517,7 +518,7 @@ export default function Home() {
       // Otherwise use our smart detection to handle mixed content
       const effectiveIsOmit = isOmit || isStrictOmit;
       
-      console.log(`Modification request: isOmit=${isOmit}, containsOmitTags=${containsOmitTags}, isStrictOmit=${isStrictOmit}`);
+      logger(`Modification request: isOmit=${isOmit}, containsOmitTags=${containsOmitTags}, isStrictOmit=${isStrictOmit}`);
       
       // Call the API to modify the LaTeX with the existing content and processed modification notes
       const result = await modifyLatex(editorState.latexContent, processedNotes, effectiveIsOmit);
@@ -565,7 +566,7 @@ export default function Home() {
     
     // If user is not authenticated, show auth prompt
     if (!session.isAuthenticated) {
-      console.log("User not authenticated, showing auth prompt for PDF download");
+      logger("User not authenticated, showing auth prompt for PDF download");
       
       try {
         // Show auth required dialog
@@ -699,9 +700,9 @@ export default function Home() {
       // Check if this is an anonymous user with remaining free usage
       if (isAnonymous && hasRemainingAnonymousUsage) {
         // Anonymous user with remaining usage, allow PDF compilation
-        console.log("Anonymous user with remaining usage, allowing PDF compilation");
+        logger("Anonymous user with remaining usage, allowing PDF compilation");
       } else {
-        console.log("User not authenticated, showing auth prompt for PDF compilation");
+        logger("User not authenticated, showing auth prompt for PDF compilation");
         
         try {
           // Show auth required dialog
@@ -751,7 +752,7 @@ export default function Home() {
           actions: [
             {
               label: "View Details",
-              action: () => console.log(result.compilationResult.errorDetails),
+              action: () => logger(result.compilationResult.errorDetails),
             },
           ],
         });
