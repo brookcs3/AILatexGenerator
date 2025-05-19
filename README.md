@@ -88,9 +88,9 @@ If you prefer the Replit ecosystem, this repository includes a `.replit` file fo
 
 1. Clone this repository
 2. Install dependencies: `npm install`
-3. Lint the codebase: `npm run lint`
-4. Create a `.env` file with the required environment variables (see `.env.example`)
-   including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
+**Note:** All server and client dependencies are managed in the root `package.json`; the `server` folder no longer has its own `package.json`.
+3. Create a `.env` file with the required environment variables (see `.env.example`)
+including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 5. Run the application: `npm run dev`
 
