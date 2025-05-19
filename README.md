@@ -67,6 +67,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 
 5. **Deploy**
    - Railway will automatically deploy your application
+   - During the build phase the `prebuild` script runs `npm run generate:robots && npm run generate:sitemap` to update SEO files
    - After deployment, click on "Generate Domain" to get a public URL
 
 6. **Run Database Migrations**
@@ -141,6 +142,17 @@ deployment platform. Refer to `.env.example` for sample values.
 
 Guest mode should only be enabled when testing. For production deployments make
 sure `GUEST_MODE=false`.
+
+## SEO
+
+Robots and sitemap files are generated automatically. Use the following commands to update them manually:
+
+```bash
+npm run generate:robots
+npm run generate:sitemap
+```
+
+Both commands rely on the `SITE_DOMAIN` environment variable and output files under `public/`. They also run automatically via the `prebuild` script before each build.
 
 ## Stripe Environment Variables
 

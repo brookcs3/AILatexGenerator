@@ -12,7 +12,10 @@
     "db:generate": "drizzle-kit generate --config=./drizzle.config.ts",
     "db:migrate": "tsx db/migrate.ts",
     "test": "node --test",
-    "lint": "eslint \"{client,server}/**/*.{ts,tsx}\""
+    "lint": "eslint \"{client,server}/**/*.{ts,tsx}\"",
+    "generate:robots": "node scripts/generate-robots.js",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "prebuild": "npm run generate:robots && npm run generate:sitemap"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
