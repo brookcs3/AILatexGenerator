@@ -8,9 +8,20 @@ export function setupPugRoutes(app: express.Express) {
 
   // Define template render function to keep DRY
   const renderPugApp = (req: express.Request, res: express.Response) => {
+    const siteTitle = process.env.SITE_TITLE || 'AI LaTeX Generator';
+    const siteDescription =
+      process.env.SITE_DESCRIPTION ||
+      'Generate professional LaTeX documents with AI assistance.';
+    const siteDomain = process.env.SITE_DOMAIN || 'https://aitexgen.com';
+    const siteImage =
+      process.env.SITE_IMAGE || `${siteDomain}/logo.png`;
+
     res.render('app_pug', {
-      title: 'AI LaTeX Generator - Pug Version',
-      userCredits: 3
+      title: siteTitle,
+      description: siteDescription,
+      ogUrl: siteDomain,
+      ogImage: siteImage,
+      userCredits: 3,
     });
   };
 

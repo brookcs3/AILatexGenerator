@@ -52,6 +52,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    - `DATABASE_URL` (Copy this from the PostgreSQL service's "Connect" tab)
    - `SESSION_SECRET` (A random string for securing sessions)
    - `DEBUG_SESSIONS` set to `true` to log session data for debugging
+   - `LATEX_DEBUG` set to `true` to enable verbose LaTeX compilation logs
 
    - `OPENAI_API_KEY` (Your OpenAI API key)
    - `ANTHROPIC_API_KEY` (Your Anthropic API key)
@@ -83,6 +84,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
+5. (Optional) Set `LATEX_DEBUG=true` in your `.env` to see detailed LaTeX compilation logs
 
 ## API Integration
 
@@ -131,12 +133,14 @@ deployment platform. Refer to `.env.example` for sample values.
 - `NODE_ENV` - Environment mode (`development` or `production`).
 - `DATABASE_URL` - PostgreSQL connection string.
 - `SESSION_SECRET` - Secret used to sign sessions.
+- `JWT_SECRET` - Secret key for signing JSON Web Tokens.
 - Session cookies use the `secure` flag when `NODE_ENV` is `production`, so HTTPS is required in that mode.
 - `OPENAI_API_KEY` - OpenAI API key.
 - `ANTHROPIC_API_KEY` - Anthropic API key.
 - `GROQ_API_KEY` - Groq API key.
 - `GUEST_MODE` - Set to `true` to allow anonymous access for testing.
 - `DISABLE_USAGE_LIMITS` - Set to `true` to bypass subscription usage limits (defaults to `false`).
+- `LATEX_DEBUG` - Set to `true` to enable verbose LaTeX compilation logs.
 
 - `POSTMARK_API_KEY` - Postmark API key for sending emails.
 - `STRIPE_SECRET_KEY` - Stripe secret key.
@@ -147,6 +151,9 @@ deployment platform. Refer to `.env.example` for sample values.
 - `STRIPE_PRICE_REFILL_PACK_ID` - Price ID for refill packs.
 - `DOMAIN` - Production domain used in email links.
 - `SITE_DOMAIN` - Primary site domain used in robots.txt and metadata.
+- `SITE_TITLE` - Default site title used in templates.
+- `SITE_DESCRIPTION` - Default meta description for pages.
+- `SITE_IMAGE` - Default preview image for social cards.
 - `VITE_API_BASE_URL` - Base URL for the frontend API.
 
 Guest mode should only be enabled when testing. For production deployments make
@@ -169,6 +176,7 @@ configuration:
 - `STRIPE_WEBHOOK_SECRET`
 - `POSTMARK_API_KEY`
 - `DISABLE_USAGE_LIMITS`
+- `LATEX_DEBUG`
 
 Refer to `.env.example` for default values and additional optional variables.
 
