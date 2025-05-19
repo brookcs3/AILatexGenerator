@@ -1,13 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import VanillaTilt from "vanilla-tilt";
 import "./PromptAnimator.css";
 import HeroTitle from "./HeroTitle";
-import "./PromptAnimator.css";
 
 interface Props {
   onGetStarted: () => void;
 }
 
 export default function PromptAnimator({ onGetStarted }: Props) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const btn = document.querySelector('.cta-button') as HTMLElement | null;
+    if (btn) {
+      VanillaTilt.init(btn, {
+        max: 12,
+        speed: 400,
+        scale: 1.05,
+        glare: true,
+        "max-glare": 0.3,
+      });
+    }
+    return () => {
+      if (btn && (btn as any).vanillaTilt) {
+        (btn as any).vanillaTilt.destroy();
+      }
+    };
+  }, []);
+  
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+        window.innerWidth < 768 || 
+        ('ontouchstart' in window) || 
+        (navigator.maxTouchPoints > 0);
+    };
+    
+    setIsMobile(checkMobile());
+    
+    const handleResize = () => {
+      setIsMobile(checkMobile());
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Enhanced click handler for better mobile support
+  const handleGetStartedClick = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    
+    // Create visible feedback for mobile users
+    if (isMobile) {
+      const button = e.currentTarget as HTMLButtonElement;
+      button.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        button.style.transform = '';
+        onGetStarted();
+      }, 150);
+    } else {
+      onGetStarted();
+    }
+  };
+  
   const handleDownload = () => {
     const latexCodeContainer = document.getElementById("latex-code-container");
     let latexCode = "";
@@ -54,7 +112,8 @@ export default function PromptAnimator({ onGetStarted }: Props) {
           <div className="cta-button-container">
             <button
               className="cta-button"
-              onClick={onGetStarted}
+              onClick={handleGetStartedClick}
+              onTouchEnd={isMobile ? handleGetStartedClick : undefined}
               aria-label="Get started with AI LaTeX Generator"
             >
               Get Started

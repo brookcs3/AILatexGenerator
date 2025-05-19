@@ -213,6 +213,8 @@
   position: relative;
   z-index: 2;
   text-align: center;
+  perspective: 800px;
+  transform-style: preserve-3d;
 }
 
 /* Prompt animation */
@@ -484,6 +486,11 @@
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5);
+  -webkit-tap-highlight-color: transparent; /* Removes the tap highlight on mobile */
+  touch-action: manipulation; /* Improves touch handling */
+  user-select: none; /* Prevents text selection on button */
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .cta-button:hover {
@@ -493,4 +500,23 @@
 
 .cta-button:active {
   transform: translateY(1px);
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .cta-button {
+    padding: 0.875rem 2rem;
+    font-size: 1.1rem;
+    width: auto;
+    min-width: 160px;
+    margin: 1rem auto;
+  }
+  
+  /* Specific styles for iOS devices to fix tap issues */
+  @supports (-webkit-touch-callout: none) {
+    .cta-button {
+      cursor: pointer;
+      -webkit-appearance: none;
+    }
+  }
 }

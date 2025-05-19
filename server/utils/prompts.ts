@@ -1,10 +1,9 @@
 /**
  * System prompt for LaTeX generation
  */
-// This string holds the system prompt used by the AI models. It is updated at
-// runtime by updateSystemPromptsWithTemplates() to include any custom templates
-// discovered on disk.
-export let LATEX_SYSTEM_PROMPT = `
+// This string holds the base system prompt used by the AI models.
+// The actual prompt with templates is retrieved via getSystemPromptWithTemplates()
+export const LATEX_SYSTEM_PROMPT = `
 ## Role and Objective
 You are a specialized LaTeX conversion assistant. Your task is to transform plain text input into correctly formatted, compilable LaTeX documents. Analyze the content structure, mathematical expressions, tables, and other elements to produce professional LaTeX code.
 
@@ -179,3 +178,6 @@ Guidelines:
 4. For papers or reports, use the first few words if they appear to be a title
 5. Return "Document" only if there is absolutely no text that could reasonably be a title
 `;
+
+// Function to be initialized by templateLoader.ts
+export let getSystemPromptWithTemplates = () => LATEX_SYSTEM_PROMPT;

@@ -112,6 +112,18 @@ Letter content goes here.
   }
 }
 
+// Create a module variable to store the template sections
+let templateSections: string = '';
+
+/**
+ * Returns the complete system prompt with templates
+ * @param basePrompt - The base system prompt to extend
+ * @returns The system prompt with template sections appended
+ */
+export function getFullSystemPrompt(basePrompt: string): string {
+  return basePrompt + templateSections;
+}
+
 /**
  * Updates the system prompts with custom templates
  * This function should be called during server startup
@@ -127,15 +139,15 @@ export async function updateSystemPromptsWithTemplates(): Promise<void> {
   }
 
   // Build a readable section for the system prompt containing all templates
-  const templateSections = Object.entries(templates)
+  const sections = Object.entries(templates)
     .map(([type, text]) => {
       const title = type.charAt(0).toUpperCase() + type.slice(1);
       return `### ${title} Template\n\`\`\`latex\n${text}\n\`\`\``;
     })
     .join("\n\n");
 
-  // Append the templates to the global system prompt string
-  prompts.LATEX_SYSTEM_PROMPT += `\n\n## Document Templates\n${templateSections}`;
+  // Store the template sections for later use
+  templateSections = `\n\n## Document Templates\n${sections}`;
 
   console.log('Templates loaded and merged into system prompt');
 }

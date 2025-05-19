@@ -4,17 +4,32 @@
  * This script tests the Pro Plan subscription setup with tax-inclusive pricing.
  * It creates a test checkout session and verifies the configuration is correct.
  */
-import { config } from 'dotenv';
-import Stripe from 'stripe';
+// Attempt to load environment variables if dotenv is available
+let loadEnv = async () => {};
+try {
+  const mod = await import('dotenv');
+  loadEnv = mod.config;
+} catch (err) {
+  console.warn('dotenv not installed - skipping env load');
+}
+// Dynamically import Stripe if available
+let Stripe;
+try {
+  const mod = await import('stripe');
+  Stripe = mod.default;
+} catch (err) {
+  console.warn('stripe not installed - skipping test');
+  process.exit(0);
+}
 
-// Load environment variables
-config();
+// Load environment variables if possible
+await loadEnv();
 
 // Initialize Stripe with your secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Pro Plan Price ID - hardcoded to the tax-inclusive one we updated in shared/stripe-config.ts
-const proPlanPriceId = 'price_1RQTn0FlLCnouIYKOMOghgIp'; // Pro Plan with tax-inclusive pricing
+// Pro Plan Price ID used for testing - should point to the tax-inclusive price
+const proPlanPriceId = process.env.TEST_PRO_PLAN_PRICE_ID;
 
 async function testProPlanCheckout() {
   console.log('=== Testing Pro Plan Checkout Session ===');

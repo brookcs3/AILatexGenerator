@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import axios from 'axios';
 import { AI_MODELS } from '@/lib/constants';
 import { LATEX_SYSTEM_PROMPT } from '../utils/prompts';
+import { getFullSystemPrompt } from '../utils/templateLoader';
 
 // System prompt used for advanced text rewriting to avoid AI detection
 const UNDETECTABLE_SYSTEM_PROMPT = `
@@ -50,7 +51,7 @@ const providers = {
       const response = await openaiClient.chat.completions.create({
         model: model,
         messages: [
-          { role: 'system', content: LATEX_SYSTEM_PROMPT },
+          { role: 'system', content: getFullSystemPrompt(LATEX_SYSTEM_PROMPT) },
           { role: 'user', content: prompt }
         ],
         temperature: 0.2,
@@ -72,7 +73,7 @@ const providers = {
 
       const response = await anthropicClient.messages.create({
         model: model,
-        system: LATEX_SYSTEM_PROMPT,
+        system: getFullSystemPrompt(LATEX_SYSTEM_PROMPT),
         max_tokens: 4000,
         temperature: 0.2,
         messages: [{ role: 'user', content: prompt }]
@@ -99,7 +100,8 @@ const providers = {
       if (!groqApiKey) throw new Error('Groq API not configured');
       
       // Estimate tokens in the request (very rough estimate: ~1.3 tokens per word)
-      const systemPromptTokens = Math.ceil(LATEX_SYSTEM_PROMPT.split(/\s+/).length * 1.3);
+      const fullSystemPrompt = getFullSystemPrompt(LATEX_SYSTEM_PROMPT);
+      const systemPromptTokens = Math.ceil(fullSystemPrompt.split(/\s+/).length * 1.3);
       const promptTokens = Math.ceil(prompt.split(/\s+/).length * 1.3);
       const estimatedRequestTokens = systemPromptTokens + promptTokens + 4000; // Include max response tokens
       
@@ -114,7 +116,7 @@ const providers = {
           {
             model: model,
             messages: [
-              { role: 'system', content: LATEX_SYSTEM_PROMPT },
+              { role: 'system', content: fullSystemPrompt },
               { role: 'user', content: prompt }
             ],
             temperature: 0.2,
@@ -230,7 +232,10 @@ const providers = {
           headers: {
             'Authorization': `Bearer ${openrouterApiKey}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': process.env.DOMAIN || 'http://localhost:5000',
+            'HTTP-Referer':
+              process.env.SITE_DOMAIN ||
+              process.env.DOMAIN ||
+              'http://localhost:5000',
             'X-Title': 'AI LaTeX Generator'
           }
         }
