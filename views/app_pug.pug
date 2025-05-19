@@ -217,6 +217,12 @@ html(lang="en")
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
+        position: relative;
+        z-index: 1;
+        margin-bottom: 1rem;
+        width: auto;
+        max-width: 100%;
+        overflow: visible;
       }
       
       .btn:hover {
@@ -234,6 +240,12 @@ html(lang="en")
       
       .btn:hover .btn-icon {
         transform: translateX(3px);
+      }
+      
+      /* Ensure the button doesn't have any weird overflow issues */
+      #generate-btn {
+        clear: both;
+        margin-top: 0.5rem;
       }
       
       .tabs {
