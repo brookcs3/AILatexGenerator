@@ -269,44 +269,34 @@ html(lang="en")
       }
       
       .templates {
-        margin-top: 2rem;
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
       }
       
-      .template-title {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
+      .template-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
       }
       
-      .template-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 1rem;
-      }
-      
-      .template-card {
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 1rem;
-        text-align: center;
+      .template-pill {
+        font-size: 0.875rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
       }
       
-      .template-card:hover {
-        transform: translateY(-2px);
-        border-color: var(--primary);
-        background-color: rgba(59, 130, 246, 0.05);
-      }
-      
-      .template-icon {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-      }
-      
-      .template-name {
-        font-size: 0.75rem;
-        font-weight: 500;
+      .template-pill:hover {
+        background-color: var(--primary);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
       }
       
       /* Animation for typing effect */
@@ -361,20 +351,11 @@ html(lang="en")
             span.btn-icon →
           
           div.templates
-            h3.template-title Templates
-            div.template-grid
-              div.template-card(data-template="math")
-                div.template-icon 📐
-                div.template-name Math Paper
-              div.template-card(data-template="thesis")
-                div.template-icon 📚
-                div.template-name Thesis
-              div.template-card(data-template="letter")
-                div.template-icon ✉️
-                div.template-name Letter
-              div.template-card(data-template="resume")
-                div.template-icon 📄
-                div.template-name Resume
+            div.template-bar
+              div.template-pill(data-template="math") 📐 Math
+              div.template-pill(data-template="thesis") 📚 Thesis
+              div.template-pill(data-template="letter") ✉️ Letter
+              div.template-pill(data-template="resume") 📄 Resume
         
         div.panel#output-panel
           div.tabs
