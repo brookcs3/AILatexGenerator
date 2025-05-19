@@ -21,6 +21,10 @@ const IntroPage: React.FC = () => {
   // Ensure we start at the top of the page when the component loads
   useEffect(() => {
     window.scrollTo(0, 0);
+    const container = document.querySelector('.intro-page-container');
+    if (container) {
+      (container as HTMLElement).scrollTop = 0;
+    }
   }, []);
 
   // Show skip button and toggle button after a short delay

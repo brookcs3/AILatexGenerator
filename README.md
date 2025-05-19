@@ -67,6 +67,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 
 5. **Deploy**
    - Railway will automatically deploy your application
+   - During the build phase the `prebuild` script runs `npm run generate:robots && npm run generate:sitemap` to update SEO files
    - After deployment, click on "Generate Domain" to get a public URL
 
 6. **Run Database Migrations**
@@ -87,9 +88,9 @@ If you prefer the Replit ecosystem, this repository includes a `.replit` file fo
 
 1. Clone this repository
 2. Install dependencies: `npm install`
-3. Lint the codebase: `npm run lint`
-4. Create a `.env` file with the required environment variables (see `.env.example`)
-   including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
+**Note:** All server and client dependencies are managed in the root `package.json`; the `server` folder no longer has its own `package.json`.
+3. Create a `.env` file with the required environment variables (see `.env.example`)
+including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 5. Run the application: `npm run dev`
 
@@ -139,8 +140,22 @@ deployment platform. Refer to `.env.example` for sample values.
 - `SITE_IMAGE` - Default preview image for social cards.
 - `VITE_API_BASE_URL` - Base URL for the frontend API.
 
+After setting these values, run `npm run prebuild` to generate `robots.txt` and
+`sitemap.xml` under the `public/` directory for SEO purposes.
+
 Guest mode should only be enabled when testing. For production deployments make
 sure `GUEST_MODE=false`.
+
+## SEO
+
+Robots and sitemap files are generated automatically. Use the following commands to update them manually:
+
+```bash
+npm run generate:robots
+npm run generate:sitemap
+```
+
+Both commands rely on the `SITE_DOMAIN` environment variable and output files under `public/`. They also run automatically via the `prebuild` script before each build.
 
 ## Stripe Environment Variables
 
