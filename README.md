@@ -104,6 +104,7 @@ deployment platform. Refer to `.env.example` for sample values.
 - `NODE_ENV` - Environment mode (`development` or `production`).
 - `DATABASE_URL` - PostgreSQL connection string.
 - `SESSION_SECRET` - Secret used to sign sessions.
+- Session cookies use the `secure` flag when `NODE_ENV` is `production`, so HTTPS is required in that mode.
 - `OPENAI_API_KEY` - OpenAI API key.
 - `ANTHROPIC_API_KEY` - Anthropic API key.
 - `GROQ_API_KEY` - Groq API key.

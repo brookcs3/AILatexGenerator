@@ -125,7 +125,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Use the most reliable cookie configuration
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      secure: false,                // Set to false for development
+      // Use secure cookies in production
+      secure: process.env.NODE_ENV === 'production',
       httpOnly: true,               // Prevent JavaScript access
       sameSite: 'lax',             // Allow cross-site requests in specific cases
       path: '/'                     // Ensure cookies are sent with all requests
