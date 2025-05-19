@@ -82,6 +82,31 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
 
+## API Integration
+
+The server exposes a `/api/latex/compile/webhook` endpoint so external tools can
+request LaTeX compilation and receive the result via webhook. Send a POST request
+with the LaTeX content and a `webhookUrl` where the compiled PDF should be
+delivered.
+
+```bash
+curl -X POST https://your-server.com/api/latex/compile/webhook \
+  -H 'Content-Type: application/json' \
+  -d '{"latex":"\\documentclass{article}\\n\\begin{document}Hello!\\end{document}","webhookUrl":"https://example.com/hook"}'
+```
+
+Once compilation finishes the server POSTs a JSON payload to the provided URL:
+
+```json
+{ "success": true, "pdf": "base64string" }
+```
+
+### CI/CD Example
+
+The repository includes a sample GitHub Actions workflow in
+`.github/workflows/compile-latex.yml` demonstrating how to invoke the API from a
+pipeline.
+
 ## Documentation
 
 The project includes a growing set of guides under `content/blog` as well as two

@@ -26,12 +26,13 @@ const validateRequest = (schema: z.ZodType<any, any>) => {
     }
   };
 };
-import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE, contactSchema, insertPostSchema } from "@shared/schema";
+import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE, contactSchema, compileWebhookSchema } from "@shared/schema";
 import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex, rewriteText, generateSummary, generateOutline, generateGlossary, generateFlashcards } from "./services/aiProvider";
 import { compileLatex, compileAndFixLatex } from "./services/latexService";
 import { stripeService } from "./services/stripeService";
 import { stripeSync } from "./services/stripeSync";
 import { testPostmarkConnection, generateVerificationToken, sendVerificationEmail, sendContactEmail } from "./utils/email";
+import { sendWebhook } from "./utils/webhook";
 import Stripe from "stripe";
 import session from "express-session";
 import pgSession from "connect-pg-simple";
@@ -550,6 +551,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error("LaTeX compilation error:", error);
         return res.status(500).json({ message: "Failed to compile LaTeX" });
       }
+    }
+  );
+
+  app.post('/api/latex/compile/webhook',
+    authenticateUser,
+    validateRequest(compileWebhookSchema),
+    async (req: Request, res: Response) => {
+      const { latex, webhookUrl } = req.body as { latex: string; webhookUrl: string };
+
+      // Run compilation asynchronously and notify via webhook
+      compileLatex(latex).then((result) => {
+        sendWebhook(webhookUrl, result);
+      }).catch((err) => {
+        console.error('Async compilation error:', err);
+        sendWebhook(webhookUrl, { success: false, error: 'Internal error during compilation' });
+      });
+
+      res.status(202).json({ message: 'Compilation started, webhook will receive result' });
     }
   );
 
