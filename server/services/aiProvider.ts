@@ -2,7 +2,8 @@ import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 import axios from 'axios';
 import { AI_MODELS } from '@/lib/constants';
-import * as prompts from '../utils/prompts';
+import { LATEX_SYSTEM_PROMPT } from '../utils/prompts';
+import { getFullSystemPrompt } from '../utils/templateLoader';
 
 // System prompt used for advanced text rewriting to avoid AI detection
 const UNDETECTABLE_SYSTEM_PROMPT = `
