@@ -77,10 +77,11 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 
 1. Clone this repository
 2. Install dependencies: `npm install`
-3. Create a `.env` file with the required environment variables (see `.env.example`)
+3. Lint the codebase: `npm run lint`
+4. Create a `.env` file with the required environment variables (see `.env.example`)
    including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
-4. Run the application: `npm run dev`
+5. Run the application: `npm run dev`
 
 ## Documentation
 
