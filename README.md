@@ -144,6 +144,16 @@ configuration:
 
 Refer to `.env.example` for default values and additional optional variables.
 
+## Running Tests
+
+To run the test suite locally, execute:
+
+```bash
+npm test
+```
+
+This uses Node's built-in test runner to execute all tests defined in the project.
+
 ## License
 
 Released under the [MIT License](LICENSE).
