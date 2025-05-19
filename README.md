@@ -52,6 +52,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    - `DATABASE_URL` (Copy this from the PostgreSQL service's "Connect" tab)
    - `SESSION_SECRET` (A random string for securing sessions)
    - `DEBUG_SESSIONS` set to `true` to log session data for debugging
+   - `LATEX_DEBUG` set to `true` to enable verbose LaTeX compilation logs
 
    - `OPENAI_API_KEY` (Your OpenAI API key)
    - `ANTHROPIC_API_KEY` (Your Anthropic API key)
@@ -81,6 +82,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
+5. (Optional) Set `LATEX_DEBUG=true` in your `.env` to see detailed LaTeX compilation logs
 
 ## API Integration
 
@@ -135,6 +137,7 @@ deployment platform. Refer to `.env.example` for sample values.
 - `GROQ_API_KEY` - Groq API key.
 - `GUEST_MODE` - Set to `true` to allow anonymous access for testing.
 - `DISABLE_USAGE_LIMITS` - Set to `true` to bypass subscription usage limits (defaults to `false`).
+- `LATEX_DEBUG` - Set to `true` to enable verbose LaTeX compilation logs.
 
 - `POSTMARK_API_KEY` - Postmark API key for sending emails.
 - `STRIPE_SECRET_KEY` - Stripe secret key.
@@ -167,6 +170,7 @@ configuration:
 - `STRIPE_WEBHOOK_SECRET`
 - `POSTMARK_API_KEY`
 - `DISABLE_USAGE_LIMITS`
+- `LATEX_DEBUG`
 
 Refer to `.env.example` for default values and additional optional variables.
 
