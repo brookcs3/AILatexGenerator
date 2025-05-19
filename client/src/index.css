@@ -345,3 +345,17 @@ code[class*="language-"] {
   /* as these properties might cause search engines to ignore the content */
   z-index: -1000; /* Behind everything, but still in the DOM */
 }
+
+/* Custom cursor styles */
+.custom-cursor-enabled {
+  cursor: none;
+}
+.custom-cursor-enabled * {
+  cursor: none;
+}
+
+
+/* Reveal animation for Locomotive Scroll */
+[data-reveal] { opacity: 0; transform: translateY(40px); }
+.revealed { opacity: 1 !important; transform: translateY(0) !important; transition: opacity 0.4s, transform 0.4s; }
+

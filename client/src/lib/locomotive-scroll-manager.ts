@@ -59,6 +59,8 @@ class ScrollManager {
 
   private constructor() {}
 
+  private scrollCallbacks: Array<(instance: any) => void> = [];
+
   public static getInstance(): ScrollManager {
     if (!ScrollManager.instance) {
       ScrollManager.instance = new ScrollManager();
@@ -94,6 +96,15 @@ class ScrollManager {
       
       // Set up event listeners
       this.setupEventListeners();
+
+      // Rebind scroll callbacks if any were registered before init
+      this.scrollCallbacks.forEach((cb) => {
+        try {
+          this.locomotiveScroll?.on('scroll', cb);
+        } catch (e) {
+          console.error('Failed to bind scroll callback:', e);
+        }
+      });
       
       this.initialized = true;
       
@@ -154,6 +165,13 @@ class ScrollManager {
   public destroy(): void {
     if (this.locomotiveScroll) {
       try {
+        this.scrollCallbacks.forEach((cb) => {
+          try {
+            this.locomotiveScroll?.off('scroll', cb);
+          } catch (e) {
+            console.error('Failed to unbind scroll callback:', e);
+          }
+        });
         this.locomotiveScroll.destroy();
         this.locomotiveScroll = null;
         this.initialized = false;
@@ -168,10 +186,10 @@ class ScrollManager {
    */
   private setupEventListeners(): void {
     if (!this.locomotiveScroll) return;
-    
+
     // Listen for scroll start
     this.locomotiveScroll.on('scroll', (instance: any) => {
-      // You can trigger custom animations based on scroll position here
+      this.scrollCallbacks.forEach((cb) => cb(instance));
     });
     
     // Handle window resize
@@ -198,6 +216,34 @@ class ScrollManager {
   }
 
   private resizeTimeout: NodeJS.Timeout | null = null;
+
+  /**
+   * Register a scroll callback.
+   */
+  public onScroll(callback: (instance: any) => void): void {
+    this.scrollCallbacks.push(callback);
+    if (this.locomotiveScroll) {
+      try {
+        this.locomotiveScroll.on('scroll', callback);
+      } catch (e) {
+        console.error('Failed to bind scroll callback:', e);
+      }
+    }
+  }
+
+  /**
+   * Remove a previously registered scroll callback.
+   */
+  public offScroll(callback: (instance: any) => void): void {
+    this.scrollCallbacks = this.scrollCallbacks.filter((cb) => cb !== callback);
+    if (this.locomotiveScroll) {
+      try {
+        this.locomotiveScroll.off('scroll', callback);
+      } catch (e) {
+        console.error('Failed to unbind scroll callback:', e);
+      }
+    }
+  }
 }
 
 export default ScrollManager.getInstance();
