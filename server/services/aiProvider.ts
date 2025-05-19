@@ -51,7 +51,7 @@ const providers = {
       const response = await openaiClient.chat.completions.create({
         model: model,
         messages: [
-          { role: 'system', content: LATEX_SYSTEM_PROMPT },
+          { role: 'system', content: getFullSystemPrompt(LATEX_SYSTEM_PROMPT) },
           { role: 'user', content: prompt }
         ],
         temperature: 0.2,
@@ -73,7 +73,7 @@ const providers = {
 
       const response = await anthropicClient.messages.create({
         model: model,
-        system: LATEX_SYSTEM_PROMPT,
+        system: getFullSystemPrompt(LATEX_SYSTEM_PROMPT),
         max_tokens: 4000,
         temperature: 0.2,
         messages: [{ role: 'user', content: prompt }]
