@@ -27,7 +27,7 @@ const validateRequest = (schema: z.ZodType<any, any>) => {
   };
 };
 import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE } from "@shared/schema";
-import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex, rewriteText } from "./services/aiProvider";
+import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex, rewriteText, generateSummary, generateOutline, generateGlossary, generateFlashcards } from "./services/aiProvider";
 import { compileLatex, compileAndFixLatex } from "./services/latexService";
 import { stripeService } from "./services/stripeService";
 import { stripeSync } from "./services/stripeSync";
@@ -645,6 +645,155 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } catch (error) {
         console.error("Rewrite text error:", error);
         return res.status(500).json({ message: "Failed to rewrite text" });
+      }
+    }
+  );
+
+  // Groq niche feature endpoints
+  app.post(
+    "/api/groq/summarize",
+    trackAnonymousUser,
+    allowAnonymousOrAuth,
+    checkSubscription,
+    async (req: Request, res: Response) => {
+      const { text } = req.body;
+      const userId = req.session.userId;
+      const isAuthenticated = !!userId;
+
+      if (!text) {
+        return res.status(400).json({ message: "Text is required" });
+      }
+
+      try {
+        if (!isAuthenticated) {
+          await incrementAnonymousUsage(req);
+        }
+
+        const result = await generateSummary(text);
+
+        if (!result.success) {
+          return res.status(500).json({ message: result.error });
+        }
+
+        if (isAuthenticated && userId) {
+          await storage.incrementUserUsage(userId);
+        }
+
+        return res.status(200).json({ summary: result.summary });
+      } catch (error) {
+        console.error("Summary error:", error);
+        return res.status(500).json({ message: "Failed to generate summary" });
+      }
+    }
+  );
+
+  app.post(
+    "/api/groq/outline",
+    trackAnonymousUser,
+    allowAnonymousOrAuth,
+    checkSubscription,
+    async (req: Request, res: Response) => {
+      const { text } = req.body;
+      const userId = req.session.userId;
+      const isAuthenticated = !!userId;
+
+      if (!text) {
+        return res.status(400).json({ message: "Text is required" });
+      }
+
+      try {
+        if (!isAuthenticated) {
+          await incrementAnonymousUsage(req);
+        }
+
+        const result = await generateOutline(text);
+
+        if (!result.success) {
+          return res.status(500).json({ message: result.error });
+        }
+
+        if (isAuthenticated && userId) {
+          await storage.incrementUserUsage(userId);
+        }
+
+        return res.status(200).json({ outline: result.outline });
+      } catch (error) {
+        console.error("Outline error:", error);
+        return res.status(500).json({ message: "Failed to generate outline" });
+      }
+    }
+  );
+
+  app.post(
+    "/api/groq/glossary",
+    trackAnonymousUser,
+    allowAnonymousOrAuth,
+    checkSubscription,
+    async (req: Request, res: Response) => {
+      const { text } = req.body;
+      const userId = req.session.userId;
+      const isAuthenticated = !!userId;
+
+      if (!text) {
+        return res.status(400).json({ message: "Text is required" });
+      }
+
+      try {
+        if (!isAuthenticated) {
+          await incrementAnonymousUsage(req);
+        }
+
+        const result = await generateGlossary(text);
+
+        if (!result.success) {
+          return res.status(500).json({ message: result.error });
+        }
+
+        if (isAuthenticated && userId) {
+          await storage.incrementUserUsage(userId);
+        }
+
+        return res.status(200).json({ glossary: result.glossary });
+      } catch (error) {
+        console.error("Glossary error:", error);
+        return res.status(500).json({ message: "Failed to generate glossary" });
+      }
+    }
+  );
+
+  app.post(
+    "/api/groq/flashcards",
+    trackAnonymousUser,
+    allowAnonymousOrAuth,
+    checkSubscription,
+    async (req: Request, res: Response) => {
+      const { text } = req.body;
+      const userId = req.session.userId;
+      const isAuthenticated = !!userId;
+
+      if (!text) {
+        return res.status(400).json({ message: "Text is required" });
+      }
+
+      try {
+        if (!isAuthenticated) {
+          await incrementAnonymousUsage(req);
+        }
+
+        const result = await generateFlashcards(text);
+
+        if (!result.success) {
+          return res.status(500).json({ message: result.error });
+        }
+
+        if (isAuthenticated && userId) {
+          await storage.incrementUserUsage(userId);
+        }
+
+        return res.status(200).json({ flashcards: result.flashcards });
+      } catch (error) {
+        console.error("Flashcards error:", error);
+        return res.status(500).json({ message: "Failed to generate flashcards" });
       }
     }
   );

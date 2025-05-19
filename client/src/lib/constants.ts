@@ -80,6 +80,12 @@ export const API_ROUTES = {
   undetectable: {
     rewrite: "/api/undetectable/rewrite"
   },
+  groq: {
+    summarize: "/api/groq/summarize",
+    outline: "/api/groq/outline",
+    glossary: "/api/groq/glossary",
+    flashcards: "/api/groq/flashcards"
+  },
   subscription: {
     create: "/api/subscription/create",
     manage: "/api/subscription/manage",

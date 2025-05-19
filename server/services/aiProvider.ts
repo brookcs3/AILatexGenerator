@@ -613,4 +613,204 @@ export async function rewriteText(
   }
 }
 
+const SUMMARY_SYSTEM_PROMPT = `You are a professional academic assistant. Provide a concise summary of the user's text in 3-5 bullet points.`;
+
+export async function generateSummary(
+  text: string,
+  model: string = 'llama3-8b-8192'
+): Promise<{ success: boolean; summary?: string; error?: string }> {
+  if (!groqApiKey) {
+    return { success: false, error: 'Groq API not configured' };
+  }
+
+  const provider = providers.groq as any;
+  const systemTokens = Math.ceil(SUMMARY_SYSTEM_PROMPT.split(/\s+/).length * 1.3);
+  const textTokens = Math.ceil(text.split(/\s+/).length * 1.3);
+  const estimatedRequestTokens = systemTokens + textTokens + 400;
+
+  if (provider.totalTokensUsed + estimatedRequestTokens > provider.MAX_TOKENS) {
+    return { success: false, error: 'Groq spending limit exceeded' };
+  }
+
+  try {
+    const resp = await axios.post(
+      'https://api.groq.com/openai/v1/chat/completions',
+      {
+        model,
+        messages: [
+          { role: 'system', content: SUMMARY_SYSTEM_PROMPT },
+          { role: 'user', content: text }
+        ],
+        temperature: 0.3,
+        max_tokens: 400
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${groqApiKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    const tokensUsed = resp.data.usage?.total_tokens || estimatedRequestTokens;
+    provider.totalTokensUsed += tokensUsed;
+    return { success: true, summary: resp.data.choices[0].message.content.trim() };
+  } catch (error) {
+    const errorObj = error as any;
+    if (errorObj.response?.status === 429) {
+      provider.totalTokensUsed = provider.MAX_TOKENS;
+    }
+    return { success: false, error: errorObj.message || 'Failed to summarize text' };
+  }
+}
+
+const OUTLINE_SYSTEM_PROMPT = `You create concise bullet-point outlines capturing the major topics of the user's text.`;
+
+export async function generateOutline(
+  text: string,
+  model: string = 'llama3-8b-8192'
+): Promise<{ success: boolean; outline?: string; error?: string }> {
+  if (!groqApiKey) {
+    return { success: false, error: 'Groq API not configured' };
+  }
+
+  const provider = providers.groq as any;
+  const systemTokens = Math.ceil(OUTLINE_SYSTEM_PROMPT.split(/\s+/).length * 1.3);
+  const textTokens = Math.ceil(text.split(/\s+/).length * 1.3);
+  const estimatedRequestTokens = systemTokens + textTokens + 400;
+
+  if (provider.totalTokensUsed + estimatedRequestTokens > provider.MAX_TOKENS) {
+    return { success: false, error: 'Groq spending limit exceeded' };
+  }
+
+  try {
+    const resp = await axios.post(
+      'https://api.groq.com/openai/v1/chat/completions',
+      {
+        model,
+        messages: [
+          { role: 'system', content: OUTLINE_SYSTEM_PROMPT },
+          { role: 'user', content: text }
+        ],
+        temperature: 0.3,
+        max_tokens: 400
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${groqApiKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    const tokensUsed = resp.data.usage?.total_tokens || estimatedRequestTokens;
+    provider.totalTokensUsed += tokensUsed;
+    return { success: true, outline: resp.data.choices[0].message.content.trim() };
+  } catch (error) {
+    const errorObj = error as any;
+    if (errorObj.response?.status === 429) {
+      provider.totalTokensUsed = provider.MAX_TOKENS;
+    }
+    return { success: false, error: errorObj.message || 'Failed to create outline' };
+  }
+}
+
+const GLOSSARY_SYSTEM_PROMPT = `Extract key terms from the user's text and provide short definitions in the form "Term: definition".`;
+
+export async function generateGlossary(
+  text: string,
+  model: string = 'llama3-8b-8192'
+): Promise<{ success: boolean; glossary?: string; error?: string }> {
+  if (!groqApiKey) {
+    return { success: false, error: 'Groq API not configured' };
+  }
+
+  const provider = providers.groq as any;
+  const systemTokens = Math.ceil(GLOSSARY_SYSTEM_PROMPT.split(/\s+/).length * 1.3);
+  const textTokens = Math.ceil(text.split(/\s+/).length * 1.3);
+  const estimatedRequestTokens = systemTokens + textTokens + 400;
+
+  if (provider.totalTokensUsed + estimatedRequestTokens > provider.MAX_TOKENS) {
+    return { success: false, error: 'Groq spending limit exceeded' };
+  }
+
+  try {
+    const resp = await axios.post(
+      'https://api.groq.com/openai/v1/chat/completions',
+      {
+        model,
+        messages: [
+          { role: 'system', content: GLOSSARY_SYSTEM_PROMPT },
+          { role: 'user', content: text }
+        ],
+        temperature: 0.3,
+        max_tokens: 400
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${groqApiKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    const tokensUsed = resp.data.usage?.total_tokens || estimatedRequestTokens;
+    provider.totalTokensUsed += tokensUsed;
+    return { success: true, glossary: resp.data.choices[0].message.content.trim() };
+  } catch (error) {
+    const errorObj = error as any;
+    if (errorObj.response?.status === 429) {
+      provider.totalTokensUsed = provider.MAX_TOKENS;
+    }
+    return { success: false, error: errorObj.message || 'Failed to generate glossary' };
+  }
+}
+
+const FLASHCARD_SYSTEM_PROMPT = `Create brief study flashcards from the user's text. Respond with a numbered list where each item contains a question and its answer.`;
+
+export async function generateFlashcards(
+  text: string,
+  model: string = 'llama3-8b-8192'
+): Promise<{ success: boolean; flashcards?: string; error?: string }> {
+  if (!groqApiKey) {
+    return { success: false, error: 'Groq API not configured' };
+  }
+
+  const provider = providers.groq as any;
+  const systemTokens = Math.ceil(FLASHCARD_SYSTEM_PROMPT.split(/\s+/).length * 1.3);
+  const textTokens = Math.ceil(text.split(/\s+/).length * 1.3);
+  const estimatedRequestTokens = systemTokens + textTokens + 400;
+
+  if (provider.totalTokensUsed + estimatedRequestTokens > provider.MAX_TOKENS) {
+    return { success: false, error: 'Groq spending limit exceeded' };
+  }
+
+  try {
+    const resp = await axios.post(
+      'https://api.groq.com/openai/v1/chat/completions',
+      {
+        model,
+        messages: [
+          { role: 'system', content: FLASHCARD_SYSTEM_PROMPT },
+          { role: 'user', content: text }
+        ],
+        temperature: 0.3,
+        max_tokens: 400
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${groqApiKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    const tokensUsed = resp.data.usage?.total_tokens || estimatedRequestTokens;
+    provider.totalTokensUsed += tokensUsed;
+    return { success: true, flashcards: resp.data.choices[0].message.content.trim() };
+  } catch (error) {
+    const errorObj = error as any;
+    if (errorObj.response?.status === 429) {
+      provider.totalTokensUsed = provider.MAX_TOKENS;
+    }
+    return { success: false, error: errorObj.message || 'Failed to create flashcards' };
+  }
+}
+
 // exports are already defined individually throughout the file
