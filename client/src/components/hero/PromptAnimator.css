@@ -468,16 +468,9 @@
 .cta-button-container {
   display: flex;
   justify-content: center;
-  width: auto;
-  margin: 0;
+  width: 100%;
+  margin: 0.75rem 0;
   padding: 0;
-  position: fixed;
-  left: 50%;
-  bottom: 2rem;
-  transform: translateX(-50%) translateZ(50px);
-  pointer-events: all;
-  z-index: 50;
-
 }
 
 .cta-button {
