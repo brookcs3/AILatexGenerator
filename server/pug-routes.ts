@@ -6,11 +6,21 @@ export function setupPugRoutes(app: express.Express) {
   app.set('views', path.join(process.cwd(), 'views'));
   app.set('view engine', 'pug');
 
-  // Route for our Pug test page
-  app.get('/pug_test', (req, res) => {
+  // Define template render function to keep DRY
+  const renderPugApp = (req: express.Request, res: express.Response) => {
     res.render('app_pug', {
       title: 'AI LaTeX Generator - Pug Version',
       userCredits: 3
     });
-  });
+  };
+
+  // Original route (preserved for backward compatibility)
+  app.get('/pug_test', renderPugApp);
+  
+  // New more intuitive routes
+  app.get('/app/pug', renderPugApp);
+  app.get('/pug', renderPugApp);
+  
+  // Route that reflects the "alternative" nature of this implementation
+  app.get('/app/alternative', renderPugApp);
 }
