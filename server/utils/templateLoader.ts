@@ -134,8 +134,11 @@ export async function updateSystemPromptsWithTemplates(): Promise<void> {
     })
     .join("\n\n");
 
-  // Append the templates to the global system prompt string
-  prompts.LATEX_SYSTEM_PROMPT += `\n\n## Document Templates\n${templateSections}`;
+  // Instead of modifying the original prompt, export a new function that returns
+  // the combined prompt with templates
+  prompts.getSystemPromptWithTemplates = () => {
+    return prompts.LATEX_SYSTEM_PROMPT + `\n\n## Document Templates\n${templateSections}`;
+  };
 
   console.log('Templates loaded and merged into system prompt');
 }
