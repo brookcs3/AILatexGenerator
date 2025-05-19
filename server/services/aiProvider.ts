@@ -100,7 +100,8 @@ const providers = {
       if (!groqApiKey) throw new Error('Groq API not configured');
       
       // Estimate tokens in the request (very rough estimate: ~1.3 tokens per word)
-      const systemPromptTokens = Math.ceil(LATEX_SYSTEM_PROMPT.split(/\s+/).length * 1.3);
+      const fullSystemPrompt = getFullSystemPrompt(LATEX_SYSTEM_PROMPT);
+      const systemPromptTokens = Math.ceil(fullSystemPrompt.split(/\s+/).length * 1.3);
       const promptTokens = Math.ceil(prompt.split(/\s+/).length * 1.3);
       const estimatedRequestTokens = systemPromptTokens + promptTokens + 4000; // Include max response tokens
       
