@@ -703,10 +703,17 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
-    <script
-      type="text/javascript"
-      src="https://replit.com/public/js/replit-dev-banner.js"
-    ></script>
+    <!-- Only load replit-dev-banner on *.repl.co or when REPL_ID exists -->
+    <script type="module">
+      (function () {
+        var host = window.location.hostname;
+        if (host.endsWith('.repl.co') || window.REPL_ID) {
+          var banner = document.createElement('script');
+          banner.type = 'text/javascript';
+          banner.src = 'https://replit.com/public/js/replit-dev-banner.js';
+          document.body.appendChild(banner);
+        }
+      })();
+    </script>
   </body>
 </html>
