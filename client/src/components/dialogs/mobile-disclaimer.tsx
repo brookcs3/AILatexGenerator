@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-// Flag to enable/disable the mobile disclaimer
-// Set to true to activate the feature
-const SHOW_MOBILE_DISCLAIMER = false;
+// Flag to enable/disable the mobile disclaimer controlled via environment variable
+// Set VITE_SHOW_MOBILE_DISCLAIMER=true in your .env file to activate the feature
+const SHOW_MOBILE_DISCLAIMER = import.meta.env.VITE_SHOW_MOBILE_DISCLAIMER === 'true';
 
 export default function MobileDisclaimer() {
   const [open, setOpen] = useState(false);
