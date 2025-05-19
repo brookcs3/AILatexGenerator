@@ -12,7 +12,9 @@ const app = express();
 
 // Redirect ads.txt to Ezoic's ads.txt manager before serving static files
 app.get('/ads.txt', (req, res) => {
-  return res.redirect(301, 'https://srv.adstxtmanager.com/74831/aitexgen.com');
+  const domain = (process.env.SITE_DOMAIN || 'https://aitexgen.com')
+    .replace(/^https?:\/\//, '');
+  return res.redirect(301, `https://srv.adstxtmanager.com/74831/${domain}`);
 });
 
 // Serve static files from the public directory

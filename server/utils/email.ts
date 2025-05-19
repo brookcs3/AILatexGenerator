@@ -63,7 +63,11 @@ export async function sendVerificationEmail(
     // Determine the base URL based on the environment
     // For Railway, use the PRIMARY_DOMAIN environment variable
     // This will ensure the verification link works in both local and production environments
-    const baseUrl = process.env.PRIMARY_DOMAIN || process.env.PUBLIC_URL || 'http://aitexgen.com';
+    const baseUrl =
+      process.env.PRIMARY_DOMAIN ||
+      process.env.PUBLIC_URL ||
+      process.env.SITE_DOMAIN ||
+      'https://aitexgen.com';
     const verificationLink = `${baseUrl}/verify-email?token=${verificationToken}`;
     
     const response = await client.sendEmail({
@@ -73,7 +77,7 @@ export async function sendVerificationEmail(
       HtmlBody: `
         <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #e5e7eb; border-radius: 8px;">
           <div style="text-align: center; margin-bottom: 24px;">
-            <img src="https://aitexgen.com/logo.png" alt="AITexGen Logo" style="max-width: 120px; height: auto;" onerror="this.style.display='none'">
+            <img src="${baseUrl.replace(/\/$/, '')}/logo.png" alt="AITexGen Logo" style="max-width: 120px; height: auto;" onerror="this.style.display='none'">
           </div>
           <h1 style="color: #2563eb; margin-bottom: 24px; text-align: center;">Verify your email address</h1>
           <p style="margin-bottom: 24px; font-size: 16px; line-height: 24px;">

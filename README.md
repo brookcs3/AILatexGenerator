@@ -119,6 +119,7 @@ deployment platform. Refer to `.env.example` for sample values.
   subscription tiers.
 - `STRIPE_PRICE_REFILL_PACK_ID` - Price ID for refill packs.
 - `DOMAIN` - Production domain used in email links.
+- `SITE_DOMAIN` - Primary site domain used in robots.txt and metadata.
 - `VITE_API_BASE_URL` - Base URL for the frontend API.
 
 Guest mode should only be enabled when testing. For production deployments make
