@@ -36,22 +36,45 @@ const DistortionBackground = () => {
     resize();
     
     // Particle settings
-    const particleCount = 80;
+    const particleCount = 100; // Increased from 80 to 100 for better distribution
     const colors = ['#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899'];
     let mouseX = canvas.width / 2;
     let mouseY = canvas.height / 2;
     
-    // Create particles
+    // Create particles with improved initial distribution
     const particles = [];
+    
+    // Helper function to ensure particles are well-distributed
+    const getRandomPosition = () => {
+      // Divide canvas into grid cells for better distribution
+      const gridCols = 10;
+      const gridRows = 10;
+      const cellWidth = canvas.width / gridCols;
+      const cellHeight = canvas.height / gridRows;
+      
+      // Pick a random cell
+      const cellX = Math.floor(Math.random() * gridCols);
+      const cellY = Math.floor(Math.random() * gridRows);
+      
+      // Return a position within that cell (add slight padding)
+      return {
+        x: (cellX + 0.2 + Math.random() * 0.6) * cellWidth,
+        y: (cellY + 0.2 + Math.random() * 0.6) * cellHeight
+      };
+    };
+    
     for (let i = 0; i < particleCount; i++) {
+      const position = getRandomPosition();
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 3 + 1,
+        x: position.x,
+        y: position.y,
+        radius: Math.random() * 2.5 + 1, // Slightly smaller max radius
         color: colors[Math.floor(Math.random() * colors.length)],
-        vx: Math.random() * 1 - 0.5,
-        vy: Math.random() * 1 - 0.5,
-        opacity: Math.random() * 0.5 + 0.2
+        vx: (Math.random() * 1.5 - 0.75) * 0.5, // More varied velocities
+        vy: (Math.random() * 1.5 - 0.75) * 0.5,
+        opacity: Math.random() * 0.5 + 0.2,
+        // Add slight repulsion factor to avoid clumping
+        repulsion: Math.random() * 0.5 + 0.5
       });
     }
     
