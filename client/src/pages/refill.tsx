@@ -72,7 +72,7 @@ export default function RefillPage() {
   useEffect(() => {
     // Redirect to login if not authenticated
     if (!session.isAuthenticated) {
-      navigate("/auth");
+      navigate("/login");
       return;
     }
     
