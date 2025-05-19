@@ -80,6 +80,19 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
 
+## Documentation
+
+The project includes a growing set of guides under `content/blog` as well as two
+new pages in the frontend:
+
+- `/how-to` – A step‑by‑step introduction to generating documents.
+- `/faq` – Answers to common questions from new users.
+- `/community` – A simple forum for sharing tips and feedback.
+- `/contact` – Get in touch about support or partnerships.
+
+Feel free to add more Markdown posts in `content/blog` to expand the knowledge
+base.
+
 ## Required Environment Variables
 
 The following variables must be configured either in a `.env` file or in your
