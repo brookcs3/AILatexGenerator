@@ -77,6 +77,8 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 
 1. Clone this repository
 2. Install dependencies: `npm install`
+   (includes dev packages such as `dotenv` used by the test suite)
+**Note:** All server and client dependencies are managed in the root `package.json`; the `server` folder no longer has its own `package.json`.
 3. Create a `.env` file with the required environment variables (see `.env.example`)
    including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
