@@ -1,14 +1,40 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 /**
  * Custom cursor with a trailing effect. Uses requestAnimationFrame
  * for smooth updates without blocking the main thread.
+ * Only shows on desktop devices and is disabled on touch devices.
  */
 export default function CustomCursor() {
   const outerRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if we're on a mobile device
+    const checkMobile = () => {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+        window.innerWidth < 768 || 
+        ('ontouchstart' in window) || 
+        (navigator.maxTouchPoints > 0);
+    };
+
+    setIsMobile(checkMobile());
+
+    // Re-check on resize
+    const handleResize = () => {
+      setIsMobile(checkMobile());
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    // Don't run the cursor effect on mobile devices
+    if (checkMobile()) {
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+
     const outer = outerRef.current;
     const dot = dotRef.current;
     if (!outer || !dot) return;
@@ -17,15 +43,16 @@ export default function CustomCursor() {
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
+    let animationFrameId: number;
 
     const render = () => {
       currentX += (targetX - currentX) * 0.15;
       currentY += (targetY - currentY) * 0.15;
       outer.style.transform = `translate3d(${currentX - outer.offsetWidth / 2}px, ${currentY - outer.offsetHeight / 2}px, 0)`;
       dot.style.transform = `translate3d(${targetX - dot.offsetWidth / 2}px, ${targetY - dot.offsetHeight / 2}px, 0)`;
-      requestAnimationFrame(render);
+      animationFrameId = requestAnimationFrame(render);
     };
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     const move = (e: MouseEvent) => {
       targetX = e.clientX;
@@ -42,12 +69,19 @@ export default function CustomCursor() {
     document.body.classList.add('custom-cursor-enabled');
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       document.removeEventListener('mousemove', move);
       document.removeEventListener('mousedown', down);
       document.removeEventListener('mouseup', up);
       document.body.classList.remove('custom-cursor-enabled');
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  // Don't render the cursor elements on mobile devices
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <>

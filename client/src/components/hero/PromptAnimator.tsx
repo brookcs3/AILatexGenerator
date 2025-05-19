@@ -1,13 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./PromptAnimator.css";
 import HeroTitle from "./HeroTitle";
-import "./PromptAnimator.css";
 
 interface Props {
   onGetStarted: () => void;
 }
 
 export default function PromptAnimator({ onGetStarted }: Props) {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+        window.innerWidth < 768 || 
+        ('ontouchstart' in window) || 
+        (navigator.maxTouchPoints > 0);
+    };
+    
+    setIsMobile(checkMobile());
+    
+    const handleResize = () => {
+      setIsMobile(checkMobile());
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Enhanced click handler for better mobile support
+  const handleGetStartedClick = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    
+    // Create visible feedback for mobile users
+    if (isMobile) {
+      const button = e.currentTarget as HTMLButtonElement;
+      button.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        button.style.transform = '';
+        onGetStarted();
+      }, 150);
+    } else {
+      onGetStarted();
+    }
+  };
+  
   const handleDownload = () => {
     const latexCodeContainer = document.getElementById("latex-code-container");
     let latexCode = "";
