@@ -467,26 +467,45 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin: 0.75rem 0;
+  margin: 1rem 0;
   padding: 0;
+  position: relative;
+  z-index: 100; /* Ensure it's above other elements */
 }
 
 .cta-button {
   background: linear-gradient(90deg, #3b82f6, #2563eb);
   color: white;
   font-weight: 600;
-  padding: 0.75rem 2rem;
+  padding: 0.875rem 2.5rem;
   border-radius: 50px;
   border: none;
-  font-size: 1.125rem;
+  font-size: 1.25rem; /* Larger font size */
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Allow button glow to extend beyond border */
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5);
   -webkit-tap-highlight-color: transparent; /* Removes the tap highlight on mobile */
   touch-action: manipulation; /* Improves touch handling */
   user-select: none; /* Prevents text selection on button */
+  z-index: 100; /* Ensure the button is above other elements */
+  min-width: 180px; /* Ensure button has reasonable minimum width */
+  margin: 0 auto;
+  outline: none; /* Remove outline on focus */
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 60px;
+  background: transparent;
+  z-index: -1;
+  pointer-events: auto; /* Make this area clickable too */
 }
 
 .cta-button:hover {
