@@ -16,10 +16,12 @@ export function setupPugRoutes(app: express.Express) {
     const siteImage =
       process.env.SITE_IMAGE || `${siteDomain}/logo.png`;
 
+    const canonicalUrl = `${siteDomain}${req.originalUrl}`;
+
     res.render('app_pug', {
       title: siteTitle,
       description: siteDescription,
-      ogUrl: siteDomain,
+      ogUrl: canonicalUrl,
       ogImage: siteImage,
       userCredits: 3,
     });

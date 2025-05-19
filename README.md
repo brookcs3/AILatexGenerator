@@ -67,6 +67,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 
 5. **Deploy**
    - Railway will automatically deploy your application
+   - During the build phase the `prebuild` script runs `npm run generate:robots && npm run generate:sitemap` to update SEO files
    - After deployment, click on "Generate Domain" to get a public URL
 
 6. **Run Database Migrations**
@@ -89,35 +90,10 @@ If you prefer the Replit ecosystem, this repository includes a `.replit` file fo
 2. Install dependencies: `npm install`
 **Note:** All server and client dependencies are managed in the root `package.json`; the `server` folder no longer has its own `package.json`.
 3. Create a `.env` file with the required environment variables (see `.env.example`)
-   including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
+including the Stripe keys (`VITE_STRIPE_PUBLIC_KEY`, `STRIPE_SECRET_KEY`,
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
-4. Run the application: `npm run dev`
-5. (Optional) Set `LATEX_DEBUG=true` in your `.env` to see detailed LaTeX compilation logs
+5. Run the application: `npm run dev`
 
-## API Integration
-
-The server exposes a `/api/latex/compile/webhook` endpoint so external tools can
-request LaTeX compilation and receive the result via webhook. Send a POST request
-with the LaTeX content and a `webhookUrl` where the compiled PDF should be
-delivered.
-
-```bash
-curl -X POST https://your-server.com/api/latex/compile/webhook \
-  -H 'Content-Type: application/json' \
-  -d '{"latex":"\\documentclass{article}\\n\\begin{document}Hello!\\end{document}","webhookUrl":"https://example.com/hook"}'
-```
-
-Once compilation finishes the server POSTs a JSON payload to the provided URL:
-
-```json
-{ "success": true, "pdf": "base64string" }
-```
-
-### CI/CD Example
-
-The repository includes a sample GitHub Actions workflow in
-`.github/workflows/compile-latex.yml` demonstrating how to invoke the API from a
-pipeline.
 
 ## Documentation
 
@@ -169,6 +145,17 @@ After setting these values, run `npm run prebuild` to generate `robots.txt` and
 
 Guest mode should only be enabled when testing. For production deployments make
 sure `GUEST_MODE=false`.
+
+## SEO
+
+Robots and sitemap files are generated automatically. Use the following commands to update them manually:
+
+```bash
+npm run generate:robots
+npm run generate:sitemap
+```
+
+Both commands rely on the `SITE_DOMAIN` environment variable and output files under `public/`. They also run automatically via the `prebuild` script before each build.
 
 ## Stripe Environment Variables
 
