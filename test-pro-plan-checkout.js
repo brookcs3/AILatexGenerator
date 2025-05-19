@@ -13,8 +13,8 @@ config();
 // Initialize Stripe with your secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Pro Plan Price ID (should be the tax-inclusive one)
-const proPlanPriceId = process.env.STRIPE_PRICE_TIER4_ID;
+// Pro Plan Price ID (hardcoded to the tax-inclusive one)
+const proPlanPriceId = 'price_1RQTn0FlLCnouIYKOMOghgIp';
 
 async function testProPlanCheckout() {
   console.log('=== Testing Pro Plan Checkout Session ===');
@@ -62,10 +62,6 @@ async function testProPlanCheckout() {
       success_url: 'https://example.com/success?session_id={CHECKOUT_SESSION_ID}',
       cancel_url: 'https://example.com/cancel',
       tax_id_collection: { enabled: true },
-      customer_update: {
-        address: 'auto',
-        name: 'auto'
-      },
     });
     
     console.log(`\nCheckout Session Created:`);
