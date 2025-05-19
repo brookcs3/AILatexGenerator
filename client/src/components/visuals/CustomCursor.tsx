@@ -1,0 +1,64 @@
+import React, { useEffect, useRef } from 'react';
+
+/**
+ * Custom cursor with a trailing effect. Uses requestAnimationFrame
+ * for smooth updates without blocking the main thread.
+ */
+export default function CustomCursor() {
+  const outerRef = useRef<HTMLDivElement>(null);
+  const dotRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const outer = outerRef.current;
+    const dot = dotRef.current;
+    if (!outer || !dot) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const render = () => {
+      currentX += (targetX - currentX) * 0.15;
+      currentY += (targetY - currentY) * 0.15;
+      outer.style.transform = `translate3d(${currentX - outer.offsetWidth / 2}px, ${currentY - outer.offsetHeight / 2}px, 0)`;
+      dot.style.transform = `translate3d(${targetX - dot.offsetWidth / 2}px, ${targetY - dot.offsetHeight / 2}px, 0)`;
+      requestAnimationFrame(render);
+    };
+    render();
+
+    const move = (e: MouseEvent) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    };
+
+    const down = () => outer.classList.add('active');
+    const up = () => outer.classList.remove('active');
+
+    document.addEventListener('mousemove', move);
+    document.addEventListener('mousedown', down);
+    document.addEventListener('mouseup', up);
+
+    document.body.classList.add('custom-cursor-enabled');
+
+    return () => {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('mousedown', down);
+      document.removeEventListener('mouseup', up);
+      document.body.classList.remove('custom-cursor-enabled');
+    };
+  }, []);
+
+  return (
+    <>
+      <div
+        ref={outerRef}
+        className="pointer-events-none fixed left-0 top-0 z-50 h-8 w-8 rounded-full border-2 border-white mix-blend-difference transition-transform duration-150 ease-out"
+      ></div>
+      <div
+        ref={dotRef}
+        className="pointer-events-none fixed left-0 top-0 z-50 h-2 w-2 rounded-full bg-white mix-blend-difference"
+      ></div>
+    </>
+  );
+}

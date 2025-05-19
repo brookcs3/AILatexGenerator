@@ -11,7 +11,9 @@
     "db:push": "drizzle-kit push --force --config=./drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config=./drizzle.config.ts",
     "db:migrate": "tsx db/migrate.ts",
-    "test": "node --test"
+    "test": "node --test",
+    "generate:robots": "node scripts/generate-robots.js",
+    "prebuild": "npm run generate:robots"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
@@ -72,6 +74,7 @@
     "express-session": "^1.18.1",
     "framer-motion": "^11.18.2",
     "gsap": "^3.13.0",
+    "regl": "^2.1.0",
     "input-otp": "^1.2.4",
     "jsonwebtoken": "^9.0.2",
     "locomotive-scroll": "^4.1.4",

@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { useLocation } from "wouter";
 import { UserContext, AuthRequiredContext } from "@/App";
 import SiteLayout from "@/components/layout/site-layout";
+import ShaderBackground from "@/components/background/ShaderBackground";
 import TabsWithContent from "@/components/ui/tabs-with-content";
 import LatexInput from "@/components/editor/latex-input";
 import LatexOutput from "@/components/editor/latex-output";
@@ -912,7 +913,10 @@ export default function Home() {
   
   return (
     <SiteLayout seoTitle="AI LaTeX Generator - Create Professional LaTeX Documents with AI">
-      <div className="h-full flex flex-col md:flex-row bg-gradient-soft">
+      <div className="absolute inset-0 -z-10">
+        <ShaderBackground />
+      </div>
+      <div className="relative h-full flex flex-col md:flex-row bg-gradient-soft">
         
         {/* Left Panel (Input) */}
         <div className="w-full md:w-1/2 h-full relative">

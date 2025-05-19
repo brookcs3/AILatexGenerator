@@ -27,7 +27,7 @@ export default function SiteLayout({
       </main>
       {!hideFooter && <Footer />}
       
-      {/* Mobile disclaimer popup - currently disabled but can be enabled by setting SHOW_MOBILE_DISCLAIMER to true */}
+      {/* Mobile disclaimer popup - enable by setting VITE_SHOW_MOBILE_DISCLAIMER=true */}
       <MobileDisclaimer />
     </div>
   );

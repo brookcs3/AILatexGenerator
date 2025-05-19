@@ -1,7 +1,10 @@
 /**
  * System prompt for LaTeX generation
  */
-export const LATEX_SYSTEM_PROMPT = `
+// This string holds the system prompt used by the AI models. It is updated at
+// runtime by updateSystemPromptsWithTemplates() to include any custom templates
+// discovered on disk.
+export let LATEX_SYSTEM_PROMPT = `
 ## Role and Objective
 You are a specialized LaTeX conversion assistant. Your task is to transform plain text input into correctly formatted, compilable LaTeX documents. Analyze the content structure, mathematical expressions, tables, and other elements to produce professional LaTeX code.
 

@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { updateSystemPromptsWithTemplates } from "./utils/templateLoader";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -12,7 +13,9 @@ const app = express();
 
 // Redirect ads.txt to Ezoic's ads.txt manager before serving static files
 app.get('/ads.txt', (req, res) => {
-  return res.redirect(301, 'https://srv.adstxtmanager.com/74831/aitexgen.com');
+  const domain = (process.env.SITE_DOMAIN || 'https://aitexgen.com')
+    .replace(/^https?:\/\//, '');
+  return res.redirect(301, `https://srv.adstxtmanager.com/74831/${domain}`);
 });
 
 // Serve static files from the public directory
@@ -66,6 +69,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  await updateSystemPromptsWithTemplates();
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

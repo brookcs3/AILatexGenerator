@@ -58,12 +58,54 @@ export const anonymousUsers = pgTable("anonymous_users", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// Community forum posts
+export const posts = pgTable("posts", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Upvotes for forum posts
+export const postUpvotes = pgTable("post_upvotes", {
+  id: serial("id").primaryKey(),
+  postId: integer("post_id").references(() => posts.id).notNull(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Showcase gallery entries referencing documents
+export const showcaseEntries = pgTable("showcase_entries", {
+  id: serial("id").primaryKey(),
+  documentId: integer("document_id").references(() => documents.id).notNull(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  title: text("title"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const usersRelations = relations(users, ({ many }) => ({
   documents: many(documents)
 }));
 
 export const documentsRelations = relations(documents, ({ one }) => ({
   user: one(users, { fields: [documents.userId], references: [users.id] })
+}));
+
+export const postsRelations = relations(posts, ({ one, many }) => ({
+  user: one(users, { fields: [posts.userId], references: [users.id] }),
+  upvotes: many(postUpvotes)
+}));
+
+export const postUpvotesRelations = relations(postUpvotes, ({ one }) => ({
+  post: one(posts, { fields: [postUpvotes.postId], references: [posts.id] }),
+  user: one(users, { fields: [postUpvotes.userId], references: [users.id] })
+}));
+
+export const showcaseEntriesRelations = relations(showcaseEntries, ({ one }) => ({
+  user: one(users, { fields: [showcaseEntries.userId], references: [users.id] }),
+  document: one(documents, { fields: [showcaseEntries.documentId], references: [documents.id] })
 }));
 
 // Validation schemas
@@ -76,6 +118,11 @@ export const insertUserSchema = createInsertSchema(users, {
 export const insertDocumentSchema = createInsertSchema(documents, {
   title: (schema) => schema.min(1, "Title is required"),
   inputContent: (schema) => schema.min(1, "Input content is required"),
+}).omit({ id: true, createdAt: true, updatedAt: true });
+
+export const insertPostSchema = createInsertSchema(posts, {
+  title: (schema) => schema.min(1, "Title is required"),
+  content: (schema) => schema.min(1, "Content is required"),
 }).omit({ id: true, createdAt: true, updatedAt: true });
 
 export const loginSchema = z.object({
@@ -101,9 +148,13 @@ export const insertAnonymousUserSchema = createInsertSchema(anonymousUsers, {
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type InsertDocument = z.infer<typeof insertDocumentSchema>;
+export type InsertPost = z.infer<typeof insertPostSchema>;
 export type InsertAnonymousUser = z.infer<typeof insertAnonymousUserSchema>;
 export type User = typeof users.$inferSelect;
 export type Document = typeof documents.$inferSelect;
+export type Post = typeof posts.$inferSelect;
+export type PostUpvote = typeof postUpvotes.$inferSelect;
+export type ShowcaseEntry = typeof showcaseEntries.$inferSelect;
 export type AnonymousUser = typeof anonymousUsers.$inferSelect;
 export type LoginCredentials = z.infer<typeof loginSchema>;
 export type GenerateLatexRequest = z.infer<typeof generateLatexSchema>;

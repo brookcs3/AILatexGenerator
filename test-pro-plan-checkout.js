@@ -13,8 +13,8 @@ config();
 // Initialize Stripe with your secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Pro Plan Price ID - hardcoded to the tax-inclusive one we updated in shared/stripe-config.ts
-const proPlanPriceId = 'price_1RQTn0FlLCnouIYKOMOghgIp'; // Pro Plan with tax-inclusive pricing
+// Pro Plan Price ID used for testing - should point to the tax-inclusive price
+const proPlanPriceId = process.env.TEST_PRO_PLAN_PRICE_ID;
 
 async function testProPlanCheckout() {
   console.log('=== Testing Pro Plan Checkout Session ===');
