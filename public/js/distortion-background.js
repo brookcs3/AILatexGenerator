@@ -1,9 +1,9 @@
-import * as THREE from "https://esm.sh/three";
-import { OrbitControls } from "https://esm.sh/three/examples/jsm/controls/OrbitControls.js";
-import { EffectComposer } from "https://esm.sh/three/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "https://esm.sh/three/examples/jsm/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "https://esm.sh/three/examples/jsm/postprocessing/UnrealBloomPass.js";
-import { FilmPass } from "https://esm.sh/three/examples/jsm/postprocessing/FilmPass.js";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 
 const DITHER_MOTION_SPEED = 2.0;
 const DITHER_MOTION_AMPLITUDE = 1.5;
