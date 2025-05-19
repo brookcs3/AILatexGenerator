@@ -703,12 +703,15 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Load the Replit dev banner only when hosted on Replit -->
-    <script>
-      if (location.hostname.endsWith('.repl.co') || window.REPL_ID) {
-        const s = document.createElement('script');
-        s.src = 'https://replit.com/public/js/replit-dev-banner.js';
-        document.body.appendChild(s);
+    <!-- Load Replit dev banner on *.repl.co or when REPL_ID is set -->
+    <script type="module">
+      if (
+        window.location.hostname.endsWith('.repl.co') ||
+        import.meta.env.REPL_ID
+      ) {
+        const banner = document.createElement('script');
+        banner.src = 'https://replit.com/public/js/replit-dev-banner.js';
+        document.head.appendChild(banner);
       }
     </script>
   </body>

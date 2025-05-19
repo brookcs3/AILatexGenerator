@@ -32,6 +32,8 @@ export default defineConfig({
         ]
       : []),
   ],
+  // Expose REPL_* variables to the client along with VITE_ defaults
+  envPrefix: ["VITE_", "REPL_"],
 
   resolve: {
     alias: {
