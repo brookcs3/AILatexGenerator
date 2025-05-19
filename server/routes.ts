@@ -31,7 +31,7 @@ import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex }
 import { compileLatex, compileAndFixLatex } from "./services/latexService";
 import { stripeService } from "./services/stripeService";
 import { stripeSync } from "./services/stripeSync";
-import { testPostmarkConnection, generateVerificationToken, sendVerificationEmail } from "./utils/email";
+import { testPostmarkConnection, generateVerificationToken, sendVerificationEmail, sendContactEmail } from "./utils/email";
 import Stripe from "stripe";
 import session from "express-session";
 import pgSession from "connect-pg-simple";
@@ -323,6 +323,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({
         success: false,
         message: "Failed to resend verification email"
+      });
+    }
+  });
+
+  // Contact form endpoint
+  app.post("/api/contact", async (req: Request, res: Response) => {
+    const { name, email, message } = req.body;
+
+    if (!email || !message) {
+      return res.status(400).json({ message: "Email and message are required" });
+    }
+
+    try {
+      const result = await sendContactEmail(email, message, name);
+      return res.status(result.success ? 200 : 500).json(result);
+    } catch (error) {
+      console.error("Contact form error:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to send contact message"
       });
     }
   });

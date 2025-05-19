@@ -9,6 +9,7 @@ const client = process.env.POSTMARK_API_KEY
   : null;
 
 export const FROM_EMAIL = 'no-reply@aitexgen.com';
+export const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'support@aitexgen.com';
 
 /**
  * Tests the connection to Postmark API
@@ -47,7 +48,7 @@ export async function generateVerificationToken(): Promise<string> {
 }
 
 export async function sendVerificationEmail(
-  email: string, 
+  email: string,
   verificationToken: string
 ): Promise<{ success: boolean; message: string }> {
   if (!client) {
@@ -124,6 +125,46 @@ export async function sendVerificationEmail(
     return { 
       success: false, 
       message: `Failed to send verification email: ${error.message || 'Unknown error'}` 
+    };
+  }
+}
+
+export async function sendContactEmail(
+  fromEmail: string,
+  message: string,
+  name = ''
+): Promise<{ success: boolean; message: string }> {
+  if (!client) {
+    return {
+      success: false,
+      message: 'Email service not available'
+    };
+  }
+
+  try {
+    const response = await client.sendEmail({
+      From: FROM_EMAIL,
+      To: CONTACT_EMAIL,
+      ReplyTo: fromEmail,
+      Subject: 'Contact Form Submission',
+      HtmlBody: `
+        <p><strong>Name:</strong> ${name || 'N/A'}</p>
+        <p><strong>Email:</strong> ${fromEmail}</p>
+        <p>${message}</p>
+      `,
+      TextBody: `Name: ${name}\nEmail: ${fromEmail}\n\n${message}`,
+      MessageStream: 'outbound'
+    });
+
+    return {
+      success: true,
+      message: `Contact email sent: ${response.MessageID}`
+    };
+  } catch (error: any) {
+    console.error('Failed to send contact email:', error);
+    return {
+      success: false,
+      message: `Failed to send contact email: ${error.message || 'Unknown error'}`
     };
   }
 }

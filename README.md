@@ -59,6 +59,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    - `STRIPE_SECRET_KEY` (Your Stripe secret key)
    - `STRIPE_WEBHOOK_SECRET` (Webhook secret used to verify Stripe events)
    - `POSTMARK_API_KEY` (Your Postmark API key for sending emails)
+   - `CONTACT_EMAIL` (Address to receive contact form submissions)
    - Any other API keys needed for service integrations
    - Stripe variables (see [Stripe Environment Variables](#stripe-environment-variables))
 
@@ -80,6 +81,19 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
 
+## Documentation
+
+The project includes a growing set of guides under `content/blog` as well as several
+help pages in the frontend:
+
+- `/how-to` – A step‑by‑step introduction to generating documents.
+- `/faq` – Answers to common questions from new users.
+- `/contact` – Contact form for support inquiries.
+- `/community` – Links to forums and chat channels.
+
+Feel free to add more Markdown posts in `content/blog` to expand the knowledge
+base.
+
 ## Required Environment Variables
 
 The following variables must be configured either in a `.env` file or in your
@@ -93,6 +107,7 @@ deployment platform. Refer to `.env.example` for sample values.
 - `ANTHROPIC_API_KEY` - Anthropic API key.
 - `GROQ_API_KEY` - Groq API key.
 - `POSTMARK_API_KEY` - Postmark API key for sending emails.
+- `CONTACT_EMAIL` - Destination address for contact form submissions.
 - `STRIPE_SECRET_KEY` - Stripe secret key.
 - `STRIPE_WEBHOOK_SECRET` - Secret to verify Stripe webhooks.
 - `VITE_STRIPE_PUBLIC_KEY` - Stripe publishable key for the client.
@@ -118,6 +133,7 @@ configuration:
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `POSTMARK_API_KEY`
+- `CONTACT_EMAIL`
 
 Refer to `.env.example` for default values and additional optional variables.
 
