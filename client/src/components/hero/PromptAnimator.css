@@ -213,6 +213,8 @@
   position: relative;
   z-index: 2;
   text-align: center;
+  perspective: 800px;
+  transform-style: preserve-3d;
 }
 
 /* Prompt animation */
@@ -466,9 +468,15 @@
 .cta-button-container {
   display: flex;
   justify-content: center;
-  width: 100%;
-  margin: 0.75rem 0;
+  width: auto;
+  margin: 0;
   padding: 0;
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%) translateZ(50px);
+  pointer-events: all;
+  z-index: 50;
 }
 
 .cta-button {
@@ -487,6 +495,8 @@
   -webkit-tap-highlight-color: transparent; /* Removes the tap highlight on mobile */
   touch-action: manipulation; /* Improves touch handling */
   user-select: none; /* Prevents text selection on button */
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .cta-button:hover {
