@@ -1,0 +1,596 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title AI LaTeX Generator - Pug Version
+    style.
+      :root {
+        --background: #f8fafc;
+        --foreground: #0f172a;
+        --primary: #3b82f6;
+        --primary-foreground: #ffffff;
+        --secondary: #f1f5f9;
+        --secondary-foreground: #1e293b;
+        --accent: #e2e8f0;
+        --accent-foreground: #1e293b;
+        --destructive: #ef4444;
+        --destructive-foreground: #ffffff;
+        --success: #22c55e;
+        --success-foreground: #ffffff;
+        --border: #e2e8f0;
+        --input: #e2e8f0;
+        --ring: #3b82f6;
+        --radius: 0.5rem;
+      }
+      
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background-color: var(--background);
+        color: var(--foreground);
+        line-height: 1.5;
+      }
+      
+      .main-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--border);
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      
+      .logo {
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: var(--foreground);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .logo img {
+        height: 32px;
+      }
+      
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      
+      .nav-link {
+        color: var(--foreground);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      
+      .nav-link:hover {
+        color: var(--primary);
+      }
+      
+      .auth-buttons {
+        display: flex;
+        gap: 0.75rem;
+      }
+      
+      .btn {
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+      }
+      
+      .btn-primary {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+      
+      .btn-primary:hover {
+        background-color: #2563eb;
+      }
+      
+      .btn-outline {
+        background-color: transparent;
+        border: 1px solid var(--border);
+        color: var(--foreground);
+      }
+      
+      .btn-outline:hover {
+        background-color: var(--secondary);
+      }
+      
+      .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+      }
+      
+      .app-container {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 4rem - 64px);
+        position: relative;
+      }
+      
+      @media (min-width: 768px) {
+        .app-container {
+          flex-direction: row;
+        }
+      }
+      
+      .panel {
+        position: relative;
+        height: 50%;
+        overflow: hidden;
+        padding: 1rem;
+      }
+      
+      @media (min-width: 768px) {
+        .panel {
+          height: 100%;
+          width: 50%;
+        }
+      }
+      
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--radius);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      .depth-3d {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+      
+      .floating-rect {
+        position: absolute;
+        inset: 1rem;
+        overflow: hidden;
+      }
+      
+      .latex-input {
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        border: none;
+        outline: none;
+        background: transparent;
+        resize: none;
+        color: var(--foreground);
+      }
+      
+      .tab-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      
+      .tab {
+        padding: 0.75rem 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+      }
+      
+      .tab.active {
+        border-bottom-color: var(--primary);
+        color: var(--primary);
+      }
+      
+      .tab-content {
+        flex: 1;
+        overflow: auto;
+        padding: 1rem;
+      }
+      
+      .toolbar {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      
+      .toolbar-button {
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: all 0.2s;
+      }
+      
+      .toolbar-button:hover {
+        background-color: var(--secondary);
+      }
+      
+      pre {
+        margin: 0;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+        white-space: pre-wrap;
+      }
+      
+      .pdf-preview {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .placeholder {
+        color: #64748b;
+        text-align: center;
+      }
+      
+      /* Icon placeholders */
+      .icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: currentColor;
+        mask-size: cover;
+        -webkit-mask-size: cover;
+      }
+      
+      .icon-latex {
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.996 3a2.999 2.999 0 1 0 0 5.998 2.999 2.999 0 0 0 0-5.998zm0 1.5a1.5 1.5 0 1 1 0 2.999 1.5 1.5 0 0 1 0-3z'/%3E%3Cpath d='M11.992 8.997a2.999 2.999 0 1 0 0 5.998 2.999 2.999 0 0 0 0-5.998zm0 1.5a1.5 1.5 0 1 1 0 2.999 1.5 1.5 0 0 1 0-3z'/%3E%3Cpath d='M17.988 15a2.999 2.999 0 1 0 0 5.998 2.999 2.999 0 0 0 0-5.998zm0 1.5a1.5 1.5 0 1 1 0 2.999 1.5 1.5 0 0 1 0-3z'/%3E%3Cpath d='M16.987 3.998H18.5v10.997h-1.513V3.998z'/%3E%3Cpath d='M8.997 9.996h5.997v1.5H8.997v-1.5z'/%3E%3Cpath d='M2.999 16.987h10.992v1.513H2.999v-1.513z'/%3E%3C/svg%3E");
+      }
+      
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .credits-badge {
+        background-color: #f0f9ff;
+        color: #0284c7;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 9999px;
+        font-weight: 500;
+      }
+      
+      /* Animation for loading state */
+      @keyframes pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+      
+      .loading {
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+      
+      /* Prompt area styling */
+      .prompt-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .prompt-label {
+        font-weight: 500;
+        font-size: 0.875rem;
+        color: #64748b;
+      }
+      
+      .prompt-input {
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background-color: #fff;
+        resize: vertical;
+        min-height: 80px;
+        font-family: inherit;
+        font-size: 0.875rem;
+      }
+      
+      .prompt-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+      }
+      
+      .generate-button {
+        background: linear-gradient(90deg, #3b82f6, #2563eb);
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        align-self: flex-start;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+      }
+      
+      .generate-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(59, 130, 246, 0.4);
+      }
+      
+      .generate-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+      }
+      
+      /* Document type selector */
+      .document-types {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      
+      .document-type {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .document-type.selected {
+        background-color: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+      
+      .document-type:hover:not(.selected) {
+        background-color: var(--secondary);
+      }
+
+  body
+    div.main-container
+      header.header
+        div.logo
+          span.icon.icon-latex
+          span AI LaTeX Generator
+        
+        nav.nav-links
+          a.nav-link(href="#") Home
+          a.nav-link(href="#") Documents
+          a.nav-link(href="#") Showcase
+          a.nav-link(href="#") How-To
+        
+        div.auth-buttons
+          div.user-info
+            span.credits-badge 3 Credits Remaining
+          button.btn.btn-outline Account
+          button.btn.btn-primary Upgrade
+      
+      main.content
+        div.app-container
+          // Left Panel (Input)
+          div.panel
+            div.floating-rect.glass.depth-3d
+              div.prompt-container
+                label.prompt-label What type of LaTeX document would you like to generate?
+                
+                div.document-types
+                  div.document-type.selected Basic 
+                  div.document-type Slide
+                  div.document-type Report
+                  div.document-type Letter
+                  div.document-type Book
+                
+                label.prompt-label(for="prompt-input") Describe your document:
+                textarea#prompt-input.prompt-input(placeholder="Describe what you want to generate, e.g., 'A mathematical paper about quantum computing with an abstract, introduction, and three sections...'")
+                
+                button.generate-button 
+                  span Generate LaTeX
+                  span →
+              
+          // Right Panel (Output)
+          div.panel
+            div.floating-rect.glass.depth-3d
+              div.tab-container
+                div.tabs
+                  div.tab.active LaTeX
+                  div.tab PDF
+                  div.tab Console
+                
+                div.toolbar
+                  button.toolbar-button Copy
+                  button.toolbar-button Download
+                
+                div.tab-content
+                  pre.
+                    \\documentclass{article}
+                    
+                    \\\usepackage{amsmath}
+                    \\begin{document}
+                    \\title{AI Generated Document}
+                    \\author{AI LaTeX Generator}
+                    \\maketitle
+                    \\begin{equation}
+                      E = mc^2
+                    \\end{equation}
+                    \\end{document}
+    
+    script.
+      // Basic tab switching functionality
+      document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.tab');
+        const documentTypes = document.querySelectorAll('.document-type');
+        
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+          });
+        });
+        
+        documentTypes.forEach(type => {
+          type.addEventListener('click', () => {
+            documentTypes.forEach(t => t.classList.remove('selected'));
+            type.classList.add('selected');
+          });
+        });
+        
+        // Demo generation button
+        const generateButton = document.querySelector('.generate-button');
+        const promptInput = document.getElementById('prompt-input');
+        const outputEl = document.querySelector('.tab-content pre');
+        
+        generateButton.addEventListener('click', () => {
+          if (!promptInput.value.trim()) {
+            alert('Please enter a prompt first');
+            return;
+          }
+          
+          generateButton.classList.add('loading');
+          generateButton.disabled = true;
+          
+          // Simulate API call
+          setTimeout(() => {
+            const selectedType = document.querySelector('.document-type.selected').textContent.trim();
+            outputEl.textContent = generateSampleLatex(selectedType, promptInput.value);
+            
+            generateButton.classList.remove('loading');
+            generateButton.disabled = false;
+          }, 1500);
+        });
+      });
+      
+      // Generate sample LaTeX based on document type and prompt
+      function generateSampleLatex(type, prompt) {
+        let template = '';
+        
+        switch(type) {
+          case 'Slide':
+            template = `\\documentclass{beamer}
+\\usepackage{amsmath}
+\\\usepackage{graphicx}
+
+\\title{${prompt.substring(0, 30)}...}
+\\author{AI LaTeX Generator}
+\\date{\\today}
+
+\\begin{document}
+
+\\begin{frame}
+\\titlepage
+\\end{frame}
+
+\\begin{frame}{Introduction}
+\\begin{itemize}
+  \\item First point about ${prompt.substring(0, 20)}
+  \\item Second important concept
+  \\item Third key idea
+\\end{itemize}
+\\end{frame}
+
+\\end{document}`;
+            break;
+            
+          case 'Report':
+            template = `\\documentclass{report}
+\\usepackage{amsmath}
+\\\usepackage{graphicx}
+\\usepackage{hyperref}
+
+\\title{${prompt.substring(0, 30)}...}
+\\author{AI LaTeX Generator}
+\\date{\\today}
+
+\\begin{document}
+
+\\maketitle
+\\tableofcontents
+
+\\chapter{Introduction}
+This report explores ${prompt}.
+
+\\chapter{Methodology}
+The approach taken in this analysis...
+
+\\chapter{Results}
+The findings of our investigation show...
+
+\\chapter{Conclusion}
+In conclusion, we have demonstrated...
+
+\\end{document}`;
+            break;
+            
+          default:
+            template = `\\documentclass{article}
+\\usepackage{amsmath}
+\\\usepackage{graphicx}
+
+\\title{${prompt.substring(0, 30)}...}
+\\author{AI LaTeX Generator}
+\\date{\\today}
+
+\\begin{document}
+\\maketitle
+
+\\begin{abstract}
+This paper examines ${prompt}.
+\\end{abstract}
+
+\\section{Introduction}
+${prompt}
+
+\\section{Background}
+Important concepts related to this topic include...
+
+\\section{Methodology}
+Our approach to analyzing this problem...
+
+\\begin{equation}
+E = mc^2
+\\end{equation}
+
+\\section{Results}
+The findings of our analysis indicate...
+
+\\section{Conclusion}
+In conclusion, we have shown...
+
+\\end{document}`;
+        }
+        
+        return template;
+    

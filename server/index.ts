@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { updateSystemPromptsWithTemplates } from "./utils/templateLoader";
+import { setupPugRoutes } from "./pug-routes";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
