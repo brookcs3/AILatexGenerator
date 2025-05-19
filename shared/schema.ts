@@ -172,3 +172,11 @@ export const contactSchema = z.object({
 });
 
 export type ContactForm = z.infer<typeof contactSchema>;
+
+// Schema for webhook-based compilation
+export const compileWebhookSchema = z.object({
+  latex: z.string().min(1, 'LaTeX content is required'),
+  webhookUrl: z.string().url('Valid webhook URL is required')
+});
+
+export type CompileWebhookRequest = z.infer<typeof compileWebhookSchema>;

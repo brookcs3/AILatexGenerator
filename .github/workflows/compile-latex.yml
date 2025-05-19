@@ -1,0 +1,17 @@
+name: Compile LaTeX
+on:
+  push:
+    paths:
+      - '**/*.tex'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trigger compilation
+        run: |
+          curl -X POST https://api.example.com/api/latex/compile/webhook \
+            -H 'Content-Type: application/json' \
+            -d '{"latex":"\\documentclass{article}\\n\\begin{document}Hello CI!\\end{document}","webhookUrl":"${{ secrets.LATEX_WEBHOOK }}"}'
