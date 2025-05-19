@@ -7,8 +7,9 @@
 import { config } from './dotenv/index.js';
 import Stripe from './stripe/index.js';
 
-// Load environment variables
-config();
+
+// Load environment variables if possible
+await loadEnv();
 
 // Initialize Stripe with your secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);

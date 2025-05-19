@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import VanillaTilt from "vanilla-tilt";
 import "./PromptAnimator.css";
 import HeroTitle from "./HeroTitle";
 
@@ -8,6 +9,24 @@ interface Props {
 
 export default function PromptAnimator({ onGetStarted }: Props) {
   const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const btn = document.querySelector('.cta-button') as HTMLElement | null;
+    if (btn) {
+      VanillaTilt.init(btn, {
+        max: 12,
+        speed: 400,
+        scale: 1.05,
+        glare: true,
+        "max-glare": 0.3,
+      });
+    }
+    return () => {
+      if (btn && (btn as any).vanillaTilt) {
+        (btn as any).vanillaTilt.destroy();
+      }
+    };
+  }, []);
   
   // Check if device is mobile
   useEffect(() => {
