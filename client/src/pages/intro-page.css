@@ -47,6 +47,16 @@
   flex-direction: column;
   gap: 10px;
   z-index: 250;
+  touch-action: manipulation;
+}
+
+/* Mobile-friendly button styles */
+.mobile-friendly-button {
+  min-height: 44px;
+  min-width: 44px; /* Ensures touch target size meets accessibility standards */
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .skip-intro-button {

@@ -48,8 +48,11 @@ const IntroPage: React.FC = () => {
     }, 1000);
   };
 
-  // Handle skip button click
-  const handleSkip = () => {
+  // Handle skip button click with improved mobile support
+  const handleSkip = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault(); // Prevent default to help with mobile
+    e.stopPropagation(); // Stop event propagation
+    console.log("Skip button clicked");
     handleIntroComplete();
   };
 
@@ -69,7 +72,7 @@ const IntroPage: React.FC = () => {
       <div className="intro-controls">
         {showSkipButton && (
           <button 
-            className="skip-intro-button"
+            className="skip-intro-button mobile-friendly-button"
             onClick={handleSkip}
             aria-label="Skip intro animation"
           >
@@ -78,7 +81,7 @@ const IntroPage: React.FC = () => {
         )}
         
         <button 
-          className="toggle-mode-button"
+          className="toggle-mode-button mobile-friendly-button"
           onClick={toggleDistortionOnly}
           aria-label="Toggle distortion effect"
         >
