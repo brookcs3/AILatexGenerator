@@ -26,7 +26,7 @@ import FAQ from "@/pages/faq";
 import HowTo from "@/pages/how-to";
 import Contact from "@/pages/contact";
 import Community from "@/pages/community";
-import Showcase from "@/pages/showcase";
+import AwwwardsShowcase from "@/pages/awwwards-showcase";
 
 // Components
 import AuthRequiredDialog from "@/components/dialogs/auth-required-dialog";
@@ -89,7 +89,7 @@ function Router() {
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/contact" component={Contact} />
       <Route path="/community" component={Community} />
-      <Route path="/showcase" component={Showcase} />
+      <Route path="/showcase" component={AwwwardsShowcase} />
       <Route path="/how-to" component={HowTo} />
       <Route path="/faq" component={FAQ} />
       <Route component={NotFound} />
