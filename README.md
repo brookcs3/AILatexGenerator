@@ -140,6 +140,9 @@ deployment platform. Refer to `.env.example` for sample values.
 - `SITE_IMAGE` - Default preview image for social cards.
 - `VITE_API_BASE_URL` - Base URL for the frontend API.
 
+After setting these values, run `npm run prebuild` to generate `robots.txt` and
+`sitemap.xml` under the `public/` directory for SEO purposes.
+
 Guest mode should only be enabled when testing. For production deployments make
 sure `GUEST_MODE=false`.
 
