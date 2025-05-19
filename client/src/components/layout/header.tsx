@@ -9,6 +9,7 @@ import SubscriptionModal from "@/components/dialogs/subscription-modal";
 import { getUsageColor } from "@/lib/utils";
 import { SubscriptionTier } from "@shared/schema.ts";
 import { Loader2 } from "lucide-react";
+import ThemeToggle from "@/components/ui/theme-toggle";
 
 export default function Header() {
   const [location, navigate] = useLocation();
@@ -92,6 +93,8 @@ export default function Header() {
         </div>
         
         <div className="flex items-center space-x-4">
+          <ThemeToggle />
+
           {session.isLoading ? (
             <div className="flex items-center">
               <Loader2 className="h-5 w-5 animate-spin text-blue-500 mr-2" />

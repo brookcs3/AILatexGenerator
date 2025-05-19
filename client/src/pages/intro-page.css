@@ -25,7 +25,6 @@
   z-index: 5;
   /* Lower z-index when not in distortion-only mode */
   overflow: hidden;
-  pointer-events: none;
 }
 
 /* Distortion only mode styles */
@@ -48,16 +47,6 @@
   flex-direction: column;
   gap: 10px;
   z-index: 250;
-  touch-action: manipulation;
-}
-
-/* Mobile-friendly button styles */
-.mobile-friendly-button {
-  min-height: 44px;
-  min-width: 44px; /* Ensures touch target size meets accessibility standards */
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 .skip-intro-button {
@@ -65,14 +54,13 @@
   background: linear-gradient(to right, #3b82f6, #2563eb);
   color: white;
   border: none;
-  display: block;
+  display: none;
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-  -webkit-tap-highlight-color: transparent;
 }
 
 .toggle-mode-button {
@@ -81,13 +69,12 @@
   color: white;
   border: none;
   border-radius: 8px;
-  display: block;
+  display: none;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-  -webkit-tap-highlight-color: transparent;
 }
 
 .toggle-mode-button:hover,
@@ -95,6 +82,8 @@
   transform: translateY(-1px);
   background: linear-gradient(to right, #2563eb, #1d4ed8);
   box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+  display: none;
+
 }
 
 .toggle-mode-button:active,

@@ -213,8 +213,6 @@
   position: relative;
   z-index: 2;
   text-align: center;
-  perspective: 800px;
-  transform-style: preserve-3d;
 }
 
 /* Prompt animation */
@@ -489,8 +487,6 @@
   -webkit-tap-highlight-color: transparent; /* Removes the tap highlight on mobile */
   touch-action: manipulation; /* Improves touch handling */
   user-select: none; /* Prevents text selection on button */
-  transform-style: preserve-3d;
-  will-change: transform;
 }
 
 .cta-button:hover {
