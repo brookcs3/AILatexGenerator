@@ -2,16 +2,17 @@
 .intro-container {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 150vh; /* Increased from 100vh to allow scrolling */
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #f8fafc;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to allow content to flow */
   align-items: center;
   color: #1e293b;
   -webkit-overflow-scrolling: touch;
+  padding-top: 5vh; /* Add some padding at the top */
 }
 
 /* Gradient background */
