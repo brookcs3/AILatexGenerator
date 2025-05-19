@@ -477,6 +477,7 @@
   transform: translateX(-50%) translateZ(50px);
   pointer-events: all;
   z-index: 50;
+
 }
 
 .cta-button {
