@@ -62,6 +62,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    - `POSTMARK_API_KEY` (Your Postmark API key for sending emails)
    - Any other API keys needed for service integrations
    - Stripe variables (see [Stripe Environment Variables](#stripe-environment-variables))
+   - `DISABLE_USAGE_LIMITS` set to `true` to bypass usage checks (leave unset in production)
 
 5. **Deploy**
    - Railway will automatically deploy your application
@@ -107,6 +108,7 @@ deployment platform. Refer to `.env.example` for sample values.
 - `ANTHROPIC_API_KEY` - Anthropic API key.
 - `GROQ_API_KEY` - Groq API key.
 - `GUEST_MODE` - Set to `true` to allow anonymous access for testing.
+- `DISABLE_USAGE_LIMITS` - Set to `true` to bypass subscription usage limits (defaults to `false`).
 - `POSTMARK_API_KEY` - Postmark API key for sending emails.
 - `STRIPE_SECRET_KEY` - Stripe secret key.
 - `STRIPE_WEBHOOK_SECRET` - Secret to verify Stripe webhooks.
@@ -133,6 +135,7 @@ configuration:
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `POSTMARK_API_KEY`
+- `DISABLE_USAGE_LIMITS`
 
 Refer to `.env.example` for default values and additional optional variables.
 
