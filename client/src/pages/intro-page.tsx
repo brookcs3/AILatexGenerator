@@ -68,27 +68,6 @@ const IntroPage: React.FC = () => {
         <DistortionBackground />
       </div>
       
-      {/* Control buttons */}
-      <div className="intro-controls">
-        {showSkipButton && (
-          <button 
-            className="skip-intro-button mobile-friendly-button"
-            onClick={handleSkip}
-            aria-label="Skip intro animation"
-          >
-            Skip Intro
-          </button>
-        )}
-        
-        <button 
-          className="toggle-mode-button mobile-friendly-button"
-          onClick={toggleDistortionOnly}
-          aria-label="Toggle distortion effect"
-        >
-          {showDistortionOnly ? "Show Full Intro" : "Show TV Effects Only"}
-        </button>
-      </div>
-      
       {/* Main intro animation component - only show if not in distortion-only mode */}
       {!showDistortionOnly && <HyperIntro onComplete={handleIntroComplete} />}
       
