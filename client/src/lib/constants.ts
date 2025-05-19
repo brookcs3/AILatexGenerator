@@ -95,5 +95,10 @@ export const API_ROUTES = {
       create: "/api/subscription/refill/create",
       success: "/api/subscription/refill/success"
     }
+  },
+  community: {
+    posts: "/api/posts",
+    post: (id: number | string) => `/api/posts/${id}`,
+    showcase: "/api/showcase"
   }
 };

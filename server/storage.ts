@@ -1,19 +1,25 @@
 import { db } from "@db";
 import { 
   users, 
-  documents, 
+  documents,
+  posts,
+  postUpvotes,
+  showcaseEntries,
   anonymousUsers,
-  User, 
-  Document, 
+  User,
+  Document,
+  Post,
+  PostUpvote,
+  ShowcaseEntry,
   AnonymousUser,
-  insertUserSchema, 
+  insertUserSchema,
   insertDocumentSchema,
   insertAnonymousUserSchema,
   SubscriptionTier,
   tierLimits
 } from "@shared/schema";
 import { hashPassword, comparePassword } from "./services/authService";
-import { eq, and, desc, isNull } from "drizzle-orm";
+import { eq, and, desc, isNull, sql } from "drizzle-orm";
 
 /**
  * Storage interface for database operations
@@ -683,13 +689,84 @@ export const storage = {
    */
   async hasRemainingAnonymousUsage(fingerprint: string): Promise<boolean> {
     const user = await this.getAnonymousUserByFingerprint(fingerprint);
-    
+
     // If user doesn't exist, they haven't used their free conversion yet
     if (!user) {
       return true;
     }
-    
+
     // Anonymous users get 1 free conversion
     return user.usageCount < 1;
+  },
+
+  // Community posts operations
+
+  async createPost(data: { userId: number; title: string; content: string }): Promise<Post> {
+    const [post] = await db.insert(posts).values({
+      userId: data.userId,
+      title: data.title,
+      content: data.content,
+    }).returning();
+    return post;
+  },
+
+  async getAllPosts(): Promise<(Post & { username: string; upvotes: number })[]> {
+    const postsWithUsers = await db
+      .select({
+        id: posts.id,
+        userId: posts.userId,
+        title: posts.title,
+        content: posts.content,
+        createdAt: posts.createdAt,
+        updatedAt: posts.updatedAt,
+        username: users.username,
+      })
+      .from(posts)
+      .innerJoin(users, eq(posts.userId, users.id));
+
+    const result: (Post & { username: string; upvotes: number })[] = [];
+
+    for (const p of postsWithUsers) {
+      const count = await db
+        .select({ count: sql`count(*)`.mapWith(Number) })
+        .from(postUpvotes)
+        .where(eq(postUpvotes.postId, p.id));
+      result.push({ ...(p as any), upvotes: count[0]?.count ?? 0 });
+    }
+
+    return result;
+  },
+
+  async addPostUpvote(userId: number, postId: number): Promise<void> {
+    const existing = await db.query.postUpvotes.findFirst({
+      where: and(eq(postUpvotes.userId, userId), eq(postUpvotes.postId, postId))
+    });
+    if (!existing) {
+      await db.insert(postUpvotes).values({ userId, postId });
+    }
+  },
+
+  async createShowcaseEntry(data: { userId: number; documentId: number; title?: string }): Promise<ShowcaseEntry> {
+    const [entry] = await db.insert(showcaseEntries).values({
+      userId: data.userId,
+      documentId: data.documentId,
+      title: data.title,
+    }).returning();
+    return entry;
+  },
+
+  async getShowcaseEntries(): Promise<(ShowcaseEntry & { username: string })[]> {
+    const entries = await db
+      .select({
+        id: showcaseEntries.id,
+        documentId: showcaseEntries.documentId,
+        title: showcaseEntries.title,
+        userId: showcaseEntries.userId,
+        createdAt: showcaseEntries.createdAt,
+        username: users.username,
+      })
+      .from(showcaseEntries)
+      .innerJoin(users, eq(showcaseEntries.userId, users.id));
+    return entries as any;
   }
 };

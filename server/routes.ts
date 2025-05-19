@@ -26,7 +26,7 @@ const validateRequest = (schema: z.ZodType<any, any>) => {
     }
   };
 };
-import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE, contactSchema } from "@shared/schema";
+import { generateLatexSchema, SubscriptionTier, REFILL_PACK_CREDITS, REFILL_PACK_PRICE, contactSchema, insertPostSchema } from "@shared/schema";
 import { generateLatex, getAvailableModels, callProviderWithModel, modifyLatex, rewriteText, generateSummary, generateOutline, generateGlossary, generateFlashcards } from "./services/aiProvider";
 import { compileLatex, compileAndFixLatex } from "./services/latexService";
 import { stripeService } from "./services/stripeService";
@@ -1402,7 +1402,75 @@ ${latex.substring(0, 5000)}`;  // Limit content to avoid token overflow
       }
     }
   );
-  
+
+  // Community forum routes
+  app.get("/api/posts", authenticateUser, async (req: Request, res: Response) => {
+    try {
+      const posts = await storage.getAllPosts();
+      return res.status(200).json(posts);
+    } catch (error) {
+      console.error("Get posts error:", error);
+      return res.status(500).json({ message: "Failed to get posts" });
+    }
+  });
+
+  app.post("/api/posts", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const { title, content } = insertPostSchema.parse(req.body);
+      const post = await storage.createPost({
+        userId: req.session.userId,
+        title,
+        content,
+      });
+      return res.status(201).json(post);
+    } catch (error) {
+      console.error("Create post error:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Validation failed", errors: error.errors });
+      }
+      return res.status(500).json({ message: "Failed to create post" });
+    }
+  });
+
+  app.post("/api/posts/:id/upvote", requireAuth, async (req: Request, res: Response) => {
+    const postId = parseInt(req.params.id);
+    if (isNaN(postId)) {
+      return res.status(400).json({ message: "Invalid post ID" });
+    }
+    try {
+      await storage.addPostUpvote(req.session.userId, postId);
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      console.error("Upvote error:", error);
+      return res.status(500).json({ message: "Failed to upvote" });
+    }
+  });
+
+  // Showcase gallery routes
+  app.get("/api/showcase", authenticateUser, async (_req: Request, res: Response) => {
+    try {
+      const entries = await storage.getShowcaseEntries();
+      return res.status(200).json(entries);
+    } catch (error) {
+      console.error("Get showcase error:", error);
+      return res.status(500).json({ message: "Failed to get showcase" });
+    }
+  });
+
+  app.post("/api/showcase", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const { documentId, title } = req.body as { documentId: number; title?: string };
+      if (!documentId) {
+        return res.status(400).json({ message: "documentId is required" });
+      }
+      const entry = await storage.createShowcaseEntry({ userId: req.session.userId, documentId, title });
+      return res.status(201).json(entry);
+    } catch (error) {
+      console.error("Create showcase error:", error);
+      return res.status(500).json({ message: "Failed to add to showcase" });
+    }
+  });
+
   // Helper function to extract title from LaTeX content using heuristics
   function extractTitleFromLatex(latex: string): string {
     // Try various patterns to find the title in the LaTeX code
