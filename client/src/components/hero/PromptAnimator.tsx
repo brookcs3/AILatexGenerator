@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./PromptAnimator.css";
 import HeroTitle from "./HeroTitle";
+import { trackEvent } from "@/lib/analytics";
 
 interface Props {
   onGetStarted: () => void;
@@ -14,6 +15,7 @@ export default function PromptAnimator({ onGetStarted }: Props) {
     // Prevent default behavior, stop propagation, and call the parent's handler
     e.preventDefault();
     e.stopPropagation();
+    trackEvent('cta_click');
     onGetStarted();
   };
   
@@ -36,6 +38,24 @@ export default function PromptAnimator({ onGetStarted }: Props) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+  }, []);
+
+  // Observe CTA visibility for analytics and animation
+  useEffect(() => {
+    const el = document.querySelector('.cta-button-container');
+    if (!el) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          trackEvent('cta_visible');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
   
   const handleDownload = () => {

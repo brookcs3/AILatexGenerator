@@ -9,3 +9,5 @@ This short guide walks new users through the basics of creating a document.
 5. **Export** – Download the PDF or copy the LaTeX code for further editing.
 
 Stay tuned for more tips and advanced tutorials.
+
+Continue with our [Advanced Tips](./advanced-tips.md) when you are ready for more.
