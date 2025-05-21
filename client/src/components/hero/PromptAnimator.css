@@ -505,7 +505,7 @@
   border-radius: 60px;
   background: transparent;
   z-index: -1;
-  pointer-events: auto; /* Make this area clickable too */
+  pointer-events: none; /* Ensure pseudo-element does not block clicks */
 }
 
 .cta-button:hover {

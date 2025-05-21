@@ -94,7 +94,7 @@ export default function PromptAnimator({ onGetStarted }: Props) {
             <button
               className="cta-button"
               onClick={handleGetStartedClick}
-              onTouchEnd={isMobile ? handleGetStartedClick : undefined}
+              onTouchStart={handleGetStartedClick}
               aria-label="Get started with AI LaTeX Generator"
             >
               Get Started
