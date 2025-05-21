@@ -1,21 +1,21 @@
-import fs from 'fs';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
-export function config() {
-  const envFile = fs.existsSync('.env') ? '.env' : '.env.example';
-  if (fs.existsSync(envFile)) {
-    const envData = fs.readFileSync(envFile, 'utf8');
-    for (const line of envData.split(/\r?\n/)) {
-      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)\s*$/);
+export function config(options = {}) {
+  const envPath = resolve(options.path || '.env');
+  try {
+    const data = readFileSync(envPath, 'utf8');
+    for (const line of data.split(/\r?\n/)) {
+      const match = line.match(/^\s*([^#=]+?)\s*=\s*(.*)\s*$/);
       if (match) {
-        let [, key, value] = match;
-        if (value.startsWith('"') && value.endsWith('"')) {
-          value = value.slice(1, -1);
-        }
-        if (!process.env[key]) {
+        const [, key, value] = match;
+        if (process.env[key] === undefined) {
           process.env[key] = value;
         }
       }
     }
+    return { parsed: process.env };
+  } catch {
+    return {};
   }
-  return { parsed: process.env };
 }
