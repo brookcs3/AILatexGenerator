@@ -2,6 +2,7 @@ import Header from "./header";
 import Footer from "./footer";
 import { ReactNode } from "react";
 import { VisuallyHiddenHeading } from "@/components/seo/visually-hidden-heading";
+import CanonicalLink from "@/components/seo/canonical-link";
 import MobileDisclaimer from "@/components/dialogs/mobile-disclaimer";
 import CustomCursor from "@/components/visuals/CustomCursor";
 
@@ -21,6 +22,8 @@ export default function SiteLayout({
   return (
     <div className={`flex flex-col ${fullHeight ? 'h-screen' : 'min-h-screen'}`}>
       <Header />
+      {/* Dynamically update canonical URL for each route */}
+      <CanonicalLink />
       <main className={fullHeight ? "flex-1 overflow-y-auto" : "flex-1"}>
         {/* Visually hidden H1 for SEO purposes */}
         <VisuallyHiddenHeading>{seoTitle}</VisuallyHiddenHeading>
