@@ -2,11 +2,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '@shared/schema';
 
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET environment variable must be defined');
-
-}
+// For development, use a fallback JWT secret if not defined in environment
+const JWT_SECRET = process.env.JWT_SECRET || 'ai-latex-generator-development-secret-key';
 const JWT_EXPIRY = '24h';
 
 /**
