@@ -2,10 +2,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '@shared/schema';
 
-// Always use environment variable for JWT secret - no fallbacks for security
-const JWT_SECRET = process.env.JWT_SECRET as string; 
+const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
-  console.error('JWT_SECRET environment variable is not set! This is a security risk.');
+  throw new Error('JWT_SECRET environment variable must be defined');
+
 }
 const JWT_EXPIRY = '24h';
 
