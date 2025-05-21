@@ -6,9 +6,6 @@ vite.config.ts.*
 *.tar.gz
 attached_assets
 
-# Ignore accidental nested repository
-AILatexGenerator/
-
 # Environment files
 .env
 .env.*
