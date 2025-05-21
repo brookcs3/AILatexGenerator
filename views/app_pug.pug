@@ -3,7 +3,19 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title AI LaTeX Generator - Pug Version
+    meta(name="description", content=description)
+    meta(property="og:type", content="website")
+    meta(property="og:url", content=ogUrl)
+    meta(property="og:title", content=title)
+    meta(property="og:description", content=description)
+    meta(property="og:image", content=ogImage)
+    meta(name="twitter:card", content="summary_large_image")
+    meta(name="twitter:url", content=ogUrl)
+    meta(name="twitter:title", content=title)
+    meta(name="twitter:description", content=description)
+    meta(name="twitter:image", content=ogImage)
+    link(rel="canonical", href=ogUrl)
+    title= title
     style.
       :root {
         --background: #f8fafc;
@@ -217,12 +229,6 @@ html(lang="en")
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        position: relative;
-        z-index: 1;
-        margin-bottom: 1rem;
-        width: auto;
-        max-width: 100%;
-        overflow: visible;
       }
       
       .btn:hover {
@@ -240,12 +246,6 @@ html(lang="en")
       
       .btn:hover .btn-icon {
         transform: translateX(3px);
-      }
-      
-      /* Ensure the button doesn't have any weird overflow issues */
-      #generate-btn {
-        clear: both;
-        margin-top: 0.5rem;
       }
       
       .tabs {
@@ -333,14 +333,43 @@ html(lang="en")
         animation: pulse 1.5s infinite;
       }
 
+      .hero {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: linear-gradient(135deg, #f8fafc, #dbeafe);
+        border-radius: var(--radius);
+        margin: 2rem 0;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+        color: var(--foreground);
+        margin-bottom: 1.5rem;
+      }
+
   body
     header.header
       div.logo AI LaTeX Generator
-      
+
       nav.nav-links
         a.nav-link(href="#") Home
         a.nav-link(href="#") Documents
         a.nav-link(href="#") Templates
+
+    section.hero
+      h1.hero-title Effortless LaTeX Creation
+      p.hero-subtitle Build professional documents with AI assistance
+      a.btn(href="#input-panel") Get Started →
     
     div.container
       div.app-container
