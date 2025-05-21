@@ -171,11 +171,18 @@ export default function Home() {
     }
   }, []);
   
-  // "Boop" effect - scroll-to-top animation for all devices
+  // "Boop" effect - scroll-to-top animation on mobile only
   useEffect(() => {
     if (!enableMobileBoop) return;
-    // Apply on all devices to ensure proper scrolling
-    logger("Setting up boop effect for all devices");
+    // Only apply on mobile devices in portrait mode
+    const isMobilePortrait = () => window.innerWidth < 768 && window.innerHeight > window.innerWidth;
+    
+    if (!isMobilePortrait()) {
+      logger("Not mobile portrait, skipping boop effect");
+      return;
+    }
+    
+    logger("Setting up boop to top effect for mobile");
     
     // Create a stylesheet for our custom animation
     const styleSheet = document.createElement("style");
