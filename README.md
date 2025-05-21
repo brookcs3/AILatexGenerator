@@ -149,6 +149,8 @@ deployment platform. Refer to `.env.example` for sample values.
 - `DOMAIN` - Production domain used in email links.
 - `SITE_DOMAIN` - Primary site domain used in robots.txt and metadata.
 - `VITE_API_BASE_URL` - Base URL for the frontend API.
+- `VITE_CLARITY_ID` - Microsoft Clarity project ID for heatmap tracking.
+- `REPORT_EMAIL` - Address to receive automated analytics reports.
 
 Guest mode should only be enabled when testing. For production deployments make
 sure `GUEST_MODE=false`.
@@ -195,6 +197,11 @@ site up to date automatically:
   and produces a summarized report.
 - **seo-service.js** – writes updated SEO metadata to `public/seo.json` based on
   the analytics report.
+- **send-weekly-report.js** – emails `analytics/report.json` to the address from
+  `REPORT_EMAIL`.
+
+Run `npm run send:report` on a schedule (e.g., cron) to automatically deliver
+weekly analytics summaries.
 
 Start all three services together with:
 
