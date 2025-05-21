@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { queryClient, checkAuthStatus } from "./lib/queryClient";
 import { useState, useEffect, useCallback } from "react";
+import { initSEO } from "@/lib/seo";
 
 // Pages
 import Home from "@/pages/home";
@@ -309,6 +310,13 @@ function App() {
       window.clearInterval(intervalId);
     };
   }, [checkAndUpdateSession]);
+  
+  // Initialize SEO tools and performance tracking
+  useEffect(() => {
+    // Start SEO optimization tools for better search engine visibility and performance
+    logger("Initializing SEO and performance tracking tools");
+    initSEO();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
