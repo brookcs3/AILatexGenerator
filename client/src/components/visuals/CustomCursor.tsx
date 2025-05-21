@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import './CustomCursor.css';
 
 /**
  * Custom cursor with a trailing effect. Uses requestAnimationFrame
