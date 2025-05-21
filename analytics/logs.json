@@ -1,90 +1,10 @@
 [
   {
-    "page": "/src/components/layout/footer.tsx",
-    "ts": "2025-05-21T15:35:10.013Z"
-  },
-  {
-    "page": "/src/components/seo/visually-hidden-heading.tsx",
-    "ts": "2025-05-21T15:35:10.022Z"
-  },
-  {
-    "page": "/src/components/seo/canonical-link.tsx",
-    "ts": "2025-05-21T15:35:10.039Z"
-  },
-  {
-    "page": "/src/components/dialogs/mobile-disclaimer.tsx",
-    "ts": "2025-05-21T15:35:10.048Z"
-  },
-  {
-    "page": "/src/components/dialogs/exit-intent-popup.tsx",
-    "ts": "2025-05-21T15:35:10.051Z"
-  },
-  {
-    "page": "/src/hooks/use-anonymous-status.tsx",
-    "ts": "2025-05-21T15:35:10.054Z"
-  },
-  {
-    "page": "/src/components/ui/select.tsx",
-    "ts": "2025-05-21T15:35:10.075Z"
-  },
-  {
-    "page": "/src/components/dialogs/anonymous-user-popup.tsx",
-    "ts": "2025-05-21T15:35:10.080Z"
-  },
-  {
-    "page": "/src/components/hero/HyperIntro.css",
-    "ts": "2025-05-21T15:35:10.109Z"
-  },
-  {
-    "page": "/src/components/hero/PromptAnimator.tsx",
-    "ts": "2025-05-21T15:35:10.111Z"
-  },
-  {
-    "page": "/src/components/background/DistortionBackground.css",
-    "ts": "2025-05-21T15:35:10.112Z"
-  },
-  {
-    "page": "/src/components/visuals/CustomCursor.css",
-    "ts": "2025-05-21T15:35:10.135Z"
-  },
-  {
-    "page": "/src/lib/locomotive-scroll-manager.ts",
-    "ts": "2025-05-21T15:35:10.141Z"
-  },
-  {
-    "page": "/src/components/dialogs/login-modal.tsx",
-    "ts": "2025-05-21T15:35:10.169Z"
-  },
-  {
-    "page": "/src/components/ui/theme-toggle.tsx",
-    "ts": "2025-05-21T15:35:10.172Z"
-  },
-  {
-    "page": "/src/components/hero/PromptAnimator.css",
-    "ts": "2025-05-21T15:35:10.177Z"
-  },
-  {
-    "page": "/src/components/hero/HeroTitle.tsx",
-    "ts": "2025-05-21T15:35:10.191Z"
-  },
-  {
-    "page": "/src/components/ui/dynamic-cta.tsx",
-    "ts": "2025-05-21T15:35:10.197Z"
-  },
-  {
-    "page": "/src/components/hero/FeatureCards.css",
-    "ts": "2025-05-21T15:35:10.204Z"
-  },
-  {
-    "page": "/src/lib/fadeInOnScroll.ts",
-    "ts": "2025-05-21T15:35:10.231Z"
-  },
-  {
     "page": "/src/components/hero/HeroTitle.css",
-    "ts": "2025-05-21T15:35:10.251Z"
+    "ts": "2025-05-21T15:35:58.969Z"
   },
   {
     "page": "/src/hooks/useABVariant.tsx",
-    "ts": "2025-05-21T15:35:10.257Z"
+    "ts": "2025-05-21T15:35:58.991Z"
   }
 ]
