@@ -5,6 +5,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { updateSystemPromptsWithTemplates } from "./utils/templateLoader";
 import { setupPugRoutes } from "./pug-routes";
+import { logPageView } from "./middleware/page-analytics";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -38,6 +39,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.urlencoded({ extended: false }));
+app.use(logPageView);
 
 app.use((req, res, next) => {
   const start = Date.now();
