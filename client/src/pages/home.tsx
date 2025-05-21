@@ -256,6 +256,7 @@ export default function Home() {
     
     // Handle keyboard dismissal with blur event
     const inputBlurHandler = () => {
+      // First scroll with animation
       setTimeout(() => {
         window.scrollTo({
           top: 0,
@@ -263,9 +264,20 @@ export default function Home() {
           behavior: 'smooth'
         });
         
-        // Fallback scroll reset for reliable position
+        // Then force an immediate jump to top with multiple techniques
+        // This ensures iOS Safari and other mobile browsers respond
         setTimeout(() => {
+          // Force hard reset of scroll position with multiple methods
           window.scrollTo(0, 0);
+          document.body.scrollTop = 0; // For Safari
+          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE
+          
+          // Extra insurance for stubborn mobile browsers
+          requestAnimationFrame(() => {
+            window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+          });
         }, 100);
       }, 300);
     };
