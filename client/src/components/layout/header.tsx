@@ -65,10 +65,10 @@ export default function Header() {
     <header className="bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center">
-          <Link 
-            href="/app" 
-            className="flex items-center" 
-            aria-label="Go to AI LaTeX Generator app" 
+          <Link
+            href="/"
+            className="flex items-center"
+            aria-label="Go to AI LaTeX Generator app"
             title="AI LaTeX Generator - App"
             rel="home"
           >
