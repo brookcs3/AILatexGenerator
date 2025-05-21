@@ -9,11 +9,13 @@ export * from './canonical-tags';
 export * from './lazy-loading';
 export * from './lighthouse-metrics';
 export * from './structured-data';
+export * from './meta-tags';
 
 import { initCanonicalUrls } from './canonical-tags';
 import { initLazyLoading } from './lazy-loading';
 import { initPerformanceTracking } from './lighthouse-metrics';
 import { initStructuredData } from './structured-data';
+import { initMetaTags } from './meta-tags';
 import { logger } from '@/lib/logger';
 
 /**
@@ -29,6 +31,7 @@ export function initSEO(): void {
   initLazyLoading();
   initPerformanceTracking();
   initStructuredData();
+  initMetaTags();
   
   logger('SEO tools initialized');
 }
