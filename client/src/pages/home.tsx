@@ -2,6 +2,7 @@ import { logger } from "@/lib/logger";
 import { useState, useContext, useEffect } from "react";
 import { useLocation } from "wouter";
 import { UserContext, AuthRequiredContext } from "@/App";
+import FadeIn from "@/components/animations/FadeIn";
 import SiteLayout from "@/components/layout/site-layout";
 import ShaderBackground from "@/components/background/ShaderBackground";
 import TabsWithContent from "@/components/ui/tabs-with-content";
