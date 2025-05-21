@@ -270,12 +270,9 @@ export default function Home() {
       }, 300);
     };
     
-    // Add input focus and blur listeners
-    const allInputs = document.querySelectorAll('input, textarea');
-    allInputs.forEach(input => {
-      input.addEventListener('focus', inputFocusHandler);
-      input.addEventListener('blur', inputBlurHandler);
-    });
+    // Use event delegation so dynamically added inputs also trigger the boop
+    document.body.addEventListener('focusin', inputFocusHandler);
+    document.body.addEventListener('focusout', inputBlurHandler);
     
     // Also listen for any scroll that might happen and gently pull back to top
     const scrollHandler = () => {
@@ -314,11 +311,9 @@ export default function Home() {
       // Clear intervals
       clearInterval(continuousPullInterval);
       
-      // Remove listeners
-      allInputs.forEach(input => {
-        input.removeEventListener('focus', inputFocusHandler);
-        input.removeEventListener('blur', inputBlurHandler);
-      });
+      // Remove delegated listeners
+      document.body.removeEventListener('focusin', inputFocusHandler);
+      document.body.removeEventListener('focusout', inputBlurHandler);
       
       window.removeEventListener('scroll', scrollHandler);
     };
