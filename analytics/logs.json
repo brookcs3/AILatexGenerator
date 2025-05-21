@@ -1,33 +1,6 @@
 [
   {
-    "page": "/src/components/dialogs/login-modal.tsx",
-    "ts": "2025-05-21T15:51:55.854Z"
-  },
-  {
-    "page": "/src/components/ui/theme-toggle.tsx",
-    "ts": "2025-05-21T15:51:55.857Z"
-  },
-  {
-    "page": "/src/components/hero/PromptAnimator.css",
-    "ts": "2025-05-21T15:51:55.874Z"
-  },
-  {
-    "page": "/src/components/hero/FeatureCards.css",
-    "ts": "2025-05-21T15:51:55.900Z"
-  },
-  {
-    "page": "/src/lib/fadeInOnScroll.ts",
-    "ts": "2025-05-21T15:51:55.931Z"
-  },
-  {
-
-    "page": "/src/hooks/useABVariant.tsx",
-    "ts": "2025-05-21T15:51:55.977Z"
-  }
-]"
-
-
-
+    "page": "/src/components/hero/HeroTitle.css",
+    "ts": "2025-05-21T16:02:02.469Z"
   }
 ]
-
