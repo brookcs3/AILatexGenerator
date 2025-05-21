@@ -1,18 +1,28 @@
 [
   {
-    "page": "/src/components/dialogs/subscription-modal.tsx",
-    "ts": "2025-05-21T15:51:30.517Z"
-  },
-  {
     "page": "/src/components/dialogs/login-modal.tsx",
-    "ts": "2025-05-21T15:51:30.569Z"
+    "ts": "2025-05-21T15:51:55.854Z"
   },
   {
-    "page": "/src/components/hero/PromptAnimator.tsx",
-    "ts": "2025-05-21T15:51:30.586Z"
+    "page": "/src/components/ui/theme-toggle.tsx",
+    "ts": "2025-05-21T15:51:55.857Z"
   },
   {
-    "page": "/src/components/ui/dynamic-cta.tsx",
-    "ts": "2025-05-21T15:51:30.653Z"
+    "page": "/src/components/hero/PromptAnimator.css",
+    "ts": "2025-05-21T15:51:55.874Z"
+  },
+  {
+    "page": "/src/components/hero/FeatureCards.css",
+    "ts": "2025-05-21T15:51:55.900Z"
+  },
+  {
+    "page": "/src/lib/fadeInOnScroll.ts",
+    "ts": "2025-05-21T15:51:55.931Z"
+  },
+  {
+    "page": "/src/hooks/useABVariant.tsx",
+    "ts": "2025-05-21T15:51:55.977Z"
+  }
+]"
   }
 ]
