@@ -16,7 +16,7 @@ const ignorePages = new Set([
 
 function routeFromFile(name) {
   const base = name.replace(/\.tsx$/, '');
-  if (base === 'home') return '/app';
+  if (base === 'home') return '/';
   if (base === 'index') return '/';
   return `/${base}`;
 }

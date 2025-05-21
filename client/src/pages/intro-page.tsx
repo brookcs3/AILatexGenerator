@@ -44,7 +44,7 @@ const IntroPage: React.FC = () => {
 
     // Navigate to main app after fade animation completes
     setTimeout(() => {
-      navigate("/app");
+      navigate("/");
     }, 1000);
   };
 
