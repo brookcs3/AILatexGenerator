@@ -13,8 +13,23 @@ export async function logPageView(req: Request, _res: Response, next: NextFuncti
   if (req.method === 'GET' && !req.path.startsWith('/api')) {
     const entry = { page: req.path, ts: new Date().toISOString() };
     try {
-      const raw = await fs.promises.readFile(LOG_FILE, 'utf8').catch(() => '[]');
-      const logs = JSON.parse(raw);
+      // Try to read the existing log file
+      let logs = [];
+      try {
+        const raw = await fs.promises.readFile(LOG_FILE, 'utf8').catch(() => '[]');
+        logs = JSON.parse(raw.trim());
+        
+        // Make sure logs is an array
+        if (!Array.isArray(logs)) {
+          logs = [];
+        }
+      } catch (parseError) {
+        // If parsing fails, reset the log file
+        console.warn('Analytics log file corrupted, resetting it', parseError);
+        logs = [];
+      }
+      
+      // Add the new entry and write back to the file
       logs.push(entry);
       await fs.promises.writeFile(LOG_FILE, JSON.stringify(logs, null, 2));
     } catch (err) {

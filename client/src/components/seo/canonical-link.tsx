@@ -7,9 +7,9 @@ interface CanonicalLinkProps {
 
 /**
  * Updates or creates the <link rel="canonical"> tag whenever the route changes.
- * Defaults to using SITE_DOMAIN env variable or https://aitexgen.com
+ * Defaults to using VITE_SITE_DOMAIN env variable or https://aitexgen.com
  */
-export default function CanonicalLink({ siteDomain = process.env.SITE_DOMAIN || 'https://aitexgen.com' }: CanonicalLinkProps) {
+export default function CanonicalLink({ siteDomain = import.meta.env.VITE_SITE_DOMAIN || 'https://aitexgen.com' }: CanonicalLinkProps) {
   const [location] = useLocation();
 
   useEffect(() => {
