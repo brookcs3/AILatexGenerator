@@ -14,7 +14,8 @@
     "test": "NODE_PATH=. node --test",
     "metrics": "node scripts/run-lighthouse.js",
     "generate:robots": "node scripts/generate-robots.js",
-    "prebuild": "npm run generate:robots"
+    "prebuild": "npm run generate:robots",
+    "send:report": "node scripts/send-weekly-report.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

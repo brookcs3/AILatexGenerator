@@ -5,6 +5,7 @@ import { User } from '@shared/schema';
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
   throw new Error('JWT_SECRET environment variable must be defined');
+
 }
 const JWT_EXPIRY = '24h';
 

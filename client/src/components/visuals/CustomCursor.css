@@ -1,0 +1,61 @@
+/* Custom cursor styling */
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #50ff50;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999; /* Very high z-index to appear above all content */
+  mix-blend-mode: difference;
+  transition: transform 0.3s ease-out, width 0.2s, height 0.2s;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor-outline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(80, 255, 80, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998; /* High z-index but below the dot */
+  mix-blend-mode: difference;
+  transition: transform 0.15s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor-outline.active {
+  transform: translate(-50%, -50%) scale(0.8);
+  background-color: rgba(80, 255, 80, 0.1);
+}
+
+/* Hide default cursor when custom cursor is enabled */
+.custom-cursor-enabled {
+  cursor: none !important;
+}
+
+/* Make sure all interactive elements still show appropriate cursors for accessibility */
+.custom-cursor-enabled a,
+.custom-cursor-enabled button,
+.custom-cursor-enabled input,
+.custom-cursor-enabled select,
+.custom-cursor-enabled [role="button"],
+.custom-cursor-enabled [tabindex="0"],
+.custom-cursor-enabled [class*="cursor-"],
+.custom-cursor-enabled .cursor-pointer,
+.custom-cursor-enabled .react-modal-sheet-container,
+.custom-cursor-enabled .tippy-box,
+.custom-cursor-enabled .pdf-preview,
+.custom-cursor-enabled [class*="dialog"],
+.custom-cursor-enabled [class*="popover"],
+.custom-cursor-enabled [class*="menu"],
+.custom-cursor-enabled [class*="dropdown"],
+.custom-cursor-enabled [class*="tooltip"],
+.custom-cursor-enabled .react-pdf__Page {
+  cursor: pointer !important;
+}

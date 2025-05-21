@@ -7,4 +7,5 @@ import "prismjs/themes/prism-tomorrow.css";
 import { initScrollDepthTracking } from "./lib/scrollTracker";
 
 initScrollDepthTracking();
+
 createRoot(document.getElementById("root")!).render(<App />);
