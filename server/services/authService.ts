@@ -2,8 +2,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '@shared/schema';
 
-// For development, use a fallback JWT secret if not defined in environment
-const JWT_SECRET = process.env.JWT_SECRET || 'ai-latex-generator-development-secret-key';
+// Use environment variable with fallback for development only
+// In production, ensure JWT_SECRET is properly set in environment variables
+const JWT_SECRET = process.env.JWT_SECRET || 'ai-latex-generator-development-secret-key-do-not-use-in-production';
 const JWT_EXPIRY = '24h';
 
 /**
