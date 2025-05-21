@@ -9,8 +9,7 @@ interface AnonymousUserBannerProps {
 }
 
 /**
- * Banner shown to anonymous users informing them of their free conversion
- * and encouraging them to sign up for more
+ * Banner shown to anonymous users encouraging them to sign up
  */
 export function AnonymousUserBanner({ usageRemaining }: AnonymousUserBannerProps) {
   return (
@@ -18,22 +17,22 @@ export function AnonymousUserBanner({ usageRemaining }: AnonymousUserBannerProps
       <InfoIcon className="h-4 w-4 mr-2" />
       <AlertTitle className="text-lg font-semibold">
         {usageRemaining 
-          ? "Welcome to AI LaTeX Generator!" 
-          : "You've used your free conversion"}
+          ? "Sign up for full features" 
+          : "Account required"}
       </AlertTitle>
       <AlertDescription className="mt-2">
         {usageRemaining ? (
           <div>
             <p className="mb-2">
-              You're currently using the free anonymous mode which allows for 1 free LaTeX conversion.
-              Sign up from the header to get more conversions and access to all features!
+              You're currently using anonymous mode with limited functionality.
+              Sign up from the header to access all features and premium templates!
             </p>
           </div>
         ) : (
           <div>
             <p className="mb-2">
-              You've already used your free LaTeX conversion. Create an account or upgrade your plan
-              to continue generating documents and unlock premium features.
+              Please create an account or log in to continue using the service.
+              Get access to premium features and templates when you sign up.
             </p>
           </div>
         )}
