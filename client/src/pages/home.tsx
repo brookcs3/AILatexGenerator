@@ -242,8 +242,8 @@ export default function Home() {
       }
     }, 750); // Check every 750ms
     
-    // Also scroll to top whenever the user taps on an input field
-    // to make sure content is visible even when keyboard appears
+    // Handle input events for mobile keyboard behavior
+    // We need to track both focus (keyboard appears) and blur (keyboard dismisses)
     const inputFocusHandler = () => {
       setTimeout(() => {
         window.scrollTo({
@@ -254,10 +254,30 @@ export default function Home() {
       }, 300); // Short delay to let keyboard appear
     };
     
-    // Add input focus listener
+    // Critical for mobile: handle keyboard dismissal with blur event
+    const inputBlurHandler = () => {
+      setTimeout(() => {
+        // When keyboard is dismissed, ensure we snap back to top
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
+        
+        // Fallback hard reset of scroll position
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          document.body.scrollTop = 0; // For Safari
+          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE
+        }, 200);
+      }, 300); // Short delay after keyboard dismisses
+    };
+    
+    // Add both focus and blur listeners to all inputs
     const allInputs = document.querySelectorAll('input, textarea');
     allInputs.forEach(input => {
       input.addEventListener('focus', inputFocusHandler);
+      input.addEventListener('blur', inputBlurHandler);
     });
     
     // Also listen for any scroll that might happen and gently pull back to top
@@ -300,6 +320,7 @@ export default function Home() {
       // Remove listeners
       allInputs.forEach(input => {
         input.removeEventListener('focus', inputFocusHandler);
+        input.removeEventListener('blur', inputBlurHandler);
       });
       
       window.removeEventListener('scroll', scrollHandler);
