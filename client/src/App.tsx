@@ -73,8 +73,8 @@ export const AuthRequiredContext = createContext<{
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={IntroPage} />
-      <Route path="/app" component={Home} />
+      <Route path="/" component={Home} />
+      <Route path="/intro" component={IntroPage} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/account" component={Account} />
