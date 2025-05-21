@@ -116,4 +116,7 @@ export async function authenticateJWT(req: Request, res: Response, next: NextFun
 
 // JWT utility for token verification
 import jwt from 'jsonwebtoken';
-const JWT_SECRET = process.env.JWT_SECRET || 'latex-generator-jwt-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable must be defined');
+}
