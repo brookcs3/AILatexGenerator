@@ -14,5 +14,70 @@
   {
     "page": "/src/components/visuals/CustomCursor.css",
     "ts": "2025-05-21T15:28:34.879Z"
+  },
+  {
+    "page": "/src/components/visuals/CustomCursor.tsx",
+    "ts": "2025-05-21T15:29:03.670Z"
+  },
+  {
+    "page": "/src/index.css",
+    "ts": "2025-05-21T15:29:14.131Z"
+  },
+  {
+    "page": "/app",
+    "ts": "2025-05-21T15:29:21.963Z"
+  },
+  {
+    "page": "/app",
+    "ts": "2025-05-21T15:29:22.039Z"
+  },
+  {
+    "page": "/@vite/client",
+    "ts": "2025-05-21T15:29:22.060Z"
+  },
+  {
+    "page": "/@react-refresh",
+    "ts": "2025-05-21T15:29:22.066Z"
+  },
+  {
+    "page": "/@vite/client",
+    "ts": "2025-05-21T15:29:22.074Z"
+  },
+  {
+    "page": "/src/main.tsx",
+    "ts": "2025-05-21T15:29:22.084Z"
+  },
+  {
+    "page": "/@react-refresh",
+    "ts": "2025-05-21T15:29:22.092Z"
+  },
+  {
+    "page": "/@fs/home/runner/workspace/node_modules/vite/dist/client/env.mjs",
+    "ts": "2025-05-21T15:29:22.107Z"
+  },
+  {
+    "page": "/src/main.tsx",
+    "ts": "2025-05-21T15:29:22.114Z"
+  },
+  {
+    "page": "/@fs/home/runner/workspace/node_modules/vite/dist/client/env.mjs",
+    "ts": "2025-05-21T15:29:22.155Z"
+  },
+  {
+    "page": "/src/App.tsx",
+    "ts": "2025-05-21T15:29:22.187Z"
+  },
+  {
+    "page": "/src/App.tsx",
+    "ts": "2025-05-21T15:29:22.190Z"
+  },
+  {
+    "page": "/src/index.css",
+    "ts": "2025-05-21T15:29:22.191Z"
+  },
+  {
+    "page": "/src/lib/initClarity.ts",
+    "ts": "2025-05-21T15:29:22.195Z"
   }
+]
 ]

@@ -88,11 +88,13 @@ export default function CustomCursor() {
     <>
       <div
         ref={outerRef}
-        className="pointer-events-none fixed left-0 top-0 z-50 h-8 w-8 rounded-full border-2 border-white mix-blend-difference transition-transform duration-150 ease-out"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-8 w-8 rounded-full border-2 border-green-400 mix-blend-difference transition-transform duration-150 ease-out"
+        style={{ pointerEvents: 'none' }}
       ></div>
       <div
         ref={dotRef}
-        className="pointer-events-none fixed left-0 top-0 z-50 h-2 w-2 rounded-full bg-white mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 rounded-full bg-green-400 mix-blend-difference"
+        style={{ pointerEvents: 'none' }}
       ></div>
     </>
   );
