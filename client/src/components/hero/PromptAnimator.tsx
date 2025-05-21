@@ -9,67 +9,10 @@ interface Props {
 export default function PromptAnimator({ onGetStarted }: Props) {
   const [isMobile, setIsMobile] = useState(false);
   
-  // Create standalone button element in the DOM
-  useEffect(() => {
-    // Remove any previous button if it exists
-    const existingButton = document.getElementById('standalone-get-started-btn');
-    if (existingButton) {
-      document.body.removeChild(existingButton);
-    }
-    
-    // Create a completely separate button that will overlay on top of everything
-    const standaloneButton = document.createElement('button');
-    standaloneButton.id = 'standalone-get-started-btn';
-    standaloneButton.textContent = 'Get Started';
-    standaloneButton.style.position = 'absolute';
-    standaloneButton.style.zIndex = '9999';
-    standaloneButton.style.top = '403px'; // Positioned to match the original button
-    standaloneButton.style.left = '50%';
-    standaloneButton.style.transform = 'translateX(-50%)';
-    standaloneButton.style.padding = '0.875rem 2.5rem';
-    standaloneButton.style.borderRadius = '50px';
-    standaloneButton.style.backgroundColor = '#3b82f6';
-    standaloneButton.style.backgroundImage = 'linear-gradient(90deg, #3b82f6, #2563eb)';
-    standaloneButton.style.color = 'white';
-    standaloneButton.style.fontWeight = '600';
-    standaloneButton.style.fontSize = '1.25rem';
-    standaloneButton.style.boxShadow = '0 4px 20px rgba(59, 130, 246, 0.5)';
-    standaloneButton.style.border = 'none';
-    standaloneButton.style.cursor = 'pointer';
-    standaloneButton.style.minWidth = '180px';
-    standaloneButton.style.fontFamily = 'inherit';
-    
-    standaloneButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      standaloneButton.style.transform = 'translateX(-50%) scale(0.95)';
-      setTimeout(() => {
-        onGetStarted();
-        // Remove the button after starting
-        document.body.removeChild(standaloneButton);
-      }, 100);
-    });
-    
-    // Add hover effects
-    standaloneButton.addEventListener('mouseover', () => {
-      standaloneButton.style.transform = 'translateX(-50%) translateY(-3px)';
-      standaloneButton.style.boxShadow = '0 6px 25px rgba(139, 92, 246, 0.6)';
-    });
-    
-    standaloneButton.addEventListener('mouseout', () => {
-      standaloneButton.style.transform = 'translateX(-50%)';
-      standaloneButton.style.boxShadow = '0 4px 20px rgba(59, 130, 246, 0.5)';
-    });
-    
-    document.body.appendChild(standaloneButton);
-    
-    return () => {
-      // Clean up when component unmounts
-      if (document.body.contains(standaloneButton)) {
-        document.body.removeChild(standaloneButton);
-      }
-    };
-  }, [onGetStarted]);
+  // Simple handler that will always work
+  const handleButtonClick = () => {
+    onGetStarted();
+  };
   
   // Check if device is mobile
   useEffect(() => {
@@ -91,13 +34,6 @@ export default function PromptAnimator({ onGetStarted }: Props) {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  // This function is now a backup - our standalone button is the primary action
-  const handleGetStartedClick = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onGetStarted();
-  };
   
   const handleDownload = () => {
     const latexCodeContainer = document.getElementById("latex-code-container");
