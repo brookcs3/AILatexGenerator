@@ -9,8 +9,11 @@ interface Props {
 export default function PromptAnimator({ onGetStarted }: Props) {
   const [isMobile, setIsMobile] = useState(false);
   
-  // Simple handler that will always work
-  const handleButtonClick = () => {
+  // This MUST be named handleGetStartedClick to match usage in the JSX below
+  const handleGetStartedClick = (e: React.MouseEvent | React.TouchEvent) => {
+    // Prevent default behavior, stop propagation, and call the parent's handler
+    e.preventDefault();
+    e.stopPropagation();
     onGetStarted();
   };
   
@@ -89,7 +92,7 @@ export default function PromptAnimator({ onGetStarted }: Props) {
                 padding: '0.875rem 2.5rem',
                 minWidth: '180px',
                 position: 'relative',
-                zIndex: 100,
+                zIndex: 9999,
                 cursor: 'pointer',
                 background: 'linear-gradient(90deg, #3b82f6, #2563eb)',
                 color: 'white',
@@ -97,14 +100,7 @@ export default function PromptAnimator({ onGetStarted }: Props) {
                 borderRadius: '50px',
                 border: 'none',
                 boxShadow: '0 4px 20px rgba(59, 130, 246, 0.5)',
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px)';
-                e.currentTarget.style.boxShadow = '0 6px 25px rgba(139, 92, 246, 0.6)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = '';
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(59, 130, 246, 0.5)';
+                pointerEvents: 'auto'
               }}
             >
               Get Started
