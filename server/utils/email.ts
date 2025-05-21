@@ -133,12 +133,18 @@ export async function sendVerificationEmail(
   }
 }
 
-export async function sendContactEmail(
-  name: string,
-  email: string,
-  subject: string,
-  message: string
-): Promise<{ success: boolean; message: string }> {
+/**
+ * Sends a contact form email
+ * @param options Contact email options
+ */
+export async function sendContactEmail(options: {
+  fromEmail: string;
+  message: string;
+  name?: string;
+  subject?: string;
+}): Promise<{ success: boolean; message: string }> {
+  const { fromEmail, message, name = '', subject = 'Contact Form Submission' } = options;
+  
   if (!client) {
     return {
       success: false,
@@ -146,21 +152,21 @@ export async function sendContactEmail(
     };
   }
 
-  const contactSubject = subject ? `Contact: ${subject}` : 'Contact Form Message';
+  const contactSubject = subject ? `Contact: ${subject}` : 'Contact Form Submission';
 
   try {
     const response = await client.sendEmail({
       From: FROM_EMAIL,
-      To: 'support@aitexgen.com',
-      ReplyTo: email,
+      To: CONTACT_EMAIL,
+      ReplyTo: fromEmail,
       Subject: contactSubject,
       HtmlBody: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Name:</strong> ${name || 'N/A'}</p>
+        <p><strong>Email:</strong> ${fromEmail}</p>
         <p><strong>Message:</strong></p>
         <p>${message.replace(/\n/g, '<br>')}</p>
       `,
-      TextBody: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      TextBody: `Name: ${name}\nEmail: ${fromEmail}\n\n${message}`,
       MessageStream: 'outbound'
     });
 
@@ -176,4 +182,3 @@ export async function sendContactEmail(
     };
   }
 }
-
