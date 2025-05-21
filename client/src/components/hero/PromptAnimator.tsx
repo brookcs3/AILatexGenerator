@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./PromptAnimator.css";
 import HeroTitle from "./HeroTitle";
+import { trackEvent } from "@/lib/analytics";
+import DynamicCTA from "@/components/ui/dynamic-cta";
 
 interface Props {
   onGetStarted: () => void;
@@ -14,6 +16,7 @@ export default function PromptAnimator({ onGetStarted }: Props) {
     // Prevent default behavior, stop propagation, and call the parent's handler
     e.preventDefault();
     e.stopPropagation();
+    trackEvent('cta_click');
     onGetStarted();
   };
   
@@ -36,6 +39,24 @@ export default function PromptAnimator({ onGetStarted }: Props) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+  }, []);
+
+  // Observe CTA visibility for analytics and animation
+  useEffect(() => {
+    const el = document.querySelector('.cta-button-container');
+    if (!el) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          trackEvent('cta_visible');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
   
   const handleDownload = () => {
@@ -82,29 +103,7 @@ export default function PromptAnimator({ onGetStarted }: Props) {
             <span className="prompt-cursor">|</span>
           </div>
           <div className="cta-button-container">
-            <button
-              className="cta-button"
-              onClick={handleGetStartedClick}
-              onTouchStart={handleGetStartedClick}
-              aria-label="Get started with AI LaTeX Generator"
-              style={{
-                fontSize: '1.25rem',
-                padding: '0.875rem 2.5rem',
-                minWidth: '180px',
-                position: 'relative',
-                zIndex: 9999,
-                cursor: 'pointer',
-                background: 'linear-gradient(90deg, #3b82f6, #2563eb)',
-                color: 'white',
-                fontWeight: 600,
-                borderRadius: '50px',
-                border: 'none',
-                boxShadow: '0 4px 20px rgba(59, 130, 246, 0.5)',
-                pointerEvents: 'auto'
-              }}
-            >
-              Get Started
-            </button>
+            <DynamicCTA onClick={handleGetStartedClick} />
           </div>
           <div className="latex-reveal">
             <div className="latex-code" id="latex-code-container">

@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { VisuallyHiddenHeading } from "@/components/seo/visually-hidden-heading";
 import MobileDisclaimer from "@/components/dialogs/mobile-disclaimer";
 import CustomCursor from "@/components/visuals/CustomCursor";
+import ExitIntentPopup from "@/components/dialogs/exit-intent-popup";
 
 interface SiteLayoutProps {
   children: ReactNode;
@@ -33,6 +34,9 @@ export default function SiteLayout({
       
       {/* Custom cursor effect applied to all pages */}
       <CustomCursor />
+
+      {/* Exit intent popup shown once per session */}
+      <ExitIntentPopup />
     </div>
   );
 }
