@@ -473,16 +473,10 @@ export default function Home() {
       return;
     }
     
-    // Verify user's authentication and usage limits
+    // Verify user's authentication
     if (!session.isAuthenticated) {
-      // Check if this is an anonymous user with remaining free usage
-      if (isAnonymous && hasRemainingAnonymousUsage) {
-        // Anonymous user with remaining usage, allow one free modification
-        logger("Anonymous user with remaining usage, allowing modification");
-      } else {
-        setShowAuthPrompt(true);
-        return;
-      }
+      setShowAuthPrompt(true);
+      return;
     }
     
     if (session.isAuthenticated && session.usage.current >= session.usage.limit) {
@@ -687,39 +681,33 @@ export default function Home() {
       return;
     }
     
-    // Check anonymous user status for non-authenticated users
+    // Check if the user is authenticated
     if (!session.isAuthenticated) {
-      // Check if this is an anonymous user with remaining free usage
-      if (isAnonymous && hasRemainingAnonymousUsage) {
-        // Anonymous user with remaining usage, allow PDF compilation
-        logger("Anonymous user with remaining usage, allowing PDF compilation");
-      } else {
-        logger("User not authenticated, showing auth prompt for PDF compilation");
+      logger("User not authenticated, showing auth prompt for PDF compilation");
+      
+      try {
+        // Show auth required dialog
+        setShowAuthPrompt(true);
         
-        try {
-          // Show auth required dialog
-          setShowAuthPrompt(true);
-          
-          // Force a dialog to appear (fallback)
-          toast({
-            title: "Authentication Required",
-            description: "Please sign in or create an account to compile to PDF.",
-            action: (
-              <div className="flex gap-2 mt-2">
-                <Button variant="outline" size="sm" onClick={() => navigate("/login")}>
-                  Login
-                </Button>
-                <Button size="sm" onClick={() => navigate("/register")}>
-                  Create Account
-                </Button>
-              </div>
-            ),
-          });
-        } catch (err) {
-          console.error("Error showing auth prompt:", err);
-        }
-        return;
+        // Force a dialog to appear (fallback)
+        toast({
+          title: "Authentication Required",
+          description: "Please sign in or create an account to compile to PDF.",
+          action: (
+            <div className="flex gap-2 mt-2">
+              <Button variant="outline" size="sm" onClick={() => navigate("/login")}>
+                Login
+              </Button>
+              <Button size="sm" onClick={() => navigate("/register")}>
+                Create Account
+              </Button>
+            </div>
+          ),
+        });
+      } catch (err) {
+        console.error("Error showing auth prompt:", err);
       }
+      return;
     }
 
     try {
