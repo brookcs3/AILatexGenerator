@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import SiteLayout from "@/components/layout/site-layout";
+import { createSchemaScript } from "@/lib/seo-utils";
 
 export default function HowTo() {
   useEffect(() => {
@@ -10,6 +11,25 @@ export default function HowTo() {
         'content',
         'Step-by-step guide to quickly generate LaTeX documents using the AI LaTeX Generator.'
       );
+    }
+
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    };
+
+    const head = document.querySelector('head');
+    if (head) {
+      const existing = document.querySelector('#faq-schema');
+      if (existing) existing.remove();
+      const script = createSchemaScript(schemaData);
+      script.id = 'faq-schema';
+      head.appendChild(script);
     }
   }, []);
 
@@ -41,6 +61,21 @@ export default function HowTo() {
     }
   ];
 
+  const faqs = [
+    {
+      q: "Do I need LaTeX experience to start?",
+      a: "No. The AI handles the formatting so you can focus on the content."
+    },
+    {
+      q: "Can I edit the generated code?",
+      a: "Yes. After generation you can tweak the LaTeX before exporting."
+    },
+    {
+      q: "Is collaboration supported?",
+      a: "Share your document link with teammates to gather feedback."
+    }
+  ];
+
   return (
     <SiteLayout seoTitle="How to Use AI LaTeX Generator">
       <div className="container mx-auto px-4 py-12">
@@ -56,6 +91,18 @@ export default function HowTo() {
             </li>
           ))}
         </ol>
+
+        <section className="mt-12">
+          <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            {faqs.map((item, index) => (
+              <div key={index} className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+                <h3 className="text-lg font-semibold mb-2">{item.q}</h3>
+                <p>{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </SiteLayout>
   );
