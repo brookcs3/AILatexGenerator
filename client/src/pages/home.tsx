@@ -171,44 +171,125 @@ export default function Home() {
     }
   }, []);
   
-  // Simple and reliable scroll-to-top effect for all devices
+  // "Boop" effect - scroll-to-top animation for all devices
   useEffect(() => {
-    // Function to scroll to top
-    const scrollToTop = () => {
-      window.scrollTo(0, 0);
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE
-    };
+    if (!enableMobileBoop) return;
+    // Apply on all devices to ensure proper scrolling
+    logger("Setting up boop effect for all devices");
     
-    // Initial scroll to top on component mount
-    scrollToTop();
-    
-    // Create an interval to check and maintain scroll position
-    const keepAtTopInterval = setInterval(() => {
-      if (window.scrollY > 5) {
-        scrollToTop();
+    // Create a stylesheet for our custom animation
+    const styleSheet = document.createElement("style");
+    styleSheet.id = "boop-animation-styles";
+    styleSheet.textContent = `
+      @keyframes boopToTop {
+        0% { transform: translateY(0); }
+        15% { transform: translateY(-5px); }
+        30% { transform: translateY(0); }
+        100% { transform: translateY(0); }
       }
-    }, 500);
+      
+      .boop-container {
+        animation: boopToTop 0.65s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+      }
+    `;
+    document.head.appendChild(styleSheet);
     
-    // Focus handler for inputs (important for mobile keyboards)
-    const handleInputFocus = () => {
-      setTimeout(scrollToTop, 100);
+    // Add animation class to main container
+    const mainElement = document.body;
+    if (mainElement) {
+      mainElement.classList.add('boop-container');
+    }
+    
+    // Run immediate scroll to top on page load
+    const immediateScrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+      
+      // Fallback direct scroll
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE
+      }, 100);
     };
     
-    // Add focus listeners to all input fields
-    const inputs = document.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-      input.addEventListener('focus', handleInputFocus);
+    // Call scroll immediately
+    immediateScrollToTop();
+    
+    // Set up a continuous gentle pull to top that runs
+    // every few seconds to keep the page at the top
+    const continuousPullInterval = setInterval(() => {
+      if (window.scrollY > 20) { // Only pull if we've scrolled a bit
+        immediateScrollToTop();
+      }
+    }, 750); // Check every 750ms
+    
+    // Also scroll to top whenever the user taps on an input field
+    // to make sure content is visible even when keyboard appears
+    const inputFocusHandler = () => {
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }, 300); // Short delay to let keyboard appear
+    };
+    
+    // Add input focus listener
+    const allInputs = document.querySelectorAll('input, textarea');
+    allInputs.forEach(input => {
+      input.addEventListener('focus', inputFocusHandler);
     });
     
-    // Clean up on unmount
-    return () => {
-      clearInterval(keepAtTopInterval);
-      inputs.forEach(input => {
-        input.removeEventListener('focus', handleInputFocus);
-      });
+    // Also listen for any scroll that might happen and gently pull back to top
+    const scrollHandler = () => {
+      if (window.scrollY > 20) { // Only if we've scrolled down a bit
+        // Wait a moment to see if scroll is intentional or just bounce
+        setTimeout(() => {
+          // Now check if we're still scrolled
+          if (window.scrollY > 20) {
+            // Smoothly scroll back to top
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+            });
+          }
+        }, 200);
+      }
     };
-  }, []);
+    
+    // Add scroll listener
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    
+    // Clean up on component unmount
+    return () => {
+      // Remove animation styles
+      const styleElement = document.getElementById('boop-animation-styles');
+      if (styleElement) {
+        styleElement.remove();
+      }
+      
+      // Remove animation class
+      if (mainElement) {
+        mainElement.classList.remove('boop-container');
+      }
+      
+      // Clear intervals
+      clearInterval(continuousPullInterval);
+      
+      // Remove listeners
+      allInputs.forEach(input => {
+        input.removeEventListener('focus', inputFocusHandler);
+      });
+      
+      window.removeEventListener('scroll', scrollHandler);
+    };
+  }, [enableMobileBoop]);
   
   // Check localStorage for preselected template when coming from template URL
   const getInitialDocumentType = () => {
