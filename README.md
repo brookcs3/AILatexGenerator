@@ -180,6 +180,27 @@ npm test
 
 This uses Node's built-in test runner to execute all tests defined in the project.
 
+## Optional Automated Content Microservices
+
+Inside the `scripts` directory is a small trio of microservices that can keep the
+site up to date automatically:
+
+- **content-service.js** – generates new blog posts from trending topics and
+  stores them under `content/blog/generated`.
+- **analytics-service.js** – analyzes engagement logs in `analytics/logs.json`
+  and produces a summarized report.
+- **seo-service.js** – writes updated SEO metadata to `public/seo.json` based on
+  the analytics report.
+
+Start all three services together with:
+
+```bash
+node scripts/start-microservices.js
+```
+
+They communicate over HTTP on ports `5001`–`5003` and can be run alongside the
+main server to keep your content and SEO data fresh.
+
 ## License
 
 Released under the [MIT License](LICENSE).

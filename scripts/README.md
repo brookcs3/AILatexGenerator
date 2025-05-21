@@ -72,3 +72,19 @@ If you encounter issues with Docker detection even after running the preparation
 1. Check the Railway dashboard and explicitly set the builder to "Nixpacks"
 2. Verify the contents of .railway.toml and railway.json
 3. Look for any other Docker-related files that might have been missed
+
+## Automated Content Microservices
+
+This directory also contains three optional microservices that can automate site improvements.
+
+- `content-service.js` – Fetches trending topics and generates new blog posts, saving them to `content/blog/generated`. It periodically triggers itself and notifies the analytics service.
+- `analytics-service.js` – Processes engagement logs stored in `analytics/logs.json` to build a report of top pages and generated topics, then passes the data to the SEO service.
+- `seo-service.js` – Writes SEO recommendations to `public/seo.json` based on the analytics report.
+
+Each service runs independently on its own port (defaults 5001–5003) and communicates with the others over HTTP.
+
+To start all three services at once, run:
+
+```bash
+node scripts/start-microservices.js
+```
