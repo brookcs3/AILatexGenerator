@@ -10,6 +10,7 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
 - User authentication and subscription tiers
 - Collaborative editing functionality
 - User-friendly tag system for non-LaTeX users
+- Advanced text rewriting mode that makes content less detectable as AI-generated
 
 ## Tech Stack
 
@@ -59,9 +60,9 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    - `STRIPE_SECRET_KEY` (Your Stripe secret key)
    - `STRIPE_WEBHOOK_SECRET` (Webhook secret used to verify Stripe events)
    - `POSTMARK_API_KEY` (Your Postmark API key for sending emails)
-   - `CONTACT_EMAIL` (Address to receive contact form submissions)
    - Any other API keys needed for service integrations
    - Stripe variables (see [Stripe Environment Variables](#stripe-environment-variables))
+   - `DISABLE_USAGE_LIMITS` set to `true` to bypass usage checks (leave unset in production)
 
 5. **Deploy**
    - Railway will automatically deploy your application
@@ -81,15 +82,40 @@ A comprehensive web-based AI LaTeX Generator that simplifies document creation t
    `STRIPE_WEBHOOK_SECRET`) and the `POSTMARK_API_KEY` used for email.
 4. Run the application: `npm run dev`
 
+## API Integration
+
+The server exposes a `/api/latex/compile/webhook` endpoint so external tools can
+request LaTeX compilation and receive the result via webhook. Send a POST request
+with the LaTeX content and a `webhookUrl` where the compiled PDF should be
+delivered.
+
+```bash
+curl -X POST https://your-server.com/api/latex/compile/webhook \
+  -H 'Content-Type: application/json' \
+  -d '{"latex":"\\documentclass{article}\\n\\begin{document}Hello!\\end{document}","webhookUrl":"https://example.com/hook"}'
+```
+
+Once compilation finishes the server POSTs a JSON payload to the provided URL:
+
+```json
+{ "success": true, "pdf": "base64string" }
+```
+
+### CI/CD Example
+
+The repository includes a sample GitHub Actions workflow in
+`.github/workflows/compile-latex.yml` demonstrating how to invoke the API from a
+pipeline.
+
 ## Documentation
 
-The project includes a growing set of guides under `content/blog` as well as several
-help pages in the frontend:
+The project includes a growing set of guides under `content/blog` as well as two
+new pages in the frontend:
 
 - `/how-to` – A step‑by‑step introduction to generating documents.
 - `/faq` – Answers to common questions from new users.
-- `/contact` – Contact form for support inquiries.
-- `/community` – Links to forums and chat channels.
+- `/community` – A simple forum for sharing tips and feedback.
+- `/contact` – Get in touch about support or partnerships.
 
 Feel free to add more Markdown posts in `content/blog` to expand the knowledge
 base.
@@ -103,11 +129,14 @@ deployment platform. Refer to `.env.example` for sample values.
 - `NODE_ENV` - Environment mode (`development` or `production`).
 - `DATABASE_URL` - PostgreSQL connection string.
 - `SESSION_SECRET` - Secret used to sign sessions.
+- Session cookies use the `secure` flag when `NODE_ENV` is `production`, so HTTPS is required in that mode.
 - `OPENAI_API_KEY` - OpenAI API key.
 - `ANTHROPIC_API_KEY` - Anthropic API key.
 - `GROQ_API_KEY` - Groq API key.
+- `GUEST_MODE` - Set to `true` to allow anonymous access for testing.
+- `DISABLE_USAGE_LIMITS` - Set to `true` to bypass subscription usage limits (defaults to `false`).
+
 - `POSTMARK_API_KEY` - Postmark API key for sending emails.
-- `CONTACT_EMAIL` - Destination address for contact form submissions.
 - `STRIPE_SECRET_KEY` - Stripe secret key.
 - `STRIPE_WEBHOOK_SECRET` - Secret to verify Stripe webhooks.
 - `VITE_STRIPE_PUBLIC_KEY` - Stripe publishable key for the client.
@@ -115,7 +144,11 @@ deployment platform. Refer to `.env.example` for sample values.
   subscription tiers.
 - `STRIPE_PRICE_REFILL_PACK_ID` - Price ID for refill packs.
 - `DOMAIN` - Production domain used in email links.
+- `SITE_DOMAIN` - Primary site domain used in robots.txt and metadata.
 - `VITE_API_BASE_URL` - Base URL for the frontend API.
+
+Guest mode should only be enabled when testing. For production deployments make
+sure `GUEST_MODE=false`.
 
 ## Stripe Environment Variables
 
@@ -133,9 +166,19 @@ configuration:
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `POSTMARK_API_KEY`
-- `CONTACT_EMAIL`
+- `DISABLE_USAGE_LIMITS`
 
 Refer to `.env.example` for default values and additional optional variables.
+
+## Running Tests
+
+To run the test suite locally, execute:
+
+```bash
+npm test
+```
+
+This uses Node's built-in test runner to execute all tests defined in the project.
 
 ## License
 

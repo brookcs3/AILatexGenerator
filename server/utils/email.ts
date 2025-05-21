@@ -64,7 +64,11 @@ export async function sendVerificationEmail(
     // Determine the base URL based on the environment
     // For Railway, use the PRIMARY_DOMAIN environment variable
     // This will ensure the verification link works in both local and production environments
-    const baseUrl = process.env.PRIMARY_DOMAIN || process.env.PUBLIC_URL || 'http://aitexgen.com';
+    const baseUrl =
+      process.env.PRIMARY_DOMAIN ||
+      process.env.PUBLIC_URL ||
+      process.env.SITE_DOMAIN ||
+      'https://aitexgen.com';
     const verificationLink = `${baseUrl}/verify-email?token=${verificationToken}`;
     
     const response = await client.sendEmail({
@@ -74,7 +78,7 @@ export async function sendVerificationEmail(
       HtmlBody: `
         <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #e5e7eb; border-radius: 8px;">
           <div style="text-align: center; margin-bottom: 24px;">
-            <img src="https://aitexgen.com/logo.png" alt="AITexGen Logo" style="max-width: 120px; height: auto;" onerror="this.style.display='none'">
+            <img src="${baseUrl.replace(/\/$/, '')}/logo.png" alt="AITexGen Logo" style="max-width: 120px; height: auto;" onerror="this.style.display='none'">
           </div>
           <h1 style="color: #2563eb; margin-bottom: 24px; text-align: center;">Verify your email address</h1>
           <p style="margin-bottom: 24px; font-size: 16px; line-height: 24px;">
@@ -122,9 +126,53 @@ export async function sendVerificationEmail(
     };
   } catch (error: any) {
     console.error('Failed to send verification email:', error);
-    return { 
-      success: false, 
-      message: `Failed to send verification email: ${error.message || 'Unknown error'}` 
+    return {
+      success: false,
+      message: `Failed to send verification email: ${error.message || 'Unknown error'}`
+    };
+  }
+}
+
+export async function sendContactEmail(
+  name: string,
+  email: string,
+  subject: string,
+  message: string
+): Promise<{ success: boolean; message: string }> {
+  if (!client) {
+    return {
+      success: false,
+      message: 'Email service not available'
+    };
+  }
+
+  const contactSubject = subject ? `Contact: ${subject}` : 'Contact Form Message';
+
+  try {
+    const response = await client.sendEmail({
+      From: FROM_EMAIL,
+      To: 'support@aitexgen.com',
+      ReplyTo: email,
+      Subject: contactSubject,
+      HtmlBody: `
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+      TextBody: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      MessageStream: 'outbound'
+    });
+
+    return {
+      success: true,
+      message: `Contact email sent: ${response.MessageID}`
+    };
+  } catch (error: any) {
+    console.error('Failed to send contact email:', error);
+    return {
+      success: false,
+      message: `Failed to send contact email: ${error.message || 'Unknown error'}`
     };
   }
 }

@@ -8,6 +8,7 @@
   background-color: transparent;
   /* Changed from solid color to transparent */
   z-index: 10;
+  pointer-events: none;
 }
 
 /* Backdrop gradient - completely transparent */
@@ -20,6 +21,7 @@
   background: transparent;
   opacity: 0;
   z-index: 11;
+  pointer-events: none;
 }
 
 /* Particles backdrop */
@@ -31,6 +33,7 @@
   height: 100%;
   opacity: 0.8;
   z-index: 12;
+  pointer-events: none; /* Allow interactions with elements behind */
 }
 
 /* Particles.js container styles */
@@ -42,6 +45,7 @@
   width: 100%;
   height: 100%;
   z-index: 12;
+  pointer-events: none; /* Ensure background effects don't block clicks */
 }
 
 /* Particles canvas adjustments */
@@ -53,6 +57,7 @@
   width: 100% !important;
   height: 100% !important;
   z-index: 12;
+  pointer-events: none;
 }
 
 /* Scanlines effect */
@@ -254,6 +259,7 @@
 .intro-page-container.distortion-only .gradient-backdrop {
   opacity: 0.95;
   background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.6) 0%, rgba(79, 70, 229, 0.7) 50%, rgb(56, 99, 168, 0.8) 100%);
+  pointer-events: none;
 }
 
 /* Controls panel */
