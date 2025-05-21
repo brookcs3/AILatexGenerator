@@ -1,83 +1,90 @@
 [
   {
-    "page": "/src/components/ui/theme-toggle.tsx",
-    "ts": "2025-05-21T15:28:09.859Z"
+    "page": "/src/components/layout/footer.tsx",
+    "ts": "2025-05-21T15:35:10.013Z"
   },
   {
-    "page": "/src/components/visuals/CustomCursor.tsx",
-    "ts": "2025-05-21T15:28:34.692Z"
+    "page": "/src/components/seo/visually-hidden-heading.tsx",
+    "ts": "2025-05-21T15:35:10.022Z"
   },
   {
-    "page": "/src/index.css",
-    "ts": "2025-05-21T15:28:34.694Z"
+    "page": "/src/components/seo/canonical-link.tsx",
+    "ts": "2025-05-21T15:35:10.039Z"
+  },
+  {
+    "page": "/src/components/dialogs/mobile-disclaimer.tsx",
+    "ts": "2025-05-21T15:35:10.048Z"
+  },
+  {
+    "page": "/src/components/dialogs/exit-intent-popup.tsx",
+    "ts": "2025-05-21T15:35:10.051Z"
+  },
+  {
+    "page": "/src/hooks/use-anonymous-status.tsx",
+    "ts": "2025-05-21T15:35:10.054Z"
+  },
+  {
+    "page": "/src/components/ui/select.tsx",
+    "ts": "2025-05-21T15:35:10.075Z"
+  },
+  {
+    "page": "/src/components/dialogs/anonymous-user-popup.tsx",
+    "ts": "2025-05-21T15:35:10.080Z"
+  },
+  {
+    "page": "/src/components/hero/HyperIntro.css",
+    "ts": "2025-05-21T15:35:10.109Z"
+  },
+  {
+    "page": "/src/components/hero/PromptAnimator.tsx",
+    "ts": "2025-05-21T15:35:10.111Z"
+  },
+  {
+    "page": "/src/components/background/DistortionBackground.css",
+    "ts": "2025-05-21T15:35:10.112Z"
   },
   {
     "page": "/src/components/visuals/CustomCursor.css",
-    "ts": "2025-05-21T15:28:34.879Z"
+    "ts": "2025-05-21T15:35:10.135Z"
   },
   {
-    "page": "/src/components/visuals/CustomCursor.tsx",
-    "ts": "2025-05-21T15:29:03.670Z"
+    "page": "/src/lib/locomotive-scroll-manager.ts",
+    "ts": "2025-05-21T15:35:10.141Z"
   },
   {
-    "page": "/src/index.css",
-    "ts": "2025-05-21T15:29:14.131Z"
+    "page": "/src/components/dialogs/login-modal.tsx",
+    "ts": "2025-05-21T15:35:10.169Z"
   },
   {
-    "page": "/app",
-    "ts": "2025-05-21T15:29:21.963Z"
+    "page": "/src/components/ui/theme-toggle.tsx",
+    "ts": "2025-05-21T15:35:10.172Z"
   },
   {
-    "page": "/app",
-    "ts": "2025-05-21T15:29:22.039Z"
+    "page": "/src/components/hero/PromptAnimator.css",
+    "ts": "2025-05-21T15:35:10.177Z"
   },
   {
-    "page": "/@vite/client",
-    "ts": "2025-05-21T15:29:22.060Z"
+    "page": "/src/components/hero/HeroTitle.tsx",
+    "ts": "2025-05-21T15:35:10.191Z"
   },
   {
-    "page": "/@react-refresh",
-    "ts": "2025-05-21T15:29:22.066Z"
+    "page": "/src/components/ui/dynamic-cta.tsx",
+    "ts": "2025-05-21T15:35:10.197Z"
   },
   {
-    "page": "/@vite/client",
-    "ts": "2025-05-21T15:29:22.074Z"
+    "page": "/src/components/hero/FeatureCards.css",
+    "ts": "2025-05-21T15:35:10.204Z"
   },
   {
-    "page": "/src/main.tsx",
-    "ts": "2025-05-21T15:29:22.084Z"
+    "page": "/src/lib/fadeInOnScroll.ts",
+    "ts": "2025-05-21T15:35:10.231Z"
   },
   {
-    "page": "/@react-refresh",
-    "ts": "2025-05-21T15:29:22.092Z"
+    "page": "/src/components/hero/HeroTitle.css",
+    "ts": "2025-05-21T15:35:10.251Z"
   },
   {
-    "page": "/@fs/home/runner/workspace/node_modules/vite/dist/client/env.mjs",
-    "ts": "2025-05-21T15:29:22.107Z"
-  },
-  {
-    "page": "/src/main.tsx",
-    "ts": "2025-05-21T15:29:22.114Z"
-  },
-  {
-    "page": "/@fs/home/runner/workspace/node_modules/vite/dist/client/env.mjs",
-    "ts": "2025-05-21T15:29:22.155Z"
-  },
-  {
-    "page": "/src/App.tsx",
-    "ts": "2025-05-21T15:29:22.187Z"
-  },
-  {
-    "page": "/src/App.tsx",
-    "ts": "2025-05-21T15:29:22.190Z"
-  },
-  {
-    "page": "/src/index.css",
-    "ts": "2025-05-21T15:29:22.191Z"
-  },
-  {
-    "page": "/src/lib/initClarity.ts",
-    "ts": "2025-05-21T15:29:22.195Z"
+    "page": "/src/hooks/useABVariant.tsx",
+    "ts": "2025-05-21T15:35:10.257Z"
   }
-]
 ]
