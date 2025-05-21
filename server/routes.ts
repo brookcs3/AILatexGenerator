@@ -117,9 +117,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Set up session with robust configuration
+  const sessionSecret = process.env.SESSION_SECRET;
+  if (!sessionSecret) {
+    throw new Error('SESSION_SECRET environment variable must be defined');
+  }
+
   app.use(session({
     store: sessionStore,
-    secret: process.env.SESSION_SECRET || 'latex-generator-session-secret',
+    secret: sessionSecret,
     resave: true,                   // Always save session with every request
     rolling: true,                  // Reset expiration with each request
     saveUninitialized: false,       // Don't save empty sessions

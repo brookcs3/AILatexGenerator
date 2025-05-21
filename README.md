@@ -186,6 +186,16 @@ npm test
 
 This uses Node's built-in test runner to execute all tests defined in the project.
 
+## Collecting Baseline Performance Metrics
+
+Run the Lighthouse script to capture scores for your main pages:
+
+```bash
+npm run metrics
+```
+
+Results are saved to `analytics/baseline.json` for later comparison.
+
 ## Optional Automated Content Microservices
 
 Inside the `scripts` directory is a small trio of microservices that can keep the

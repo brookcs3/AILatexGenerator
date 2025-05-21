@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./PromptAnimator.css";
 import HeroTitle from "./HeroTitle";
 import { trackEvent } from "@/lib/analytics";
-import DynamicCTA from "@/components/ui/dynamic-cta";
+
 
 interface Props {
   onGetStarted: () => void;
@@ -14,10 +14,9 @@ export default function PromptAnimator({ onGetStarted }: Props) {
   // This MUST be named handleGetStartedClick to match usage in the JSX below
   const handleGetStartedClick = (e?: React.MouseEvent | React.TouchEvent) => {
     // Prevent default behavior, stop propagation, and call the parent's handler
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    e.preventDefault();
+    e.stopPropagation();
+
     trackEvent('cta_click');
     onGetStarted();
   };
