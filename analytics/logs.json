@@ -1,6 +1,30 @@
 [
   {
+    "page": "/src/components/visuals/CustomCursor.css",
+    "ts": "2025-05-21T16:17:50.714Z"
+  },
+  {
+    "page": "/src/components/ui/theme-toggle.tsx",
+    "ts": "2025-05-21T16:17:50.730Z"
+  },
+  {
+    "page": "/src/components/hero/PromptAnimator.css",
+    "ts": "2025-05-21T16:17:50.749Z"
+  },
+  {
+    "page": "/src/components/hero/HeroTitle.tsx",
+    "ts": "2025-05-21T16:17:50.755Z"
+  },
+  {
+    "page": "/src/components/hero/FeatureCards.css",
+    "ts": "2025-05-21T16:17:50.788Z"
+  },
+  {
+    "page": "/src/lib/fadeInOnScroll.ts",
+    "ts": "2025-05-21T16:17:50.797Z"
+  },
+  {
     "page": "/src/components/hero/HeroTitle.css",
-    "ts": "2025-05-21T16:11:24.390Z"
+    "ts": "2025-05-21T16:17:50.855Z"
   }
 ]
