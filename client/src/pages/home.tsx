@@ -9,12 +9,12 @@ import LatexInput from "@/components/editor/latex-input";
 import LatexOutput from "@/components/editor/latex-output";
 import PDFPreview from "@/components/editor/pdf-preview";
 import ErrorNotification from "@/components/dialogs/error-notification";
-import AnonymousUserBanner from "@/components/anonymous-user-banner";
+
 import { generateLatex, compileLatex, saveDocument, extractTitleFromLatex, modifyLatex } from "@/lib/aiProvider";
 import { downloadPdf, parseNotesWithOmitTags } from "@/lib/utils";
 import { TabItem, EditorState, ErrorNotificationData } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
-import { useAnonymousStatus } from "@/hooks/use-anonymous-status";
+
 import { Button } from "@/components/ui/button";
 
 // Flag to enable/disable the mobile auto-scroll effect
@@ -158,10 +158,7 @@ export default function Home() {
   // to the top. Disabled by default to prevent unexpected scrolling.
   const enableMobileBoop = true;
   
-  // Query anonymous user status
-  const anonymousStatus = useAnonymousStatus();
-  const isAnonymous = !session?.user && anonymousStatus.data?.isAnonymous;
-  const hasRemainingAnonymousUsage = anonymousStatus.data?.hasRemainingUsage ?? true;
+
   
   // SEO enhancement - set proper page title and description
   useEffect(() => {
@@ -355,48 +352,42 @@ export default function Home() {
       user: session.user
     });
     
-    // Check anonymous user status for non-authenticated users
+    // Check if user is authenticated
     if (!session.isAuthenticated) {
-      // Check if this is an anonymous user with remaining free usage
-      if (isAnonymous && hasRemainingAnonymousUsage) {
-        // Anonymous user with remaining usage, allow one free generation
-        logger("Anonymous user with remaining usage, allowing generation");
-      } else {
-        // Stop the generating animation if it was started
-        setEditorState(prev => ({ ...prev, isGenerating: false }));
+      // Stop the generating animation if it was started
+      setEditorState(prev => ({ ...prev, isGenerating: false }));
+      
+      logger("User not authenticated, showing auth prompt");
+      
+      // Try directly setting the auth prompt to true
+      try {
+        // Show auth required dialog
+        setShowAuthPrompt(true);
+        logger("Set showAuthPrompt to true");
         
-        logger("User not authenticated, showing auth prompt");
-        
-        // Try directly setting the auth prompt to true
-        try {
-          // Show auth required dialog
-          setShowAuthPrompt(true);
-          logger("Set showAuthPrompt to true");
-          
-          // Force a dialog to appear (fallback)
-          toast({
-            title: "Authentication Required",
-            description: "Please sign in or create an account to generate LaTeX.",
-            action: (
-              <div className="flex gap-2 mt-2">
-                <Button variant="outline" size="sm" onClick={() => navigate("/login")}>
-                  Login
-                </Button>
-                <Button 
-                  size="sm" 
-                  onClick={() => navigate("/register")}
-                  className="bg-primary text-white hover:bg-primary/90"
-                >
-                  Create Account
-                </Button>
-              </div>
-            ),
-          });
-        } catch (err) {
-          console.error("Error showing auth prompt:", err);
-        }
-        return;
+        // Force a dialog to appear (fallback)
+        toast({
+          title: "Authentication Required",
+          description: "Please sign in or create an account to generate LaTeX.",
+          action: (
+            <div className="flex gap-2 mt-2">
+              <Button variant="outline" size="sm" onClick={() => navigate("/login")}>
+                Login
+              </Button>
+              <Button 
+                size="sm" 
+                onClick={() => navigate("/register")}
+                className="bg-primary text-white hover:bg-primary/90"
+              >
+                Create Account
+              </Button>
+            </div>
+          ),
+        });
+      } catch (err) {
+        console.error("Error showing auth prompt:", err);
       }
+      return;
     }
     
     logger("User is authenticated, proceeding with generation");
@@ -914,11 +905,7 @@ export default function Home() {
   return (
     <SiteLayout seoTitle="AI LaTeX Generator - Create Professional LaTeX Documents with AI">
       <div className="h-full flex flex-col md:flex-row bg-gradient-soft">
-        {isAnonymous && (
-          <div className="absolute top-0 left-0 right-0 z-10 px-4 pt-4">
-            <AnonymousUserBanner usageRemaining={hasRemainingAnonymousUsage} />
-          </div>
-        )}
+
         
         {/* Left Panel (Input) */}
         <div className="w-full md:w-1/2 h-full relative">
