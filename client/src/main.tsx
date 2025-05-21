@@ -11,4 +11,6 @@ initScrollDepthTracking();
 if (import.meta.env.VITE_CLARITY_ID) {
   initClarity(import.meta.env.VITE_CLARITY_ID);
 }
+
+initScrollDepthTracking();
 createRoot(document.getElementById("root")!).render(<App />);

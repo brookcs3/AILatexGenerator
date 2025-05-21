@@ -171,44 +171,153 @@ export default function Home() {
     }
   }, []);
   
-  // Simple and reliable scroll-to-top effect for all devices
+  // "Boop" effect - scroll-to-top animation on mobile only for /app page
   useEffect(() => {
-    // Function to scroll to top
-    const scrollToTop = () => {
-      window.scrollTo(0, 0);
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE
-    };
+    if (!enableMobileBoop) return;
     
-    // Initial scroll to top on component mount
-    scrollToTop();
+    // Only apply on the /app page
+    const currentPath = window.location.pathname;
+    if (currentPath !== '/app') {
+      logger("Not on /app page, skipping boop effect");
+      return;
+    }
     
-    // Create an interval to check and maintain scroll position
-    const keepAtTopInterval = setInterval(() => {
-      if (window.scrollY > 5) {
-        scrollToTop();
+    // Only apply on mobile devices in portrait mode
+    const isMobilePortrait = () => window.innerWidth < 768 && window.innerHeight > window.innerWidth;
+    
+    if (!isMobilePortrait()) {
+      logger("Not mobile portrait, skipping boop effect");
+      return;
+    }
+    
+    logger("Setting up boop to top effect for mobile");
+    
+    // Create a stylesheet for our custom animation
+    const styleSheet = document.createElement("style");
+    styleSheet.id = "boop-animation-styles";
+    styleSheet.textContent = `
+      @keyframes boopToTop {
+        0% { transform: translateY(0); }
+        15% { transform: translateY(-5px); }
+        30% { transform: translateY(0); }
+        100% { transform: translateY(0); }
       }
-    }, 500);
+      
+      .boop-container {
+        animation: boopToTop 0.65s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+      }
+    `;
+    document.head.appendChild(styleSheet);
     
-    // Focus handler for inputs (important for mobile keyboards)
-    const handleInputFocus = () => {
-      setTimeout(scrollToTop, 100);
-    };
+    // Add animation class to main container
+    const mainElement = document.body;
+    if (mainElement) {
+      mainElement.classList.add('boop-container');
+    }
     
-    // Add focus listeners to all input fields
-    const inputs = document.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-      input.addEventListener('focus', handleInputFocus);
-    });
-    
-    // Clean up on unmount
-    return () => {
-      clearInterval(keepAtTopInterval);
-      inputs.forEach(input => {
-        input.removeEventListener('focus', handleInputFocus);
+    // Run immediate scroll to top on page load
+    const immediateScrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
       });
+      
+      // Fallback direct scroll
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE
+      }, 100);
     };
-  }, []);
+    
+    // Call scroll immediately
+    immediateScrollToTop();
+    
+    // Set up a continuous gentle pull to top that runs
+    // every few seconds to keep the page at the top
+    const continuousPullInterval = setInterval(() => {
+      if (window.scrollY > 20) { // Only pull if we've scrolled a bit
+        immediateScrollToTop();
+      }
+    }, 750); // Check every 750ms
+    
+    // Also scroll to top whenever the user taps on an input field
+    // to make sure content is visible even when keyboard appears
+    const inputFocusHandler = () => {
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }, 300); // Short delay to let keyboard appear
+    };
+    
+    // Handle keyboard dismissal with blur event
+    const inputBlurHandler = () => {
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
+        
+        // Fallback scroll reset for reliable position
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+        }, 100);
+      }, 300);
+    };
+    
+    // Use event delegation so dynamically added inputs also trigger the boop
+    document.body.addEventListener('focusin', inputFocusHandler);
+    document.body.addEventListener('focusout', inputBlurHandler);
+    
+    // Also listen for any scroll that might happen and gently pull back to top
+    const scrollHandler = () => {
+      if (window.scrollY > 20) { // Only if we've scrolled down a bit
+        // Wait a moment to see if scroll is intentional or just bounce
+        setTimeout(() => {
+          // Now check if we're still scrolled
+          if (window.scrollY > 20) {
+            // Smoothly scroll back to top
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+            });
+          }
+        }, 200);
+      }
+    };
+    
+    // Add scroll listener
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    
+    // Clean up on component unmount
+    return () => {
+      // Remove animation styles
+      const styleElement = document.getElementById('boop-animation-styles');
+      if (styleElement) {
+        styleElement.remove();
+      }
+      
+      // Remove animation class
+      if (mainElement) {
+        mainElement.classList.remove('boop-container');
+      }
+      
+      // Clear intervals
+      clearInterval(continuousPullInterval);
+      
+      // Remove delegated listeners
+      document.body.removeEventListener('focusin', inputFocusHandler);
+      document.body.removeEventListener('focusout', inputBlurHandler);
+      
+      window.removeEventListener('scroll', scrollHandler);
+    };
+  }, [enableMobileBoop]);
   
   // Check localStorage for preselected template when coming from template URL
   const getInitialDocumentType = () => {
