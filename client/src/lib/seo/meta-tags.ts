@@ -6,7 +6,7 @@
  * OpenGraph tags for social sharing.
  */
 
-import { logger } from '@/lib/logger';
+import { logger } from '../logger';
 
 // Base site information
 const siteInfo = {
@@ -148,55 +148,57 @@ export function updateMetaTagsForCurrentPage(): void {
   }
 
   const path = window.location.pathname;
-  const pageMeta: { [key: string]: MetaTagsOptions } = {
+  
+  // Define meta information for each page
+  const pageMeta: Record<string, MetaTagsOptions> = {
     '/': {
       title: 'AI LaTeX Generator | Create Professional Academic Documents',
       description: 'Generate professional LaTeX documents with AI assistance. Create papers, slides, and mathematical reports with ease using our powerful LaTeX generator.',
-      ogType: 'website',
+      ogType: 'website'
     },
     '/app': {
       title: 'AI LaTeX Editor | Create LaTeX Documents Online',
       description: 'Our AI-powered LaTeX editor makes it easy to create publication-ready documents. No LaTeX knowledge required - just enter your content and get beautiful results instantly.',
-      ogType: 'website',
+      ogType: 'website'
     },
     '/login': {
       title: 'Log In | AI LaTeX Generator',
       description: 'Log in to your AI LaTeX Generator account to create and manage your professional LaTeX documents.',
       ogType: 'website',
-      robots: 'noindex, follow', // Don't index login pages
+      robots: 'noindex, follow' // Don't index login pages
     },
     '/register': {
       title: 'Sign Up | AI LaTeX Generator',
       description: 'Create an account to access our AI-powered LaTeX document generator. Generate professional academic papers, slides, and reports instantly.',
       ogType: 'website',
-      robots: 'noindex, follow', // Don't index registration pages
+      robots: 'noindex, follow' // Don't index registration pages
     },
     '/subscribe': {
       title: 'Subscription Plans | AI LaTeX Generator',
       description: 'Choose a subscription plan for AI LaTeX Generator. Get access to unlimited document creation, premium templates, and advanced AI features.',
-      ogType: 'website',
+      ogType: 'website'
     },
     '/faq': {
       title: 'Frequently Asked Questions | AI LaTeX Generator',
       description: 'Find answers to common questions about our AI LaTeX Generator. Learn how to create documents, use templates, and get the most out of our powerful LaTeX editor.',
-      ogType: 'website',
+      ogType: 'website'
     },
     '/how-to': {
       title: 'LaTeX Tutorials & How-To Guides | AI LaTeX Generator',
       description: 'Learn how to use our AI LaTeX Generator with step-by-step tutorials. Create professional academic papers, presentations, and more without LaTeX knowledge.',
-      ogType: 'article',
+      ogType: 'article'
     },
     '/contact': {
       title: 'Contact Us | AI LaTeX Generator',
-      description: 'Get in touch with the AI LaTeX Generator team. We're here to help with questions, feedback, and support for our AI-powered document creation tool.',
-      ogType: 'website',
+      description: 'Get in touch with the AI LaTeX Generator team. We\'re here to help with questions, feedback, and support for our AI-powered document creation tool.',
+      ogType: 'website'
     },
     '/privacy-policy': {
       title: 'Privacy Policy | AI LaTeX Generator',
       description: 'AI LaTeX Generator privacy policy. Learn how we collect, use, and protect your data when you use our AI-powered LaTeX document creation service.',
       ogType: 'website',
-      robots: 'noindex, follow', // Don't index legal pages
-    },
+      robots: 'noindex, follow' // Don't index legal pages
+    }
   };
 
   // Set meta tags based on path
