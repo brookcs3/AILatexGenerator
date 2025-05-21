@@ -154,11 +154,10 @@ export default function Home() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
 
-  // Flag to control the old mobile "boop" effect that kept the page scrolled
-  // to the top. Disabled by default to prevent unexpected scrolling.
-  const enableMobileBoop = true;
+  // Flag to control the mobile "boop" effect that keeps the page scrolled to the top
+  // Set to true to enable the scroll-to-top animation
+  const enableMobileBoop = true; // Keep enabled for all devices
   
-
   
   // SEO enhancement - set proper page title and description
   useEffect(() => {
@@ -172,18 +171,11 @@ export default function Home() {
     }
   }, []);
   
-  // "Boop" effect - scroll-to-top animation on mobile
+  // "Boop" effect - scroll-to-top animation for all devices
   useEffect(() => {
     if (!enableMobileBoop) return;
-    // Only apply on mobile devices in portrait mode
-    const isMobilePortrait = () => window.innerWidth < 768 && window.innerHeight > window.innerWidth;
-    
-    if (!isMobilePortrait()) {
-      logger("Not mobile portrait, skipping boop effect");
-      return;
-    }
-    
-    logger("Setting up boop to top effect for mobile");
+    // Apply on all devices to ensure proper scrolling
+    logger("Setting up scroll-to-top effect for all devices");
     
     // Create a stylesheet for our custom animation
     const styleSheet = document.createElement("style");
