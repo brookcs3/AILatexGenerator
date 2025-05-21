@@ -13,13 +13,20 @@ import {
 // Check for Railway deployment environment
 const isRailwayDeployment = process.env.RAILWAY_STATIC_URL || process.env.RAILWAY_SERVICE_ID;
 
+// Check for verbose LaTeX logging
+const latexDebug = process.env.LATEX_DEBUG === 'true';
+
+function debugLog(...args: unknown[]) {
+  if (latexDebug) console.log(...args);
+}
+
 // Logging Railway environment for debugging
 if (isRailwayDeployment) {
-  console.log('[LATEX DEBUG] Running in Railway environment');
-  console.log('[LATEX DEBUG] RAILWAY_STATIC_URL:', process.env.RAILWAY_STATIC_URL);
-  console.log('[LATEX DEBUG] RAILWAY_SERVICE_ID:', process.env.RAILWAY_SERVICE_ID);
+  debugLog('[LATEX DEBUG] Running in Railway environment');
+  debugLog('[LATEX DEBUG] RAILWAY_STATIC_URL:', process.env.RAILWAY_STATIC_URL);
+  debugLog('[LATEX DEBUG] RAILWAY_SERVICE_ID:', process.env.RAILWAY_SERVICE_ID);
 } else {
-  console.log('[LATEX DEBUG] Not running in Railway environment');
+  debugLog('[LATEX DEBUG] Not running in Railway environment');
 }
 
 /**
@@ -32,20 +39,20 @@ export async function compileTex(latexContent: string): Promise<{
   errorDetails?: { line: number; message: string }[];
   isHtml?: boolean;
 }> {
-  console.log('[LATEX DEBUG] Starting PDF compilation process');
+  debugLog('[LATEX DEBUG] Starting PDF compilation process');
   
   // Check if Tectonic is available in this environment
   const tectonicAvailable = await isTectonicAvailable();
   
   // If we're in Railway deployment and Tectonic isn't available, use fallback mechanism
   if (isRailwayDeployment && !tectonicAvailable) {
-    console.log('[LATEX DEBUG] Running in Railway environment with Tectonic unavailable, using fallback');
+    debugLog('[LATEX DEBUG] Running in Railway environment with Tectonic unavailable, using fallback');
     
     // Try backup PDF creation method first
     const backupPdf = await createTectonicBackupPDF(latexContent);
     
     if (backupPdf) {
-      console.log('[LATEX DEBUG] Successfully created PDF using backup method');
+      debugLog('[LATEX DEBUG] Successfully created PDF using backup method');
       return {
         success: true,
         pdf: backupPdf
@@ -53,7 +60,7 @@ export async function compileTex(latexContent: string): Promise<{
     }
     
     // If backup PDF creation fails, generate HTML preview
-    console.log('[LATEX DEBUG] Backup PDF creation failed, generating HTML preview');
+    debugLog('[LATEX DEBUG] Backup PDF creation failed, generating HTML preview');
     const htmlPreview = await generateHTMLPreview(latexContent);
     
     return {
@@ -68,43 +75,43 @@ export async function compileTex(latexContent: string): Promise<{
   const inputFile = path.join(tempDir, 'input.tex');
   const outputDir = path.join(tempDir, 'output');
   
-  console.log(`[LATEX DEBUG] Created temporary directories:
+  debugLog(`[LATEX DEBUG] Created temporary directories:
    - Input file: ${inputFile}
    - Output directory: ${outputDir}`);
   
   try {
     // Create output directory
     await fs.mkdir(outputDir, { recursive: true });
-    console.log('[LATEX DEBUG] Created output directory');
+    debugLog('[LATEX DEBUG] Created output directory');
     
     // Write LaTeX content to file
     await fs.writeFile(inputFile, latexContent);
-    console.log('[LATEX DEBUG] Wrote LaTeX content to file');
+    debugLog('[LATEX DEBUG] Wrote LaTeX content to file');
     
     // Log a preview of the LaTeX content (first 100 chars)
     const previewContent = latexContent.length > 100 
       ? latexContent.substring(0, 100) + '...' 
       : latexContent;
-    console.log(`[LATEX DEBUG] LaTeX content preview: ${previewContent}`);
+    debugLog(`[LATEX DEBUG] LaTeX content preview: ${previewContent}`);
     
     // Run Tectonic
-    console.log('[LATEX DEBUG] Starting Tectonic compilation...');
+    debugLog('[LATEX DEBUG] Starting Tectonic compilation...');
     const compilationResult = await runTectonic(inputFile, outputDir);
     
     if (!compilationResult.success) {
-      console.log('[LATEX DEBUG] Tectonic compilation failed with error:', compilationResult.error);
+      debugLog('[LATEX DEBUG] Tectonic compilation failed with error:', compilationResult.error);
       const errorDetails = parseErrorLog(compilationResult.error || '');
-      console.log('[LATEX DEBUG] Parsed error details:', errorDetails);
+      debugLog('[LATEX DEBUG] Parsed error details:', errorDetails);
       
       // If in Railway deployment and compilation fails, try fallback
       if (isRailwayDeployment) {
-        console.log('[LATEX DEBUG] Attempting fallback mechanisms after compilation failure');
+        debugLog('[LATEX DEBUG] Attempting fallback mechanisms after compilation failure');
         
         // Try backup PDF creation method first
         const backupPdf = await createTectonicBackupPDF(latexContent);
         
         if (backupPdf) {
-          console.log('[LATEX DEBUG] Successfully created PDF using backup method');
+          debugLog('[LATEX DEBUG] Successfully created PDF using backup method');
           return {
             success: true,
             pdf: backupPdf
@@ -112,7 +119,7 @@ export async function compileTex(latexContent: string): Promise<{
         }
         
         // If backup PDF creation fails, generate HTML preview
-        console.log('[LATEX DEBUG] Backup PDF creation failed, generating HTML preview');
+        debugLog('[LATEX DEBUG] Backup PDF creation failed, generating HTML preview');
         const htmlPreview = await generateHTMLPreview(latexContent);
         
         return {
@@ -129,20 +136,20 @@ export async function compileTex(latexContent: string): Promise<{
       };
     }
     
-    console.log('[LATEX DEBUG] Tectonic compilation succeeded');
+    debugLog('[LATEX DEBUG] Tectonic compilation succeeded');
     
     // Read the compiled PDF
     const pdfPath = path.join(outputDir, 'input.pdf');
-    console.log(`[LATEX DEBUG] Looking for PDF at path: ${pdfPath}`);
+    debugLog(`[LATEX DEBUG] Looking for PDF at path: ${pdfPath}`);
     
     const pdfExists = await fileExists(pdfPath);
     
     if (!pdfExists) {
-      console.log('[LATEX DEBUG] PDF file was not found after successful compilation');
+      debugLog('[LATEX DEBUG] PDF file was not found after successful compilation');
       
       // If in Railway deployment and PDF wasn't created, use fallback
       if (isRailwayDeployment) {
-        console.log('[LATEX DEBUG] PDF not found in Railway environment, using fallback');
+        debugLog('[LATEX DEBUG] PDF not found in Railway environment, using fallback');
         const htmlPreview = await generateHTMLPreview(latexContent);
         
         return {
@@ -158,14 +165,14 @@ export async function compileTex(latexContent: string): Promise<{
       };
     }
     
-    console.log('[LATEX DEBUG] PDF file found, reading contents');
+    debugLog('[LATEX DEBUG] PDF file found, reading contents');
     
     // Read PDF and convert to base64
     const pdfData = await fs.readFile(pdfPath);
-    console.log(`[LATEX DEBUG] PDF file size: ${pdfData.length} bytes`);
+    debugLog(`[LATEX DEBUG] PDF file size: ${pdfData.length} bytes`);
     
     const base64Pdf = pdfData.toString('base64');
-    console.log(`[LATEX DEBUG] PDF converted to base64 (length: ${base64Pdf.length})`);
+    debugLog(`[LATEX DEBUG] PDF converted to base64 (length: ${base64Pdf.length})`);
     
     return {
       success: true,
@@ -176,7 +183,7 @@ export async function compileTex(latexContent: string): Promise<{
     
     // If in Railway deployment and there's an error, use fallback
     if (isRailwayDeployment) {
-      console.log('[LATEX DEBUG] Error in Railway environment, using fallback');
+      debugLog('[LATEX DEBUG] Error in Railway environment, using fallback');
       const htmlPreview = await generateHTMLPreview(latexContent);
       
       return {
@@ -216,7 +223,7 @@ function runTectonic(inputFile: string, outputDir: string): Promise<{
       inputFile
     ];
     
-    console.log(`[LATEX DEBUG] Running Tectonic command: tectonic ${args.join(' ')}`);
+    debugLog(`[LATEX DEBUG] Running Tectonic command: tectonic ${args.join(' ')}`);
     
     const tectonic = spawn('tectonic', args);
     
@@ -226,25 +233,25 @@ function runTectonic(inputFile: string, outputDir: string): Promise<{
     tectonic.stdout.on('data', (data) => {
       const chunk = data.toString();
       stdout += chunk;
-      console.log(`[LATEX DEBUG] Tectonic stdout: ${chunk}`);
+      debugLog(`[LATEX DEBUG] Tectonic stdout: ${chunk}`);
     });
     
     tectonic.stderr.on('data', (data) => {
       const chunk = data.toString();
       stderr += chunk;
-      console.log(`[LATEX DEBUG] Tectonic stderr: ${chunk}`);
+      debugLog(`[LATEX DEBUG] Tectonic stderr: ${chunk}`);
     });
     
     tectonic.on('close', (code) => {
-      console.log(`[LATEX DEBUG] Tectonic process exited with code: ${code}`);
+      debugLog(`[LATEX DEBUG] Tectonic process exited with code: ${code}`);
       
       if (code === 0) {
-        console.log('[LATEX DEBUG] Tectonic compilation successful');
+        debugLog('[LATEX DEBUG] Tectonic compilation successful');
         resolve({ success: true });
       } else {
-        console.log('[LATEX DEBUG] Tectonic compilation failed');
-        console.log(`[LATEX DEBUG] Full stdout: ${stdout}`);
-        console.log(`[LATEX DEBUG] Full stderr: ${stderr}`);
+        debugLog('[LATEX DEBUG] Tectonic compilation failed');
+        debugLog(`[LATEX DEBUG] Full stdout: ${stdout}`);
+        debugLog(`[LATEX DEBUG] Full stderr: ${stderr}`);
         
         resolve({
           success: false,
@@ -254,7 +261,7 @@ function runTectonic(inputFile: string, outputDir: string): Promise<{
     });
     
     tectonic.on('error', (err) => {
-      console.log(`[LATEX DEBUG] Failed to start Tectonic: ${err.message}`);
+      debugLog(`[LATEX DEBUG] Failed to start Tectonic: ${err.message}`);
       resolve({
         success: false,
         error: `Failed to start Tectonic: ${err.message}`
@@ -263,7 +270,7 @@ function runTectonic(inputFile: string, outputDir: string): Promise<{
     
     // Set a timeout for compilation (2 minutes)
     const timeout = setTimeout(() => {
-      console.log('[LATEX DEBUG] Tectonic compilation timed out after 2 minutes');
+      debugLog('[LATEX DEBUG] Tectonic compilation timed out after 2 minutes');
       tectonic.kill();
       resolve({
         success: false,
