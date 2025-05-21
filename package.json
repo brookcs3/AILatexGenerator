@@ -13,7 +13,8 @@
     "db:migrate": "tsx db/migrate.ts",
     "test": "NODE_PATH=. node --test",
     "generate:robots": "node scripts/generate-robots.js",
-    "prebuild": "npm run generate:robots"
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "prebuild": "npm run generate:robots && npm run generate:sitemap"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
