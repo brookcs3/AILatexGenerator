@@ -32,8 +32,8 @@ export function AnonymousUserBanner({ usageRemaining }: AnonymousUserBannerProps
         ) : (
           <div>
             <p className="mb-2">
-              You've already used your free LaTeX conversion. Sign up from the header to get 
-              more conversions and access to all premium features!
+              You've already used your free LaTeX conversion. Create an account or upgrade your plan
+              to continue generating documents and unlock premium features.
             </p>
           </div>
         )}
