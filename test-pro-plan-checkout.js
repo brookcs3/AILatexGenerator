@@ -23,13 +23,15 @@ try {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const proPlanPriceId = process.env.TEST_PRO_PLAN_PRICE_ID;
 
+
 async function testProPlanCheckout() {
-  console.log('=== Testing Pro Plan Checkout Session ===');
+  console.log('=== Testing Pro Plan Checkout Session (Mock Mode) ===');
   console.log(`Using Pro Plan Price ID: ${proPlanPriceId}`);
 
   try {
     const price = await stripe.prices.retrieve(proPlanPriceId);
     console.log('\nPrice verification:');
+
     console.log(`- Name: ${price.nickname || 'Unnamed price'}`);
     console.log(`- Amount: ${(price.unit_amount / 100).toFixed(2)} ${price.currency.toUpperCase()}`);
     console.log(`- Tax Behavior: ${price.tax_behavior}`);
@@ -44,6 +46,7 @@ async function testProPlanCheckout() {
 
     const product = await stripe.products.retrieve(price.product);
     console.log('\nProduct verification:');
+
     console.log(`- Name: ${product.name}`);
     console.log(`- Tax Code: ${product.tax_code || 'None'}`);
 
@@ -55,6 +58,7 @@ async function testProPlanCheckout() {
     }
 
     const session = await stripe.checkout.sessions.create({
+
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [{ price: proPlanPriceId, quantity: 1 }],

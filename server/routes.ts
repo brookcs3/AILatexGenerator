@@ -186,7 +186,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { name, email, subject = '', message } = contactSchema.parse(req.body);
 
-      const result = await sendContactEmail(name, email, subject, message);
+      const result = await sendContactEmail({
+        fromEmail: email,
+        name,
+        subject,
+        message
+      });
 
       if (result.success) {
         return res.status(200).json({ success: true });

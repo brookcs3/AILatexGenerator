@@ -24,7 +24,9 @@
   height: 100%;
   z-index: 5;
   /* Lower z-index when not in distortion-only mode */
+  pointer-events: none; /* Avoid blocking CTA on mobile */
   overflow: hidden;
+  pointer-events: none;
 }
 
 /* Distortion only mode styles */
