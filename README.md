@@ -1,6 +1,6 @@
 # AI LaTeX Generator
 
-Experimental web app for turning plain text into LaTeX documents. The project mixes a React/TypeScript frontend with an Express backend that talks to several AI providers. It can compile the resulting LaTeX to PDF using [Tectonic](https://tectonic-typesetting.github.io/) and falls back to an HTML preview when compilation fails.
+Experimental web app for turning plain text into LaTeX documents. The project powers the live demo at [AITexGen.com](https://aitexgen.com). It mixes a React/TypeScript frontend with an Express backend that talks to several AI providers. The server can compile the resulting LaTeX to PDF using [Tectonic](https://tectonic-typesetting.github.io/) and falls back to an HTML preview when compilation fails.
 
 ## Quick start
 1. Install Node 20+ and PostgreSQL.
